@@ -1,0 +1,24 @@
+{% extends 'foodie/base.html' %} 
+{% load staticfiles %} 
+{% block title_block %}
+Homepage
+{% endblock %}
+	
+{% block body_block %}
+	<div>
+		<ul> 
+			{% if user.is_authenticated %} 
+				<li><a href="{% url 'foodie:user' %}">MyUser</a></li>					
+			{% else %} 
+				<li><a href="{% url 'foodie:login' %}">Sign-up/Login</a></li> 
+			{% endif %}  
+			<li><a href="{% url 'foodie:about' %}">About</a></li> 
+			<li><a href="{% url 'foodie:home' %}">Home</a></li> 
+		</ul>
+	</div>
+	<div>
+	<h1>Fooodie wants to know if you'd rather eat...</h1>
+		<!Photo 1 here, big OR, Photo 2 next to it>
+	</div>
+	
+{% endblock %}

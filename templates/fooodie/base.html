@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load fooodie_template_tags %} 
+<html>
+	<head lang="en">
+		<meta charset="UTF-8" />
+		<title> Foodie - 
+		{% block title_block %} 
+		Foodie boi! 
+		{% endblock %} 
+		</title> 
+	</head>
+	<body> 	
+		<div>
+			{% block body_block %} 
+			{% endblock %}
+		</div>
+	</body>
+</html>
