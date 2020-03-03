@@ -16,5 +16,20 @@ def home(request):
 def about(request):
     response = render(request, 'fooodie/home.html', context=context_dict)
     return(response)
+
+def user_signup_login(request):
+    response = render(request, 'fooodie/home/html')
+    return response
+
+def user_logout(request):
+    response = render(request, 'fooodie/home/html')
+    return response
+
+# May need to use multiple views for profiles; will try
+# to figure out if view can used for both myprofile
+# and other user profiles
+def user_profile(request):
+    response = render(request, 'fooodie/home/html')
+    return response
    
 # Create your views here.
