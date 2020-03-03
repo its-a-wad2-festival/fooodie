@@ -10,8 +10,7 @@ from django.urls import reverse
 context_dict={}
 
 def home(request):
-    print("SHALASKDHJDHEWKHUEWEFKJADBKJADBJKADBKJ")
-    response = render(request, 'fooodie/home.html', context=context_dict) 
+    response = render(request, 'fooodie/home.html', context=context_dict)
     return(response)
 
 def about(request):
