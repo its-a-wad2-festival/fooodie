@@ -1,12 +1,17 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+import factory  
+import factory.django
         
 class UserProfile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.CASCADE) #Links UserProfile to a User model instance.  
     slug=models.SlugField(unique=True) #Slug field for when we try to view other user's profiles (Part of the urls)
     picture=models.ImageField(upload_to="profilepics", blank=True)
     totalVotes = models.IntegerField(default=0)
+    
+    #We need to add __str__ method here
+
     # We store within a user the number of votes he has, each time someone votes on a photo we update both Photo.votes and UserProfile.totalVotes.
     # This way we only have to iterate through the list of UserProfile in the leaderboard.
     # When accessing a user's profile you just order the leaderboard using the totalVotes attribute and then iterate through it to find him.
@@ -22,3 +27,7 @@ class Photo(models.Model):
     votes=models.IntegerField(default=0) #Number of votes the picture has
     photo = models.ImageField(upload_to="photos") #Uploaded photo (Django handles all of this, so we don't ahve to worry about paths)
     user=models.ForeignKey(UserProfile, on_delete=models.CASCADE) #User which uploaded the photo, 1 to MANY relation, so primary key on MANY side
+
+    def __str__(self):
+        return self.name
+        
