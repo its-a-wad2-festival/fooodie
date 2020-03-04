@@ -7,6 +7,7 @@ import factory.django
 class UserProfile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.CASCADE) #Links UserProfile to a User model instance.  
     slug=models.SlugField(unique=True) #Slug field for when we try to view other user's profiles (Part of the urls)
+    
     picture=models.ImageField(upload_to="profilepics", blank=True)
     totalVotes = models.IntegerField(default=0)
     
@@ -20,6 +21,20 @@ class UserProfile(models.Model):
     #IDEA 1 would require more functions in the views, and is a timely operation, yet should be memory efficient as we're storing less data
     #IDEA 2 is less memory efficient but saves us lots of time with calculations.
     #Personally I feel IDEA 2 is better.
+    
+class UserFactory(factory.django.DjangoModelFactory):
+    """
+    This class creates instances of users with random real paramaters.
+    Each instance is not stored as a UserFactory object on the database
+    But creates a User object.
+    """
+    class Meta:
+        model = User   
+
+    first_name = factory.Faker('first_name')
+    last_name = factory.Faker('last_name')
+    username = factory.Faker('user_name')
+    email = factory.Faker('email')
 
 class Photo(models.Model):
     NAME_MAX_LENGTH=128
