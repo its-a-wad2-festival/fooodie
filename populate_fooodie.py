@@ -18,16 +18,22 @@ MEDIA_DIR = os.path.join(os.path.join(BASE_DIR, 'media'))
 
 #Might be useful to create random data for users: stackoverflow.com/questions/33024510/populate-django-database
 
+
+
 def create_user_profile():
-    user = UserFactory()
-    print(user.first_name,user.last_name,user.username,user.email)
-    user.set_password("JoseIsAwesome")
+    user = UserFactory() #User created with UserFactory() in models
+    user.set_password("JoseIsAwesome") #Facts
+    #Passowrd given to ALL random users so we can access them if necessary
     user.save()
-    profile = UserProfile(user=user, slug = user.username)
+    profile = UserProfile(user=user, slug = user.username) #We give the UserProfile its slug
     profile.save()
     folder_path = os.path.join(MEDIA_DIR, user.username)
     os.mkdir(folder_path)
      
+#TO-DO:
+    #MAKE SLUGIFY FUNCTION
+    #ALL OF THE PHOTO RANDOM GENERATION
+
 if __name__ == '__main__':
     print('Starting fooodie population script...')
     for i in range (0,20):
