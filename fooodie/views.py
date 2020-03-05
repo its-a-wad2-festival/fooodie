@@ -8,13 +8,22 @@ from fooodie.models import Photo
 def home(request):
     context_dict = {}
 
-    #Ordering all photos randomly, picking first two
-    pics_to_choose = Photo.objects.order_by(?)[:1]
+##    #Ordering all photos randomly, picking first two
+##    pics_to_choose = Photo.objects.order_by(?)[:1]
+##    context_dict['pics_to_choose'] = pics_to_choose
+##
+##    #Will change this to use the same QuerySet eventually, to avoid double
+##    #search and having the same picture be both a voting pic and random pic
+##    random_pics = Photo.objects.order_by(?)[:3]
+##    context_dict['random_pics'] = random_pics
+
+    #Above will definitely work, this SHOULD work
+    pics = Photo.objects.order_by(?)
+    
+    pics_to_choose = pics[:1]
     context_dict['pics_to_choose'] = pics_to_choose
 
-    #Will change this to use the same QuerySet eventually, to avoid double
-    #search and having the same picture be both a voting pic and random pic
-    random_pics = Photo.objects.order_by(?)[:3]
+    random_pics = pics[:3]
     context_dict['random_pics'] = random_pics
     
     response = render(request, 'fooodie/home.html', context = context_dict)
