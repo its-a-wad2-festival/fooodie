@@ -20,10 +20,10 @@ def home(request):
     #Above will definitely work, this SHOULD work
     pics = Photo.objects.order_by('?')
     
-    pics_to_choose = pics[:1]
+    pics_to_choose = pics[:2]
     context_dict['pics_to_choose'] = pics_to_choose
 
-    random_pics = pics[:3]
+    random_pics = pics[:4]
     context_dict['random_pics'] = random_pics
     
     response = render(request, 'fooodie/home.html', context = context_dict)
@@ -38,10 +38,10 @@ def about(request):
 def leaderboard(request):
     context_dict = {}
 
-    top_pics = Photo.objects.order_by('-likes')[:2] #Top 3
+    top_pics = Photo.objects.order_by('-likes')[:3] #Top 3
     context_dict['top_pics'] = top_pics
 
-    top_profiles = UserProfile.objects.order_by('-totalVotes')[:7] #Top 8
+    top_profiles = UserProfile.objects.order_by('-totalVotes')[:8] #Top 8
     context_dict['top_profiles'] = top_profiles
 
     response = render(request, 'fooodie/leaderboard.html', context = context_dict)

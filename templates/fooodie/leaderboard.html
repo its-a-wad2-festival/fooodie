@@ -14,4 +14,19 @@
 			<img src ="{%static 'images/rango.jpg' %}"
 			     alt = "Picture of Rango" />
         </div>
+	
+	<body>
+		<div>
+			{% if top_profiles %}
+				<ul>
+				{% for profile in top_profiles %}
+					<li>{{ profile.user.first_name }}</li>
+				{% endfor %}
+			{% else %}
+				<strong>There are no profiles</strong>
+			{% endif %}
+		</div>
+					
+					
+			
 </html>
