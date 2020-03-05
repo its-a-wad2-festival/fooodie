@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from fooodie.models import Photo
+from fooodie.models import Photo, UserProfile
 
 def home(request):
     context_dict = {}
@@ -18,7 +18,7 @@ def home(request):
 ##    context_dict['random_pics'] = random_pics
 
     #Above will definitely work, this SHOULD work
-    pics = Photo.objects.order_by(?)
+    pics = Photo.objects.order_by('?')
     
     pics_to_choose = pics[:1]
     context_dict['pics_to_choose'] = pics_to_choose
@@ -33,6 +33,18 @@ def about(request):
     context_dict = {}
     
     response = render(request, 'fooodie/home.html')
+    return(response)
+
+def leaderboard(request):
+    context_dict = {}
+
+    top_pics = Photo.objects.order_by('-likes')[:2] #Top 3
+    context_dict['top_pics'] = top_pics
+
+    top_profiles = UserProfile.objects.order_by('-totalVotes')[:7] #Top 8
+    context_dict['top_profiles'] = top_profiles
+
+    response = render(request, 'fooodie/leaderboard.html', context = context_dict)
     return(response)
 
 def user_signup_login(request):
