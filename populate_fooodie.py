@@ -5,11 +5,12 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 import django
 django.setup()
 from django.contrib.auth.models import User
-from fooodie.models import Photo, UserProfile, UserFactory
+from fooodie.models import Photo, UserProfile, UserFactory, slugify
 import random
 import os
 import factory  
 import factory.django
+import random
 
 #Variable declaration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -25,13 +26,18 @@ def create_user_profile():
     user.set_password("JoseIsAwesome") #Facts
     #Passowrd given to ALL random users so we can access them if necessary
     user.save()
-    profile = UserProfile(user=user, slug = user.username) #We give the UserProfile its slug
+    profile = UserProfile(user=user) #We give the UserProfile its slug
     profile.save()
-    folder_path = os.path.join(MEDIA_DIR, user.username)
+    folder_path = os.path.join(MEDIA_DIR, profile.slug)
     os.mkdir(folder_path)
-     
+    add_photo()
+    
+def add_photo(userProfile):
+    p=Photo(user=userProfile)
+    p.votes=random.randint()
+    p.
+        
 #TO-DO:
-    #MAKE SLUGIFY FUNCTION
     #ALL OF THE PHOTO RANDOM GENERATION
 
 if __name__ == '__main__':
