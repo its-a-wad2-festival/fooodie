@@ -22,8 +22,10 @@ class UserProfile(models.Model):
     # When accessing a user's profile you just order the leaderboard using the totalVotes attribute and then iterate through it to find him.
     # Once you do his position on the list is his position in the ranking
     
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/userProfile<id>
+    return '{0}'.format(instance.userProfile.id)
 
-    
 class UserFactory(factory.django.DjangoModelFactory):
     """
     This class creates instances of users with random real paramaters.
@@ -58,7 +60,7 @@ class Photo(models.Model):
     name = models.CharField(max_length=NAME_MAX_LENGTH) #The name the user wants to give to the picture he has uploaded
     votes=models.IntegerField(default=0) #Number of votes the picture has
     user=models.ForeignKey(UserProfile, on_delete=models.CASCADE) #User which uploaded the photo, 1 to MANY relation, so primary key on MANY side
-    photo = models.ImageField(upload_to='photos') #Uploaded photo (Django handles all of this, so we don't ahve to worry about paths)
+    photo = models.ImageField(upload_to=user_directory_path) #Uploaded photo (Django handles all of this, so we don't ahve to worry about paths)
 
     
     def __str__(self):

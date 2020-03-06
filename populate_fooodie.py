@@ -26,18 +26,19 @@ def create_user_profile():
     user.set_password("JoseIsAwesome") #Facts
     #Passowrd given to ALL random users so we can access them if necessary
     user.save()
-    profile = UserProfile(user=user) #We give the UserProfile its slug
+    profile = UserProfile(user=user)
     profile.save()
-    folder_path = os.path.join(MEDIA_DIR, profile.slug)
+    folder_path = os.path.join(MEDIA_DIR, str(profile.id))
     os.mkdir(folder_path)
     try:
         add_photo(profile)
+        print("photo added"+str(profile.id))
     except:
+        print("couldn't add photo")
         pass
     
 def add_photo(userProfile):
     p=Photo(user=userProfile)
-    print(userProfile.slug)
     p.votes=random.randint(0,10)
     photo=random.choice(population_photos)
     p.photo=photo
