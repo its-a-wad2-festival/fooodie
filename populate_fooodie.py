@@ -15,7 +15,7 @@ import random
 #Variable declaration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MEDIA_DIR = os.path.join(os.path.join(BASE_DIR, 'media'))
-
+population_photos=os.listdir(os.path.join(BASE_DIR,'population_photos'))
 
 #Might be useful to create random data for users: stackoverflow.com/questions/33024510/populate-django-database
 
@@ -30,13 +30,19 @@ def create_user_profile():
     profile.save()
     folder_path = os.path.join(MEDIA_DIR, profile.slug)
     os.mkdir(folder_path)
-    add_photo()
+    try:
+        add_photo(profile)
+    except:
+        pass
     
 def add_photo(userProfile):
     p=Photo(user=userProfile)
-    p.votes=random.randint()
-    p.
-        
+    print(userProfile.slug)
+    p.votes=random.randint(0,10)
+    photo=random.choice(population_photos)
+    p.photo=photo
+    population_photos.remove(photo)
+    
 #TO-DO:
     #ALL OF THE PHOTO RANDOM GENERATION
 
