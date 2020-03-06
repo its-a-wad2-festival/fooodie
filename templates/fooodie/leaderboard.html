@@ -22,8 +22,20 @@
 				{% for profile in top_profiles %}
 					<li>{{ profile.user.first_name }}</li>
 				{% endfor %}
+				</ul>
 			{% else %}
 				<strong>There are no profiles</strong>
+			{% endif %}
+		</div>
+		<div>
+			{% if top_pics %}
+				<ul>
+				{% for pic in top_pics %}
+					<li>{{ pic.name }}</li>
+				{% endfor %}
+				</ul>
+			{% else %}
+				<strong>There are no pictures</strong>
 			{% endif %}
 		</div>
 					

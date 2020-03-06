@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from fooodie.models import Photo, UserProfile
+from fooodie.forms import UserForm
 
 def home(request):
     context_dict = {}
@@ -38,7 +39,7 @@ def about(request):
 def leaderboard(request):
     context_dict = {}
 
-    top_pics = Photo.objects.order_by('-likes')[:3] #Top 3
+    top_pics = Photo.objects.order_by('-votes')[:3] #Top 3
     context_dict['top_pics'] = top_pics
 
     top_profiles = UserProfile.objects.order_by('-totalVotes')[:8] #Top 8
@@ -50,13 +51,41 @@ def leaderboard(request):
 def user_signup_login(request):
     context_dict = {}
     
-    response = render(request, 'fooodie/home/html')
+    response = render(request, 'fooodie/home.html')
     return response
+
+#Will focus on the registration/login logic first, implement into a single view later
+def register(request):
+    registered = False
+
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            profile = UserProfile(user = user, slug = user.username)
+            profile.save()
+
+            folder_path = os.path.join(MEDIA_DIR, user.username)
+            os.mkdir(folder_path)
+
+            registered = True
+
+        else:
+            print(user_form.errors)
+    else:
+        user_form = UserForm()
+
+    return render(request, 'fooodie/register.html', context = {'user_form' : user_form,
+                                                               'registered' : registered})
 
 def user_logout(request):
     context_dict = {}
     
-    response = render(request, 'fooodie/home/html')
+    response = render(request, 'fooodie/home.html')
     return response
 
 # May need to use multiple views for profiles; will try
@@ -65,7 +94,7 @@ def user_logout(request):
 def user_profile(request):
     context_dict = {}
     
-    response = render(request, 'fooodie/home/html')
+    response = render(request, 'fooodie/home.html')
     return response
    
 # Create your views here.
