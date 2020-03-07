@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from fooodie.models import Photo, UserProfile
-from fooodie.forms import UserForm
+#from fooodie.forms import UserForm
 
 def home(request):
     context_dict = {}
@@ -32,7 +32,6 @@ def home(request):
 
 def about(request):
     context_dict = {}
-    
     response = render(request, 'fooodie/home.html')
     return(response)
 
