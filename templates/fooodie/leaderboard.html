@@ -1,20 +1,23 @@
 <!DOCTYPE>
+
+{% extends 'rango/home.html' %}
 {% load staticfiles %}
+
 <html>
 	<head lang="en">
 		<meta charset="UTF-8" />
-		<title> Foodie - 
-		{% block title_block %} 
-		Leaderboard 
-		{% endblock %} 
-		</title> 
+		<title> Foodie -
+		{% block title_block %}
+		Leaderboard
+		{% endblock %}
+		</title>
 <h1>THIS IS THE LEADERBOARD TEMPLATE</h1>
 	<p>I was just testing and going through Django setup</p>
 		<div>
 			<img src ="{%static 'images/rango.jpg' %}"
 			     alt = "Picture of Rango" />
         </div>
-	
+
 	<body>
 		<div>
 			{% if top_profiles %}
@@ -38,7 +41,7 @@
 				<strong>There are no pictures</strong>
 			{% endif %}
 		</div>
-					
-					
-			
+
+
+
 </html>
