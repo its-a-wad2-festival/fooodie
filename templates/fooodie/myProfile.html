@@ -1,0 +1,34 @@
+{% extends 'fooodie/base.html' %}
+{% load staticfiles %}
+
+<head lang="en">
+		<meta charset="UTF-8" />
+
+	{% block title_block %}
+		MyProfile
+	{% endblock %}
+
+<!--Just a layout, with placeholders still need actual obejcts-->
+{% block body_block %}
+<h1>My Profile</h1>
+<h2>User Picture: User Name</h2>
+<h3>Upload a profile Picture</h3>
+<h3>Upload a food plate</h3>
+	<p>
+	<body>
+		<div>
+		{% if photos %}
+			<ul>
+				{% for pic in photo%}
+					{% if pic.user == userloggedin %}
+						<!-- Actual food photo -->
+						<li>{{ pic.name }}</li>
+					{% endif %}	
+				{% endfor %}
+			</ul>
+		{% else %}
+			<strong>There are no pictures</strong>
+		{% endif %}
+		</div>
+{% endblock %}
+

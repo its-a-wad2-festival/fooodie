@@ -95,5 +95,10 @@ def user_profile(request):
     
     response = render(request, 'fooodie/home.html')
     return response
-   
+
+@login_required
+def myprofile(request): #User's manage account site
+    context_dict = {}
+    response = render(request, 'fooodie/myprofile.html')
+    return response   
 # Create your views here.

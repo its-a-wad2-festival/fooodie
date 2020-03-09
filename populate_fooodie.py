@@ -39,16 +39,16 @@ def create_user_profile():
         pass
     
 def add_photo(userProfile):
-    p = Photo(user=userProfile)
+    p = Photo(user=userProfile) #Makes photo
     p.votes = random.randint(0,10)
     p.name = photo
     photo = random.choice(population_photos)
     photo_old_path = os.path.join(population_photos_old_path,photo)
     photo_new_path = os.path.join(os.path.join(MEDIA_DIR,str(userProfile.id)),photo)
     p.photo = photo_new_path
-    p.save()
-    population_photos.remove(photo)
-    shutil.move(photo_old_path,photo_new_path)
+    p.save() #Saves photo
+    population_photos.remove(photo) #Avoids giving users the same photo
+    shutil.move(photo_old_path,photo_new_path) #Physically moves photo to user's photo file
     
 
 if __name__ == '__main__':

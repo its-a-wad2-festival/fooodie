@@ -8,6 +8,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('leaderboard/', views.leaderboard, name = 'leaderboard'),
     path('register/', views.register, name = 'register'),
+    path('myprofile/', views.myprofile, name = 'myprofile'),
     ]
 """path('add_photo/', views.add_photo, name='add_photo'),
 path('user/<slug:user_name_slug>/', views.restricted, name='user'),
