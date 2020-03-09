@@ -1,16 +1,15 @@
-<!DOCTYPE>
-
-{% extends 'rango/home.html' %}
+{% extends 'fooodie/home.html' %}
 {% load staticfiles %}
 
-<html>
+
 	<head lang="en">
 		<meta charset="UTF-8" />
-		<title> Foodie -
+
 		{% block title_block %}
 		Leaderboard
 		{% endblock %}
-		</title>
+
+{% block body_block %}
 <h1>THIS IS THE LEADERBOARD TEMPLATE</h1>
 	<p>I was just testing and going through Django setup</p>
 		<div>
@@ -41,7 +40,4 @@
 				<strong>There are no pictures</strong>
 			{% endif %}
 		</div>
-
-
-
-</html>
+{% endblock %}
