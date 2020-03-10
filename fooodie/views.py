@@ -20,19 +20,19 @@ def home(request):
 
     #Above will definitely work, this SHOULD work
     pics = Photo.objects.order_by('?')
-    
+
     pics_to_choose = pics[:2]
     context_dict['pics_to_choose'] = pics_to_choose
 
     random_pics = pics[:4]
     context_dict['random_pics'] = random_pics
-    
+
     response = render(request, 'fooodie/home.html', context = context_dict)
     return(response)
 
 def about(request):
     context_dict = {}
-    response = render(request, 'fooodie/home.html')
+    response = render(request, 'fooodie/about.html')
     return(response)
 
 def leaderboard(request):
@@ -48,7 +48,7 @@ def leaderboard(request):
 
 def user_signup_login(request):
     context_dict = {}
-    
+
     response = render(request, 'fooodie/home.html')
     return response
 
@@ -82,7 +82,7 @@ def register(request):
 
 def user_logout(request):
     context_dict = {}
-    
+
     response = render(request, 'fooodie/home.html')
     return response
 
@@ -91,7 +91,7 @@ def user_logout(request):
 # and other user profiles
 def user_profile(request):
     context_dict = {}
-    
+
     response = render(request, 'fooodie/home.html')
     return response
 
@@ -103,5 +103,5 @@ def add_food_photo(request):
 def myprofile(request): #User's manage account site
     context_dict = {}
     response = render(request, 'fooodie/myprofile.html')
-    return response   
+    return response
 # Create your views here.
