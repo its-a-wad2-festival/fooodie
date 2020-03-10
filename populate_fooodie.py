@@ -1,6 +1,5 @@
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                      'wad2_group_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE','wad2_group_project.settings')
 
 import django
 django.setup()
@@ -40,16 +39,18 @@ def create_user_profile():
     
 def add_photo(userProfile):
     p = Photo(user=userProfile) #Makes photo
-    p.votes = random.randint(0,10)
-    p.name = photo
+    votes= random.randint(100,500)
+    p.votes = votes
     photo = random.choice(population_photos)
+    p.name = str(photo)
     photo_old_path = os.path.join(population_photos_old_path,photo)
     photo_new_path = os.path.join(os.path.join(MEDIA_DIR,str(userProfile.id)),photo)
     p.photo = photo_new_path
     p.save() #Saves photo
+    userProfile.totalVotes+=votes
+    userProfile.save()
     population_photos.remove(photo) #Avoids giving users the same photo
-    shutil.move(photo_old_path,photo_new_path) #Physically moves photo to user's photo file
-    
+    shutil.copy(photo_old_path,photo_new_path) #Physically moves photo to user's photo file
 
 if __name__ == '__main__':
     print('Starting fooodie population script...')

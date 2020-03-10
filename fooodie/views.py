@@ -37,7 +37,6 @@ def about(request):
 
 def leaderboard(request):
     context_dict = {}
-
     top_pics = Photo.objects.order_by('-votes')[:3] #Top 3
     context_dict['top_pics'] = top_pics
 
@@ -95,6 +94,10 @@ def user_profile(request):
     
     response = render(request, 'fooodie/home.html')
     return response
+
+def add_food_photo(request):
+    context_dict={}
+    response=render(request, 'fooodie/uploadfoodphoto.html')
 
 @login_required
 def myprofile(request): #User's manage account site

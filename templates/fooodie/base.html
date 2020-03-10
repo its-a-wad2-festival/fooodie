@@ -77,8 +77,12 @@
 			<div class="topnav">
 			<a class="active" href="{% url 'fooodie:home' %}">Home</a>
 			<a href="{% url 'fooodie:leaderboard' %}">Leaderboard</a>
-			<a href="{% url 'fooodie:myprofile' %}">MyProfile</a>
-			<a href="#Login_SignUp">Login - SignUp</a>
+			{% if user %}
+				<a href="{% url 'fooodie:myprofile' %}">MyProfile</a>
+				<a href="#Logout">Log Out</a>
+			{% else %}
+				<a href="#Login_SignUp">Login - SignUp</a>
+			{% endif %}
 			<input type="text" placeholder="Search...">
 			</div>
 			<div>

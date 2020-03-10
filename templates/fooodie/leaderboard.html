@@ -18,17 +18,19 @@
         </div>
 
 	<body>
+		<h2> Here are the top ranking users </h2>
 		<div>
 			{% if top_profiles %}
 				<ul>
 				{% for profile in top_profiles %}
-					<li>{{ profile.user.first_name }}</li>
+					<li>{{ profile.user.username}}</li>
 				{% endfor %}
 				</ul>
 			{% else %}
 				<strong>There are no profiles</strong>
 			{% endif %}
 		</div>
+		<h2> Here are the top ranking photos </h2>
 		<div>
 			{% if top_pics %}
 				<ul>
