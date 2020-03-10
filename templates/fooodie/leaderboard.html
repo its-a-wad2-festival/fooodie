@@ -33,11 +33,13 @@
 		<h2> Here are the top ranking photos </h2>
 		<div>
 			{% if top_pics %}
-				<ul>
 				{% for pic in top_pics %}
+				<img src="{{ pic.picture.url }}" /> 
+				<ul>
 					<li>{{ pic.name }}</li>
-				{% endfor %}
+					<li>{{ pic.user }}</li>
 				</ul>
+				{% endfor %}
 			{% else %}
 				<strong>There are no pictures</strong>
 			{% endif %}

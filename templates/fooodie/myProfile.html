@@ -23,6 +23,7 @@
 					{% if pic.user == userloggedin %}
 						<!-- Actual food photo -->
 						<li>{{ pic.name }}</li>
+						<img src="{{ pic.picture.url }}" />
 					{% endif %}	
 				{% endfor %}
 			</ul>
