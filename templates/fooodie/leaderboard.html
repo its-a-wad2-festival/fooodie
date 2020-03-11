@@ -37,7 +37,7 @@
 				<img src="{{ pic.photo.url }}" /> 
 				<ul>
 					<li>{{ pic.name }}</li>
-					<li>{{ pic.user }}</li>
+					<li>{{ pic.user.user.username }}</li>
 				</ul>
 				{% endfor %}
 			{% else %}
