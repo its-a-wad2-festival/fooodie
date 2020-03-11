@@ -18,7 +18,14 @@
 			{% if top_profiles %}
 				<ul>
 				{% for profile in top_profiles %}
-					<li>{{ profile.user.username}}</li>
+				{% if profile.picture %}
+					<img src="{{ profile.picture.url }}" height="200" width="200" /> 
+				{% else %}
+					<strong>No profile pic</strong>
+				{% endif %}
+					<ul>
+						<li>{{ profile.user.username}}</li>
+					</ul>
 				{% endfor %}
 				</ul>
 			{% else %}
