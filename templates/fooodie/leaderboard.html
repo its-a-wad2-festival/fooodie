@@ -10,12 +10,7 @@
 		{% endblock %}
 
 {% block body_block %}
-<h1>THIS IS THE LEADERBOARD TEMPLATE</h1>
-	<p>I was just testing and going through Django setup</p>
-		<div>
-			<img src ="{%static 'images/rango.jpg' %}"
-			     alt = "Picture of Rango" />
-        </div>
+<h1>LEADERBOARD</h1>
 
 	<body>
 		<h2> Here are the top ranking users </h2>
@@ -34,7 +29,7 @@
 		<div>
 			{% if top_pics %}
 				{% for pic in top_pics %}
-				<img src="{{ pic.photo.url }}" /> 
+				<img src="{{ pic.photo.url }}" height="200" width="200" /> 
 				<ul>
 					<li>{{ pic.name }}</li>
 					<li>{{ pic.user.user.username }}</li>
