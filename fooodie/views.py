@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
+from django.conf import settings
 from fooodie.models import Photo, UserProfile
-#from fooodie.forms import UserForm
+from fooodie.forms import UserForm, UserProfileForm
+import os
 
 def home(request):
     context_dict = {}
@@ -58,17 +60,29 @@ def register(request):
 
     if request.method == 'POST':
         user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
 
-        if user_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
 
-            profile = UserProfile(user = user, slug = user.username)
+            print('user id: '+str(user.id))
+
+            #Creating the user's folder so we can put the profile pic into it
+            folder_path = os.path.join(settings.MEDIA_DIR, str(user.id))
+            os.mkdir(folder_path)
+
+            #profile = UserProfile(user = user, slug = user.username)
+            profile = profile_form.save(commit = False)
+            profile.user = user
+            profile.slug = user.username
+
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+            
             profile.save()
 
-            folder_path = os.path.join(MEDIA_DIR, user.username)
-            os.mkdir(folder_path)
 
             registered = True
 
@@ -76,8 +90,10 @@ def register(request):
             print(user_form.errors)
     else:
         user_form = UserForm()
+        profile_form = UserProfileForm()
 
     return render(request, 'fooodie/register.html', context = {'user_form' : user_form,
+                                                               'profile_form' : profile_form,
                                                                'registered' : registered})
 
 def user_logout(request):
