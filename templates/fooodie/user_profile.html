@@ -11,11 +11,7 @@
 <!--Just a layout, with placeholders still need actual obejcts-->
 {% block body_block %}
 <h1>My Profile</h1>
-{% if profile%}
-	<h2>{{ profile.pic }}: {{ profile.user.username }}</h2>
-{% else %}
-	<h2>SuperUser not linked to a userprofile so doesn't have a photo, nor its own food uploads: {{ user.username }}</h2>
-{% endif %}}
+<h2>User Picture: User Name</h2>
 <h3>Upload a profile Picture</h3>
 <h3><strong> <a href="{% url 'fooodie:add_food_photo'%}">Upload a food plate</a> </strong> </h3>
 	<p>
