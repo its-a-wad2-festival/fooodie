@@ -145,16 +145,14 @@ def add_food_photo(request):
 
 @login_required
 def myprofile(request): #User's manage account site
-    
-    user_id = request.user.id
-    username = request.user.username
-    photos = Photo.objects.filter(user__id = user_id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores) docs.djangoproject.com/en/dev/topics/db/queries/#lookups-that-span-relationships
-    profilePic = UserProfile.objects.filter(user__id = user_id)[:1].get().picture #As .filter returns a QuerySet we have [:1].get() to get the UserProfile obj
+    user=request.user
+    photos = Photo.objects.filter(user__id = user.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores) docs.djangoproject.com/en/dev/topics/db/queries/#lookups-that-span-relationships
+    profile = UserProfile.objects.filter(user = user)
     context_dict = {}
     context_dict['baseDir'] = os.path.dirname(os.path.dirname(os.path.abspath(__file__))).replace('\\','/')
     context_dict['photos'] = photos
-    context_dict['username'] = username
-    context_dict['profilePic'] = profilePic
+    context_dict['user'] = user
+    context_dict['profile'] = profile
     response = render(request, 'fooodie/myprofile.html', context = context_dict)
     return response
 # Create your views here.
