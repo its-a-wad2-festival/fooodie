@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.conf import settings
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from fooodie.models import Photo, UserProfile
 from fooodie.forms import UserForm, UserProfileForm
 import os
@@ -67,21 +69,47 @@ def register(request):
             user.set_password(user.password)
             user.save()
 
-            print('user id: '+str(user.id))
+            #print('user id: '+str(user.id))
 
             #Creating the user's folder so we can put the profile pic into it
-            folder_path = os.path.join(settings.MEDIA_DIR, str(user.id))
-            os.mkdir(folder_path)
+##            folder_path = os.path.join(settings.MEDIA_DIR, str(user.id))
+##            os.mkdir(folder_path)
+##
+##            print('folder path: '+folder_path)
+##
+##            folder_path_str = str(folder_path)
+
+            ##Think about placing the photo in the directory THEN just linking to that
+            ##photo, like profile.picture = path_to_file
+
+##            if 'picture' in request.FILES:
+##                pro_pic = request.FILES['picture']
+##                pro_pic2 = Image.open(pro_pic)
+##                pro_pic2.filename = str(user.id)+'.jpg'
+##                print('filename: '+pro_pic2.filename)
+##                #filename = pro_pic.filename
+##                pro_pic2.save(folder_path)
 
             #profile = UserProfile(user = user, slug = user.username)
+##            profile_pic = request.FILES['picture']
+##            path = default_storage.save(folder_path+'\\image.jpeg', ContentFile(profile_pic.read()))
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.slug = user.username
-
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+            #profile.picture = path
             
             profile.save()
+
+            profile_pic_path = os.path.join(settings.MEDIA_DIR, str(profile.id))
+            os.mkdir(profile_pic_path)
+
+            if 'picture' in request.FILES:
+                profile_pic = request.FILES['picture']
+                extension = profile_pic.name.split('.')[-1] #Gets the string after the last period, to deal with name.txt.jpg situations
+                path_to_pic = default_storage.save(profile_pic_path+'\\'+str(profile.id)+'_propic.'+extension, ContentFile(profile_pic.read()))
+                profile.picture = path_to_pic
+
+            print('So USER id is '+str(user.id)+' and PROFILE id is '+str(profile.id))
 
 
             registered = True
