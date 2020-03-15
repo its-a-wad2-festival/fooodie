@@ -147,12 +147,15 @@ def add_food_photo(request):
 def myprofile(request): #User's manage account site
     user = request.user
     photos = Photo.objects.filter(user__id = user.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores) docs.djangoproject.com/en/dev/topics/db/queries/#lookups-that-span-relationships
-    putoGato = photos[:1].get()
-    profile = UserProfile.objects.get(user = user)
     context_dict = {}
+    try:
+        profile = UserProfile.objects.get(user = user)
+        context_dict['profile'] = profile
+    except:
+        pass
     context_dict['photos'] = photos
     context_dict['user'] = user
-    context_dict['profile'] = profile
+    
     response = render(request, 'fooodie/myprofile.html', context = context_dict)
     return response
 # Create your views here.
