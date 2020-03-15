@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE','wad2_group_project.settings')
 import django
 django.setup()
 from django.contrib.auth.models import User
-from fooodie.models import Photo, UserProfile, UserFactory, slugify
+from fooodie.models import Photo, UserProfile, UserFactory, slugify, get_upload_filename
 import random
 import sys, os, glob, shutil
 import factory  
@@ -43,9 +43,9 @@ def add_photo(userProfile):
     p.votes = votes
     photo = random.choice(population_photos)
     p.name = str(photo)
+    p.photo = get_upload_filename(p,p.name) #Same function we use in models to assign the destination folder of the pictures
     photo_old_path = os.path.join(population_photos_old_path,photo)
-    photo_new_path = os.path.join(os.path.join(MEDIA_DIR,str(userProfile.id)),photo)
-    p.photo = photo_new_path
+    photo_new_path = os.path.join(os.path.join(MEDIA_DIR,str(userProfile.id)),str(p.photo.url.split("/")[-1])) #Rename file to point to p.photo.url
     p.save() #Saves photo
     userProfile.totalVotes+=votes
     userProfile.save()
@@ -56,11 +56,3 @@ if __name__ == '__main__':
     print('Starting fooodie population script...')
     for i in range (0,20):
         create_user_profile()
-        
-"""     p = Photo(user=userProfile)
-    p.votes = random.randint(0,10)
-    photo = random.choice(population_photos)
-    p.photo = photo
-    p.save()
-    population_photos.remove(photo)"
-"""

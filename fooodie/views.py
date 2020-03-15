@@ -145,11 +145,11 @@ def add_food_photo(request):
 
 @login_required
 def myprofile(request): #User's manage account site
-    user=request.user
+    user = request.user
     photos = Photo.objects.filter(user__id = user.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores) docs.djangoproject.com/en/dev/topics/db/queries/#lookups-that-span-relationships
-    profile = UserProfile.objects.filter(user = user)
+    putoGato = photos[:1].get()
+    profile = UserProfile.objects.get(user = user)
     context_dict = {}
-    context_dict['baseDir'] = os.path.dirname(os.path.dirname(os.path.abspath(__file__))).replace('\\','/')
     context_dict['photos'] = photos
     context_dict['user'] = user
     context_dict['profile'] = profile

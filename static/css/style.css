@@ -7696,7 +7696,7 @@ h1, h2, h3, h4, h5,
 
 .photography-entry {
   height: 250px;
-  display: block;
+  display: inline-block;
   z-index: 0;
   position: relative;
   margin-bottom: 30px; }
