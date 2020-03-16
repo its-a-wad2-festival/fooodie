@@ -10,9 +10,10 @@ from fooodie.models import Photo, UserProfile
 from fooodie.forms import UserForm, UserProfileForm
 import os
 
+
 def home(request):
     context_dict = {}
-
+    context_dict['userProfiles']=UserProfile.objects.all()
 ##    #Ordering all photos randomly, picking first two
 ##    pics_to_choose = Photo.objects.order_by(?)[:1]
 ##    context_dict['pics_to_choose'] = pics_to_choose
@@ -36,11 +37,13 @@ def home(request):
 
 def about(request):
     context_dict = {}
+    context_dict['userProfiles']
     response = render(request, 'fooodie/about.html')
     return(response)
 
 def leaderboard(request):
     context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
     top_pics = Photo.objects.order_by('-votes')[:3] #Top 3
     context_dict['top_pics'] = top_pics
 
@@ -52,6 +55,7 @@ def leaderboard(request):
 
 def user_signup_login(request):
     context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
 
     response = render(request, 'fooodie/home.html')
     return response
@@ -135,19 +139,31 @@ def user_logout(request):
 # and other user profiles
 def user_profile(request):
     context_dict = {}
-
-    response = render(request, 'fooodie/home.html')
-    return response
+    context_dict['userProfiles']=UserProfile.objects.all()
+    user = request.user
+    photos = Photo.objects.filter(user__id = user.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores) docs.djangoproject.com/en/dev/topics/db/queries/#lookups-that-span-relationships
+    context_dict = {}
+    try:
+        profile = UserProfile.objects.get(user = user)
+        context_dict['profile'] = profile
+    except:
+        pass
+    context_dict['photos'] = photos
+    context_dict['user'] = user
+    
+    response = render(request, 'fooodie/user_profile.html', context = context_dict)
 
 def add_food_photo(request):
-    context_dict={}
+    context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
     response=render(request, 'fooodie/uploadfoodphoto.html')
 
 @login_required
 def myprofile(request): #User's manage account site
+    context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
     photos = Photo.objects.filter(user__id = user.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores) docs.djangoproject.com/en/dev/topics/db/queries/#lookups-that-span-relationships
-    context_dict = {}
     try:
         profile = UserProfile.objects.get(user = user)
         context_dict['profile'] = profile

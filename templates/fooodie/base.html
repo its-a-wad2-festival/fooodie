@@ -112,7 +112,16 @@ height: 100%;
 			{% else %}
 				<a href="#Login_SignUp">Login - SignUp</a>
 			{% endif %}
-			<input type="text" placeholder="Search...">
+			{% if userProfiles %}
+				<datalist id="profiles">
+					{% for profile in userProfiles %}
+						<option value={{ profile.user.username }}>
+					{% endfor %}
+				</datalist>
+				<input type="text" list="profiles" placeholder="Search...">
+			{% else %}
+				<input type="text" placeholder="Search...">
+			{% endif %}
 			</div>
 			<body>
 				{% block body_block %}
