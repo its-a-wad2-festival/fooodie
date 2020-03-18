@@ -23,6 +23,8 @@
 					{% if profile %}
 					<li> <a href="/#"> Upload a profile Picture</a></li>
 					<li><a href="{% url 'fooodie:add_food_photo'%}"></a>Upload a food plate</li>
+					{% else %}
+						<strong>You're using a user that is NOT linked to a superUser, thus you have no profile picture options available</strong>
 					{% endif %}
 					<li><a href="/#">Settings</a></li>
 				</ul>
@@ -58,9 +60,11 @@
 									</div>
 								{% endif %}	
 							{% endfor %}
+						{% else %}
+							<strong>There are no pictures</strong>
 						{% endif %}
 					{% else %}
-						<strong>There are no pictures</strong>
+						<strong>You're using a user that is NOT linked to a superUser, thus you have no photos available</strong>
 					{% endif %}
 					
 						<div class="col-md-4 ftco-animate">

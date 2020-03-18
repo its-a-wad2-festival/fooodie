@@ -163,13 +163,13 @@ def myprofile(request): #User's manage account site
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    photos = Photo.objects.filter(user__id = user.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores) docs.djangoproject.com/en/dev/topics/db/queries/#lookups-that-span-relationships
     try:
         profile = UserProfile.objects.get(user = user)
         context_dict['profile'] = profile
+        photos = Photo.objects.filter(user__id = profile.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
+        context_dict['photos'] = photos
     except:
-        pass
-    context_dict['photos'] = photos
+        pass 
     context_dict['user'] = user
     
     response = render(request, 'fooodie/myprofile.html', context = context_dict)
