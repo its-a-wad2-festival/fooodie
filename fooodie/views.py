@@ -112,8 +112,9 @@ def register(request):
                 extension = profile_pic.name.split('.')[-1] #Gets the string after the last period, to deal with name.txt.jpg situations
                 path_to_pic = default_storage.save(profile_pic_path+'\\'+str(profile.id)+'_propic.'+extension, ContentFile(profile_pic.read()))
                 profile.picture = path_to_pic
+                profile.save()
 
-            print('So USER id is '+str(user.id)+' and PROFILE id is '+str(profile.id))
+            print('So USER id is '+str(user.id)+' and PROFILE id is '+str(profile.id)+' and picture is '+str(profile.picture))
 
 
             registered = True
