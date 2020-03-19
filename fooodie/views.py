@@ -8,7 +8,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from fooodie.models import Photo, UserProfile
 from fooodie.forms import UserForm, UserProfileForm
-import os
+import os, random
 
 
 def home(request):
@@ -24,6 +24,7 @@ def home(request):
 ##    context_dict['random_pics'] = random_pics
 
     #Above will definitely work, this SHOULD work
+    
     pics = Photo.objects.order_by('?')
 
     pics_to_choose = pics[:2]
