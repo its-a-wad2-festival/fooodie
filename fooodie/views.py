@@ -130,11 +130,10 @@ def register(request):
                                                                'profile_form' : profile_form,
                                                                'registered' : registered})
 
-def user_logout(request):
-    context_dict = {}
-
-    response = render(request, 'fooodie/home.html')
-    return response
+@login_required 
+def user_logout(request): 
+    logout(request) # Since we know the user is logged in, we can now just log them out. 
+    return redirect(reverse('fooodie:home'))
 
 # May need to use multiple views for profiles; will try
 # to figure out if view can used for both myprofile
