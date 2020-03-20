@@ -54,12 +54,21 @@ def leaderboard(request):
     response = render(request, 'fooodie/leaderboard.html', context = context_dict)
     return(response)
 
+#This will simply display the forms; the associated template will call
+#one of the functions below dependent on button clicked
 def user_signup_login(request):
-    context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
+    registered = False
+    user_form = UserForm()
+    profile_form = UserProfileForm()
 
-    response = render(request, 'fooodie/home.html')
-    return response
+    return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
+                                                               'profile_form' : profile_form,
+                                                               'registered' : registered})
+##    context_dict = {}
+##    context_dict['userProfiles']=UserProfile.objects.all()
+##
+##    response = render(request, 'fooodie/home.html')
+##    return response
 
 #Will focus on the registration/login logic first, implement into a single view later
 def user_login(request):
@@ -83,11 +92,10 @@ def user_login(request):
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied")
     else:
-        return render(request, 'fooodie/login.html')
+        return render(request, 'fooodie/loginregister.html')
 
 #Will focus on the registration/login logic first, implement into a single view later
 def register(request):
-    registered = False
 
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -150,7 +158,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'fooodie/register.html', context = {'user_form' : user_form,
+    return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
                                                                'profile_form' : profile_form,
                                                                'registered' : registered})
 

@@ -40,7 +40,7 @@
 										<li class="nav-item"><a class="nav-link" href="{% url 'fooodie:myprofile' %}">My profile</a></li>
 										<li class="nav-item"><a class="nav-link" href="{% url 'fooodie:logout' %}">Log Out</a></li>
 									{% else %}
-                                    <li class="nav-item"><a class="nav-link" href="#Login_SignUp">Login - SignUp</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'fooodie:loginregister' %}">Login - SignUp</a></li>
                                     {% endif %}   
                                 </ul>
                                 <!-- Search Form Area Start -->
