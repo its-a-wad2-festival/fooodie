@@ -62,6 +62,30 @@ def user_signup_login(request):
     return response
 
 #Will focus on the registration/login logic first, implement into a single view later
+def user_login(request):
+    if request.method == 'POST':
+        #Need to consider allowing email OR username potentially
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username = username, password = password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                print("Login success!")
+                print("Is user thenticated?")
+                print(user.is_authenticated)
+                return redirect(reverse('fooodie:home'))
+            else:
+                return HttpResponse("Your account is disabled")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied")
+    else:
+        return render(request, 'fooodie/login.html')
+
+#Will focus on the registration/login logic first, implement into a single view later
 def register(request):
     registered = False
 
