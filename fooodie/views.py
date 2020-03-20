@@ -162,21 +162,19 @@ def user_logout(request):
 # May need to use multiple views for profiles; will try
 # to figure out if view can used for both myprofile
 # and other user profiles
-def user_profile(request):
+def user_profile(request, user_profile_slug):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    photos = Photo.objects.filter(user__id = user.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores) docs.djangoproject.com/en/dev/topics/db/queries/#lookups-that-span-relationships
     context_dict = {}
     try:
-        profile = UserProfile.objects.get(user = user)
+        profile = UserProfile.objects.get(slug = user_profile_slug)
         context_dict['profile'] = profile
+        photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
+        context_dict['photos'] = photos
     except:
         pass
-    context_dict['photos'] = photos
-    context_dict['user'] = user
-    
-    response = render(request, 'fooodie/user_profile.html', context = context_dict)
+    return render(request, 'fooodie/userprofile.html', context = context_dict)
 
 def add_food_photo(request):
     context_dict = {}

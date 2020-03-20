@@ -14,10 +14,10 @@
 	<div id="fooodie-page">
 		<a href="#" class="js-fooodie-nav-toggle fooodie-nav-toggle"><i></i></a>
 		<aside id="fooodie-aside" role="complementary" class="js-fullheight text-center">
-			{% if profile %}
-			<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({{ profile.picture.url}});"></span>{{ user.username }}</a></h1>
+			{% if profile.picture %}
+				<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({{ profile.picture.url}});"></span>{{ user.username }}</a></h1>
 			{% else %}
-			<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url();"></span>{{ user.username }}</a></h1>
+				<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url();"></span>{{ user.username }}</a></h1>
 			{% endif %}
 			<nav id="fooodie-main-menu" role="navigation">
 				<ul>
@@ -30,16 +30,16 @@
 					<li><a href="/#">Settings</a></li>
 				</ul>
 			</nav>
-
 		</aside> <!-- END fooodie-ASIDE -->
+		
 		<div id="fooodie-main">
 			<section class="ftco-section ftco-bread">
 				<div class="container">
 					<div class="row no-gutters slider-text justify-content-center align-items-center">
-	          <div class="col-md-8 ftco-animate">
-	            <h1 class="bread">My Profile</h1>
-	          </div>
-	        </div>
+						<div class="col-md-8 ftco-animate">
+							<h1 class="bread">My Profile</h1>
+						</div>
+					</div>
 				</div>
 			</section>
 			<section class="ftco-section-3">
@@ -85,4 +85,3 @@
 	</div><!-- END fooodie-PAGE -->
 </section>
 {% endblock %}
-
