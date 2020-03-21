@@ -28,6 +28,13 @@ def home(request):
     pics = Photo.objects.order_by('?')
 
     pics_to_choose = pics[:2]
+    
+    photo1=pics_to_choose.first()
+    context_dict['photo1']=photo1
+    
+    photo2=pics_to_choose[1]
+    context_dict['photo2']=photo2
+
     context_dict['pics_to_choose'] = pics_to_choose
 
     random_pics = pics[:4]

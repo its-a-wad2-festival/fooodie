@@ -19,6 +19,22 @@
                     <div class="section-heading text-center">
                         <p>Some Random Pictures of Our Users</p>
                         <h2>Do you like what you see?</h2>
+						
+						<div>
+							<img src="{{ photo1.photo.url }}" alt="">
+							<strong id="like_count">{{ photo1.votes }}</strong> votes 
+							<button id="like_btn" data-categoryid="{{ photo1.vote }}" class="btn btn-primary btn-sm" type="button"> 
+								<span data-feather="thumbs-up"></span> Like Photo 
+							</button>
+
+							<img src="{{ photo2.photo.url }}" alt="">
+							<strong id="like_count">{{ photo1.votes }}</strong> votes 
+							<button id="like_btn" data-categoryid="{{ photo1.vote }}" class="btn btn-primary btn-sm" type="button"> 
+								<span data-feather="thumbs-up"></span> Like Photo 
+							</button>
+						</div>
+						
+						
                     </div>
                 </div>
             </div>
@@ -33,7 +49,7 @@
 						<div class="port-hover-text text-center">
 							<h4>{{ pic.name }}</h4>
 							<a href="#">Number of votes: {{ pic.votes }}</a><br>
-							<a href="#">Author: {{ pic.user.user.username }}</a>
+							<a href="user/{{ pic.user.slug }}">Author: {{ pic.user.user.username }}</a>
 						</div>
 					</div>
 				</div>
