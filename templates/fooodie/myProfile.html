@@ -36,8 +36,7 @@
 			<section class="ftco-section ftco-bread">
 				<div class="container">
 					<div class="row no-gutters slider-text justify-content-center align-items-center">
-						<h1>My Profile</h1>
-						<div class="col-md-8 ftco-animate">
+						<div class="col-md-8">
 							<h1 class="bread">My Profile</h1>
 						</div>
 					</div>
@@ -51,7 +50,7 @@
 							{% for pic in photos %}	
 								{% if pic.user.id == profile.id %}
 									<!-- Actual food photo -->
-									<div class="col-md-4 ftco-animate">
+									<div class="col-md-4">
 										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
 										<div class="overlay"></div>
 											<div class="text ml-4 mb-4">
@@ -69,7 +68,7 @@
 						<strong>You're using a user that is NOT linked to a UserProfile, thus you have no photos available</strong>
 					{% endif %}
 					
-						<div class="col-md-4 ftco-animate">
+						<div class="col-md-4">
 							<a href="{% static 'images/rango.jpg' %}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({% static 'images/rango.jpg' %});">
 								<div class="overlay"></div>
 								<div class="text ml-4 mb-4">
