@@ -3,6 +3,7 @@
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * 
  */
  
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
@@ -13,7 +14,7 @@
 @import 'magnific-popup.css';
 @import 'font-awesome.min.css';
  
- 
+
 
 :root {
   --blue: #007bff;
@@ -9492,7 +9493,7 @@ img {
 }
 
 .single_gallery_item:hover > img {
-    -webkit-transform: scale(s 1.1);
+    -webkit-transform: scale(1.1);
     transform: scale(1.1);
     filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="8" /></filter></svg>#filter');
     -webkit-filter: blur(8px);
