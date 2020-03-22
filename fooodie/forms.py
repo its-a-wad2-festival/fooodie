@@ -16,3 +16,11 @@ class UserProfileForm(forms.ModelForm):
         
 class UserSearchBarForm(forms.Form):
     username=forms.CharField()
+    
+class UserSettings(forms.Form):
+    username=forms.CharField()
+    email = forms.EmailField()
+    password = forms.PasswordInput()
+    class Meta:
+        model=UserProfile
+        fields=('picture')

@@ -169,14 +169,14 @@ def register(request):
                                                                'profile_form' : profile_form,
                                                                'registered' : registered})
 
+
+
 @login_required 
 def user_logout(request): 
     logout(request) # Since we know the user is logged in, we can now just log them out. 
     return redirect(reverse('fooodie:home'))
 
-# May need to use multiple views for profiles; will try
-# to figure out if view can used for both myprofile
-# and other user profiles
+
 def user_profile(request, user_profile_slug):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
@@ -212,4 +212,51 @@ def myprofile(request): #User's manage account site
     
     response = render(request, 'fooodie/myprofile.html', context = context_dict)
     return response
+
+
+####SETTINGS VIEWS
+def settings(request):
+    context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
+    user = request.user
+    profile = UserProfile.objects.get(user = user)
+    context_dict['profile'] = profile
+    response = render(request, 'fooodie/settings.html', context = context_dict)
+    return response
+    
+def settingsusername(request):
+    context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
+    user = request.user
+    #Get new username from forms! 
+    user.username=newusername
+    user.save()
+    return redirect(reverse('fooodie:settings'))
+    
+def settingsemail(request):
+    context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
+    user = request.user
+    #Get new email from forms! 
+    user.email=newemail
+    user.save()
+    return redirect(reverse('fooodie:settings'))
+
+def settingsprofilepic(request):
+    context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
+    user = request.user
+    profile=UserProfile.objects.get(user=user)
+    #Get Profilepic from forms
+    profile.profilepic=newprofilepic
+    profile.save()
+    return redirect(reverse('fooodie:settings'))
+    
+def settingspassword(request):
+    pass
+
+
+###SETTINGS VIEWS END
+
+
 # Create your views here.

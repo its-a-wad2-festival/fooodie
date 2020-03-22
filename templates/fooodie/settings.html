@@ -1,0 +1,34 @@
+{% extends 'fooodie/base.html' %}
+{% load static %}
+
+{% block title_block %}
+	Homepage
+{% endblock %}
+
+
+{% block body_block %}
+	<section class="mosh-portfolio-area section_padding_100_0 clearfix">
+		<h1 style="font-size:50px;" align="center";> MyProfile Settings:</h1>
+	</section>
+
+    <!-- ***** Random Pics Area Start ***** -->
+    <section class="mosh-portfolio-area section_padding_100_0 clearfix">
+        Your username: </br>
+		{{ profile.user.username }} </br>
+				<a class="nav-link" href="{% url 'fooodie:settingsusername' %}">Change your username</a> </br>
+		Your email: </br>
+		{{ profile.user.email }} </br>
+		<a class="nav-link" href="{% url 'fooodie:settingsemail' %}">Change your email</a> </br>
+		Your profile picture: </br>
+		{% if profile.picture %} 
+			{{ profile.picture }} </br>
+		{% else %}
+			You don't have a profile picture </br>
+		{% endif %}
+		<a class="nav-link" href="{% url 'fooodie:settingsprofilepic' %}">Change your profile picture</a> </br></br> </br>
+		
+		Click here if you wih to change your password!
+		<a class="nav-link" href="{% url 'fooodie:settingspassword' %}">Change your email</a> </br>
+    </section>
+    <!-- ***** Random Pics Area End ***** -->
+{% endblock %}

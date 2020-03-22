@@ -26,24 +26,6 @@ class UserProfile(models.Model):
     # Once you do his position on the list is his position in the ranking
 
 class UserFactory(factory.django.DjangoModelFactory):
-    """
-    This class creates instances of users with random real paramaters.
-    Each instance is not stored as a UserFactory object on the database
-    but as an User object, we still need to create the class though to
-    use it in the population script.
-
-    Once in the population script it is linked to a UserProfile.
-    Due to the characteristics of our webapp we cannot randomly create
-    photos with which to populate the database.
-
-    TO-DO:
-    That is why we can include multiple photos (Manually ourselves),
-    randomly assign them a number of votes (Population Script) and
-    fill in their user parameter from a randomly generated user in
-    the population script.
-    (Unless someone knows how to create random jpgs
-        that look like food ofc)
-    """
     class Meta:
         model = User
         #Here we tell the UserFactory to use the model User as a base,
