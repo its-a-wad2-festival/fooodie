@@ -20,14 +20,14 @@
 		{{ profile.user.email }} </br>
 		<a class="nav-link" href="{% url 'fooodie:settingsemail' %}">Change your email</a> </br>
 		Your profile picture: </br>
-		{% if profile.picture %} 
+		{% if profile.picture %}
 			{{ profile.picture }} </br>
 		{% else %}
 			You don't have a profile picture </br>
 		{% endif %}
 		<a class="nav-link" href="{% url 'fooodie:settingsprofilepic' %}">Change your profile picture</a> </br></br> </br>
-		
-		Click here if you wih to change your password!
+
+		Click here if you wish to change your password!
 		<a class="nav-link" href="{% url 'fooodie:settingspassword' %}">Change your email</a> </br>
     </section>
     <!-- ***** Random Pics Area End ***** -->

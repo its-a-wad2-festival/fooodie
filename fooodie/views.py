@@ -204,7 +204,7 @@ def myprofile(request): #User's manage account site
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
 
-    profile.user.username=''
+    #profile.user.username=''
 
     try:
         profile = UserProfile.objects.get(user = user)
@@ -217,9 +217,9 @@ def myprofile(request): #User's manage account site
 
     if 'search' in request.GET:
         profile.user.username = request.GET['search']
-        fooodie = fooodie.filter(text__icontains=search_terms)
+        #fooodie = fooodie.filter(text__icontains=search_terms)
 
-    context = {'fooodie':fooodie, 'profile.user.username' : profile.user.username}
+    context = {'profile.user.username' : profile.user.username}
 
     response = render(request, 'fooodie/myprofile.html', context = context_dict)
     return response

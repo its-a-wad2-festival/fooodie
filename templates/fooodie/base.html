@@ -8,12 +8,12 @@
 		<meta name="description" content="">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		
+
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 		<link rel="stylesheet" href="{% static 'css/style.css' %}">
 		<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-	
+
 		<title>
         Fooodie - {% block title_block %}{% endblock %}
 		</title>
@@ -43,19 +43,19 @@
 										<li class="nav-item"><a class="nav-link" href="{% url 'fooodie:logout' %}">Log Out</a></li>
 									{% else %}
                                     <li class="nav-item"><a class="nav-link" href="{% url 'fooodie:loginregister' %}">Login - SignUp</a></li>
-                                    {% endif %}   
+                                    {% endif %}
                                 </ul>
                                 <!-- Search Form Area Start -->
-								{% if userProfiles %}
-									<datalist id="profiles">
-									{% for profile in userProfiles %}
-										<option value={{ profile.user.username }}>
-									{% endfor %}
-									</datalist>
-									<input type="text" list="profiles" placeholder="Search...">
-								{% else %}
-									<input type="text" placeholder="Search...">
-								{% endif %}
+																<form class="form-inline my-2 my-lg-1">
+										<input
+												class="form-control mr-sm-2"
+												type="search"
+												placeholder="Search"
+												aria-label="Search"
+												name='search'
+												value="{{profile.user.username}}">
+										<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+									</form>
                                 </div>
                             </div>
                         </nav>
@@ -65,10 +65,10 @@
         </div>
     </header>
 <!-- ***** Header Area End ***** -->
-	
+
 		{% block body_block %}
 		{% endblock %}
-			
+
 <!-- ***** Footer Area Start ***** -->
     <footer class="footer-area clearfix">
         <!-- Fotter Bottom Area -->
@@ -92,9 +92,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Foood
         </div>
     </footer>
     <!-- ***** Footer Area End ***** -->
-</body>	
+</body>
 
-<!--Scripts here so the page loades faster-->	
+<!--Scripts here so the page loades faster-->
   <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
   <script src="{% static 'js/popper.min.js' %}"></script>
