@@ -225,34 +225,50 @@ def myprofile(request): #User's manage account site
     return response
 
 
+def addpic(request): 
+    pass
+    #Here we can manage an add picture form which we might be able to use both for updating your profile pic AND for adding a food photo
+    #MAYBE not sure I don't understand forms
+
 ####SETTINGS VIEWS
+@login_required
 def settings(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
     profile = UserProfile.objects.get(user = user)
     context_dict['profile'] = profile
+    photos = Photo.objects.filter(user__id = profile.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
+    context_dict['photos'] = photos
     response = render(request, 'fooodie/settings.html', context = context_dict)
     return response
 
+@login_required
+def deletepic(request, photo_id):
+    Photo.objects.filter(id = photo_id).delete()
+    return redirect(reverse('fooodie:settings'))
+
+@login_required
 def settingsusername(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    #Get new username from forms!
+    #Get new username from forms! 
     user.username=newusername
     user.save()
     return redirect(reverse('fooodie:settings'))
 
+@login_required    
 def settingsemail(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    #Get new email from forms!
+    #Get new email from forms! 
     user.email=newemail
     user.save()
     return redirect(reverse('fooodie:settings'))
 
+@login_required
 def settingsprofilepic(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
@@ -261,13 +277,13 @@ def settingsprofilepic(request):
     #Get Profilepic from forms
     profile.profilepic=newprofilepic
     profile.save()
+    context_dict['change'] 
     return redirect(reverse('fooodie:settings'))
 
+@login_required    
 def settingspassword(request):
     pass
-
-
-###SETTINGS VIEWS END
+##SETTINGS END
 
 
 # Create your views here.
