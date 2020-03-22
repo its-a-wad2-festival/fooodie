@@ -24,14 +24,14 @@ def home(request):
 ##    context_dict['random_pics'] = random_pics
 
     #Above will definitely work, this SHOULD work
-    
+
     pics = Photo.objects.order_by('?')
 
     pics_to_choose = pics[:2]
-    
+
     photo1=pics_to_choose.first()
     context_dict['photo1']=photo1
-    
+
     photo2=pics_to_choose[1]
     context_dict['photo2']=photo2
 
@@ -141,7 +141,7 @@ def register(request):
             profile.user = user
             profile.slug = user.username
             #profile.picture = path
-            
+
             profile.save()
 
             profile_pic_path = os.path.join(settings.MEDIA_DIR, str(profile.id))
@@ -169,11 +169,13 @@ def register(request):
                                                                'profile_form' : profile_form,
                                                                'registered' : registered})
 
+@login_required
+def user_logout(request):
+    logout(request) # Since we know the user is logged in, we can now just log them out.
 
-
-@login_required 
-def user_logout(request): 
-    logout(request) # Since we know the user is logged in, we can now just log them out. 
+@login_required
+def user_logout(request):
+    logout(request) # Since we know the user is logged in, we can now just log them out.
     return redirect(reverse('fooodie:home'))
 
 
@@ -201,15 +203,24 @@ def myprofile(request): #User's manage account site
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
+
+    profile.user.username=''
+
     try:
         profile = UserProfile.objects.get(user = user)
         context_dict['profile'] = profile
         photos = Photo.objects.filter(user__id = profile.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
     except:
-        pass 
+        pass
     context_dict['user'] = user
-    
+
+    if 'search' in request.GET:
+        profile.user.username = request.GET['search']
+        fooodie = fooodie.filter(text__icontains=search_terms)
+
+    context = {'fooodie':fooodie, 'profile.user.username' : profile.user.username}
+
     response = render(request, 'fooodie/myprofile.html', context = context_dict)
     return response
 
@@ -223,21 +234,21 @@ def settings(request):
     context_dict['profile'] = profile
     response = render(request, 'fooodie/settings.html', context = context_dict)
     return response
-    
+
 def settingsusername(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    #Get new username from forms! 
+    #Get new username from forms!
     user.username=newusername
     user.save()
     return redirect(reverse('fooodie:settings'))
-    
+
 def settingsemail(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    #Get new email from forms! 
+    #Get new email from forms!
     user.email=newemail
     user.save()
     return redirect(reverse('fooodie:settings'))
@@ -251,7 +262,7 @@ def settingsprofilepic(request):
     profile.profilepic=newprofilepic
     profile.save()
     return redirect(reverse('fooodie:settings'))
-    
+
 def settingspassword(request):
     pass
 
