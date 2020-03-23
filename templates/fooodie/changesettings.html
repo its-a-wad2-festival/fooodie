@@ -7,7 +7,19 @@
 	{% block title_block %}
 		Change Settings
 	{% endblock %}
-
 <!--Just a layout, with placeholders still need actual obejcts-->
 {% block body_block %}
+
+<section class="mosh-portfolio-area section_padding_100_0 clearfix">
+
+<h1>Change your {{ change }} </h1> </br>
+Your current {{ change }} is {{ originalvalue }} 
+<form action="" method="post">
+    <table>
+        {{ form.as_p }}
+    </table>
+    {% csrf_token %}
+    <input type="submit" value="Submit">
+</form>
+</section>
 {% endblock %}

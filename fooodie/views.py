@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from fooodie.models import Photo, UserProfile
-from fooodie.forms import UserForm, UserProfileForm, PhotoForm
+from fooodie.forms import UserForm, UserProfileForm, PhotoForm, ChangeUsername, ChangeEmail, ChangePassword
 from datetime import datetime
 import os, random
 
@@ -276,20 +276,39 @@ def settingsusername(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    #Get new username from forms!
-    user.username=newusername
-    user.save()
-    return redirect(reverse('fooodie:settings'))
+    profile=UserProfile.objects.get(user=request.user)
+    if request.method == 'POST':
+        name_form = ChangeUsername(request.POST) # If the form is valid... 
+        if name_form.is_valid(): 
+            user.username = name_form.cleaned_data['username'] 
+            print("Name given")
+            user.save()
+            print("name saved")
+            print(user.username)
+        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal. 
+            print(name_form.errors) 
+    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input. 
+        name_form = ChangeUsername()  
+    return render(request, 'fooodie/changesettings.html', context={'change': 'username', 'form':name_form, 'profile':profile, 'originalvalue':profile.user.username})
 
 @login_required
 def settingsemail(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    #Get new email from forms!
-    user.email=newemail
-    user.save()
-    return redirect(reverse('fooodie:settings'))
+    profile=UserProfile.objects.get(user=request.user)
+    if request.method == 'POST':
+        email_form = ChangeEmail(request.POST) # If the form is valid... 
+        if email_form.is_valid(): 
+            user.email = email_form.cleaned_data['email'] 
+            print("email given")
+            user.save()
+            print(user.email)
+        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal. 
+            print(email_form.errors) 
+    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input. 
+        email_form = ChangeEmail()  
+    return render(request, 'fooodie/changesettings.html', context={'change': 'email', 'form':email_form, 'profile':profile, 'originalvalue':profile.user.email})
 
 @login_required
 def settingsprofilepic(request):
