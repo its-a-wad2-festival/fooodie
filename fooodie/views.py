@@ -8,6 +8,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from fooodie.models import Photo, UserProfile
 from fooodie.forms import UserForm, UserProfileForm
+from datetime import datetime
 import os, random
 
 
@@ -39,6 +40,9 @@ def home(request):
 
     random_pics = pics[:3]
     context_dict['random_pics'] = random_pics
+
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
 
     response = render(request, 'fooodie/home.html', context = context_dict)
     return(response)
@@ -225,7 +229,7 @@ def myprofile(request): #User's manage account site
     return response
 
 
-def addpic(request): 
+def addpic(request):
     pass
     #Here we can manage an add picture form which we might be able to use both for updating your profile pic AND for adding a food photo
     #MAYBE not sure I don't understand forms
@@ -253,17 +257,17 @@ def settingsusername(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    #Get new username from forms! 
+    #Get new username from forms!
     user.username=newusername
     user.save()
     return redirect(reverse('fooodie:settings'))
 
-@login_required    
+@login_required
 def settingsemail(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-    #Get new email from forms! 
+    #Get new email from forms!
     user.email=newemail
     user.save()
     return redirect(reverse('fooodie:settings'))
@@ -277,13 +281,37 @@ def settingsprofilepic(request):
     #Get Profilepic from forms
     profile.profilepic=newprofilepic
     profile.save()
-    context_dict['change'] 
+    context_dict['change']
     return redirect(reverse('fooodie:settings'))
 
-@login_required    
+@login_required
 def settingspassword(request):
     pass
 ##SETTINGS END
+
+def get_server_side_cookie(request, cookie, default_val=None):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
+
+def visitor_cookie_handler(request):
+    visits = int(get_server_side_cookie(request,'visits', '1'))
+    last_visit_cookie = get_server_side_cookie(request,
+                                               'last_visit',
+                                               str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7],
+                                        '%Y-%m-%d %H:%M:%S')
+
+    if (datetime.now() - last_visit_time).days > 0:
+        visits = visits + 1
+
+        request.session['last_visit'] = str(datetime.now())
+    else:
+        request.session['last_visit'] = last_visit_cookie
+
+    request.session['visits'] = visits
+
 
 
 # Create your views here.
