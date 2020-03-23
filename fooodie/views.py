@@ -37,7 +37,7 @@ def home(request):
 
     context_dict['pics_to_choose'] = pics_to_choose
 
-    random_pics = pics[:4]
+    random_pics = pics[:3]
     context_dict['random_pics'] = random_pics
 
     response = render(request, 'fooodie/home.html', context = context_dict)

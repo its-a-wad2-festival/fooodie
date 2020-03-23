@@ -1,8 +1,6 @@
 {% extends 'fooodie/base.html' %}
 {% load static %}
 
-<head lang="en">
-		<meta charset="UTF-8" />
 
 	{% block title_block %}
 		MyProfile
@@ -33,7 +31,7 @@
 		</aside> <!-- END fooodie-ASIDE -->
 		
 		<div id="fooodie-main">
-			<section class="ftco-section ftco-bread">
+			<section class="ftco-bread">
 				<div class="container">
 					<div class="row no-gutters slider-text justify-content-center align-items-center">
 						<div class="col-md-8">
@@ -42,7 +40,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="ftco-section-3">
+			<section class="mosh-portfolio-area section_padding_50_20 clearfix">
 				<div class="photograhy">
 					<div class="row">
 					{% if profile %}
@@ -52,13 +50,13 @@
 									<!-- Actual food photo -->
 									<div class="col-md-4">
 										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
-										<div class="overlay"></div>
+										<div class="overlay"> </div>
 											<div class="text ml-4 mb-4">
 												<h3>{{ pic.name }}</h3>
-												<span class="tag">Number of votes: {{ pic.votes }}</span>
+												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
+												<input class="btn btn-7" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';" value="Delete Photo" />
 											</div>
 										</a>
-										<a class="nav-link" href="settings/deletepic/{{ pic.id }}/">Delete Photo</a>
 									</div>
 								{% endif %}	
 							{% endfor %}
