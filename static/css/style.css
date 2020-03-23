@@ -1032,7 +1032,7 @@ h1, h2, h3, h4, h5,
 
 .ftco-bread {
   background: #ccb78f !important;
-  margin-bottom: 200px !important;
+  margin-bottom: 10px !important;
   padding: 4em 1.8em !important; }
   .ftco-bread .breadcrumbs {
     text-transform: uppercase;
@@ -2344,12 +2344,11 @@ span.accor-open {
 -------------------------- */
 
 .footer-area {
-	padding-top: 100px;
-    position: relative;
+    position: fixed;
 	width: 100%;
 	bottom: 0;
 	z-index: 1;
-    background-color: #211b31;
+    background-color: transparent;
 }
 
 .single-footer-widget h5 {

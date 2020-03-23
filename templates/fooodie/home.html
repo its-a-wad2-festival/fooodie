@@ -54,7 +54,7 @@
 <div class="section-heading text-center">
 <p>Some Random Pictures of Our Users</p>
 <h2>Do you like what you see?</h2>
-<div>
+
 
 
         <section class="mosh-portfolio-area section_padding_50_20 clearfix">
@@ -65,10 +65,10 @@
 						<div class="col-md-4">
 										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
 										<div class="overlay"> </div>
-											<div class="text ml-4 mb-4">
+											<div class="text ml-3 mb-3">
 												<h3>{{ pic.name }}</h3>
+												<span class="tag">Author: {{ pic.user.user.username }}</span><br>
 												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
-												<input class="btn btn-7" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';" value="Delete Photo" />
 											</div>
 										</a>
 						</div>

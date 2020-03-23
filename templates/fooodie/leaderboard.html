@@ -11,45 +11,80 @@
 
 {% block body_block %}
 <section class="mosh-portfolio-area section_padding_100_0 clearfix">
-<h1>LEADERBOARD</h1>
-	<div class="container">
+<div class="section-heading text-center">
+<h1>Leaderboard</h1>
+<p>Our best users and the best pictures!</p>
+</div>
+
+<div class="section-heading text-center">
 		<div class="row">
-			<div class="col-sm">
-				<h2> Here are the top ranking users </h2>
-				<div>
-					{% if top_profiles %}
-						<ul>
-						{% for profile in top_profiles %}
-						{% if profile.picture %}
-							<img src="{{ profile.picture.url }}" height="200" width="200" /> 
-						{% else %}
-							<strong>No profile pic</strong>
-						{% endif %}
-							<ul>
-								<li>{{ profile.user.username}}</li>
-							</ul>
-						{% endfor %}
-						</ul>
-					{% else %}
-						<strong>There are no profiles</strong>
-					{% endif %}
+			<div class="col">
+				<div class="section-heading text-center">
+				<h3>These are our best users</h3>
+				<div class="row">
+					<div class="col">
+						
+							{% if top_profiles1 %}
+								<ul>
+								{% for profile in top_profiles1 %}
+								{% if profile.picture %}
+									<img src="{{ profile.picture.url }}" height="200" width="200" /> 
+								{% else %}
+									<strong>No profile pic</strong>
+								{% endif %}
+									<ul>
+										<li>{{ profile.user.username}} has {{ profile.totalVotes}} votes</li>
+									</ul>
+								{% endfor %}
+								</ul>
+							{% else %}
+								<strong>There are no profiles</strong>
+							{% endif %}
+						
+					</div>	
+					<div class="col">
+						
+							{% if top_profiles2 %}
+								<ul>
+								{% for profile in top_profiles2 %}
+								{% if profile.picture %}
+									<img src="{{ profile.picture.url }}" height="200" width="200" /> 
+								{% else %}
+									<strong>No profile pic</strong>
+								{% endif %}
+									<ul>
+										<li>{{ profile.user.username}} has {{ profile.totalVotes}} votes</li>
+									</ul>
+								{% endfor %}
+								</ul>
+							{% else %}
+								<strong>There are no profiles</strong>
+							{% endif %}
+					</div>	
+				</div>
 				</div>
 			</div>
-			<div class="col-sm">
-				<h2> Here are the top ranking photos </h2>
-		<div>
-			{% if top_pics %}
-				{% for pic in top_pics %}
-				<img src="{{ pic.photo.url }}" height="200" width="200" /> 
-				<ul>
-					<li>{{ pic.name }}</li>
-					<li>{{ pic.user.user.username }}</li>
-				</ul>
-				{% endfor %}
-			{% else %}
-				<strong>There are no pictures</strong>
-			{% endif %}
-		</div>
+			<div class="col">
+				<h3> Here are the top ranking photos </h3>
+					<div class="section-heading text-center">
+					{% if top_pics %}
+						{% for pic in top_pics %}
+						<div class="col-md-8">
+										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
+										<div class="overlay"> </div>
+											<div class="text ml-6 mb-6">
+												<h3>{{ pic.name }}</h3>
+												<span class="tag">Author: {{ pic.user.user.username }}</span>
+												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
+												<input class="btn btn-7" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';" value="Delete Photo" />
+											</div>
+										</a>
+						</div>
+						{% endfor %}
+					{% else %}
+						<strong>There are no pictures</strong>
+					{% endif %}
+				
 			</div>
 		</div>
 	</div>
