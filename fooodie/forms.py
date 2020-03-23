@@ -17,13 +17,17 @@ class UserProfileForm(forms.ModelForm):
 class UserSearchBarForm(forms.Form):
     username=forms.CharField()
     
-class UserSettings(forms.Form):
+class ChangeUsername(forms.Form):
     username=forms.CharField()
+    
+class ChangeEmail(forms.Form):    
     email = forms.EmailField()
+
+class ChangePassword(forms.Form):
     password = forms.PasswordInput()
-    class Meta:
-        model=UserProfile
-        fields=('picture',)
+    
+class ChangePicture(forms.Form):
+    picture = forms.ImageField()
 
 class PhotoForm(forms.ModelForm):
     class Meta:
