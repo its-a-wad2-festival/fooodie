@@ -55,7 +55,7 @@
 					<p class="divider-text">
 						<span class="bg-light">OR</span>
 					</p>
-					<form id="user_form" method="post" action="{% url 'fooodie:register' %}" enctype="multipart/form-data">
+					<form id="user_form" method="post" action="{% url 'fooodie:login' %}" enctype="multipart/form-data">
 						<article class="card-body mx-auto" style="max-width: 400px;">
 						{% csrf_token %}
 						Username: <input type="text" name="username" value="" size="50" />
