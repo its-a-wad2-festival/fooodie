@@ -9,7 +9,7 @@ urlpatterns = [
     path('leaderboard/', views.leaderboard, name = 'leaderboard'),
     
     path('myprofile/', views.myprofile, name = 'myprofile'),
-    path('myprofile/addpic/', views.addpic, name = 'addpic'),
+    path('myprofile/addfoodphoto/', views.addfoodphoto, name = 'addfoodphoto'),
     path('myprofile/settings/', views.settings, name = 'settings'),
     path('myprofile/settings/deletepic/<slug:photo_id>/', views.deletepic, name = 'deletepic'),
     path('myprofile/settings/password/', views.settingspassword, name = 'settingspassword'),
@@ -18,7 +18,6 @@ urlpatterns = [
     path('myprofile/settings/email/', views.settingsemail, name = 'settingsemail'),
     
     path('user/<slug:user_profile_slug>/', views.user_profile, name='user_profile'),
-    path('myprofile/add_food_photo/', views.add_food_photo, name='add_food_photo'),
     path('logout/', views.user_logout, name='logout'),
     path('login/', views.user_login, name='login'),
     path('register/', views.register, name = 'register'),

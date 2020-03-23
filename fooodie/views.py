@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from fooodie.models import Photo, UserProfile
-from fooodie.forms import UserForm, UserProfileForm
+from fooodie.forms import UserForm, UserProfileForm, PhotoForm
 from datetime import datetime
 import os, random
 
@@ -107,7 +107,7 @@ def user_login(request):
 
 #Will focus on the registration/login logic first, implement into a single view later
 def register(request):
-
+    registered=True
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
@@ -229,10 +229,26 @@ def myprofile(request): #User's manage account site
     return response
 
 
-def addpic(request):
-    pass
-    #Here we can manage an add picture form which we might be able to use both for updating your profile pic AND for adding a food photo
-    #MAYBE not sure I don't understand forms
+def addfoodphoto(request):
+    added = False # If it's a HTTP POST, we're interested in processing form data.
+    profile=UserProfile.objects.get(user=request.user)
+    if request.method == 'POST':
+        photo_form = PhotoForm(request.POST) # If the form is valid... 
+        if photo_form.is_valid(): # Save the photo form data to the database. 
+            # Now sort out the UserProfile instance. # Since we need to set the user attribute ourselves, we set commit=False. This delays saving the model
+            # until we're ready to avoid integrity problems. 
+            photo = photo_form.save(commit=False) 
+            photo.user = user # Did the user provide a profile picture? If so, we need to get it from the input form and put it in the UserProfile model. 
+            photo.photo = request.FILES['photo'] 
+            # Now we save the UserProfile model instance. 
+            photo.save() # Update our variable to indicate that the template registration was successful. 
+            added = True 
+        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal. 
+            print(photo_form.errors) 
+    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input. 
+        photo_form = PhotoForm()  
+    return render(request, 'fooodie/addPic.html', context = {'photo_form' : photo_form,
+                                                               'registered' : added})
 
 ####SETTINGS VIEWS
 @login_required

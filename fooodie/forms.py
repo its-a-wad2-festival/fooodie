@@ -23,4 +23,9 @@ class UserSettings(forms.Form):
     password = forms.PasswordInput()
     class Meta:
         model=UserProfile
-        fields=('picture')
+        fields=('picture',)
+
+class PhotoForm(forms.ModelForm):
+    class Meta:
+        model=Photo
+        fields=('name', 'photo',)
