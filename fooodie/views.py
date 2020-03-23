@@ -59,8 +59,11 @@ def leaderboard(request):
     top_pics = Photo.objects.order_by('-votes')[:3] #Top 3
     context_dict['top_pics'] = top_pics
 
-    top_profiles = UserProfile.objects.order_by('-totalVotes')[:8] #Top 8
-    context_dict['top_profiles'] = top_profiles
+    top_profiles1 = UserProfile.objects.order_by('-totalVotes')[:8] #Top 0 - 8
+    context_dict['top_profiles1'] = top_profiles1
+    
+    top_profiles2 = UserProfile.objects.order_by('-totalVotes')[8:16] #Top 8 - 16
+    context_dict['top_profiles2'] = top_profiles2
 
     response = render(request, 'fooodie/leaderboard.html', context = context_dict)
     return(response)
