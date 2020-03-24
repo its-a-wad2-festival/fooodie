@@ -9,6 +9,8 @@ from django.core.files.base import ContentFile
 from fooodie.models import Photo, UserProfile
 from fooodie.forms import UserForm, UserProfileForm, PhotoForm, ChangeUsername, ChangeEmail, ChangePassword
 from datetime import datetime
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 import os, random
 
 
@@ -61,7 +63,7 @@ def leaderboard(request):
 
     top_profiles1 = UserProfile.objects.order_by('-totalVotes')[:8] #Top 0 - 8
     context_dict['top_profiles1'] = top_profiles1
-    
+
     top_profiles2 = UserProfile.objects.order_by('-totalVotes')[8:16] #Top 8 - 16
     context_dict['top_profiles2'] = top_profiles2
 
@@ -236,20 +238,20 @@ def addfoodphoto(request):
     added = False # If it's a HTTP POST, we're interested in processing form data.
     profile=UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
-        photo_form = PhotoForm(request.POST) # If the form is valid... 
-        if photo_form.is_valid(): # Save the photo form data to the database. 
+        photo_form = PhotoForm(request.POST) # If the form is valid...
+        if photo_form.is_valid(): # Save the photo form data to the database.
             # Now sort out the UserProfile instance. # Since we need to set the user attribute ourselves, we set commit=False. This delays saving the model
-            # until we're ready to avoid integrity problems. 
-            photo = photo_form.save(commit=False) 
-            photo.user = user # Did the user provide a profile picture? If so, we need to get it from the input form and put it in the UserProfile model. 
-            photo.photo = request.FILES['photo'] 
-            # Now we save the UserProfile model instance. 
-            photo.save() # Update our variable to indicate that the template registration was successful. 
-            added = True 
-        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal. 
-            print(photo_form.errors) 
-    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input. 
-        photo_form = PhotoForm()  
+            # until we're ready to avoid integrity problems.
+            photo = photo_form.save(commit=False)
+            photo.user = user # Did the user provide a profile picture? If so, we need to get it from the input form and put it in the UserProfile model.
+            photo.photo = request.FILES['photo']
+            # Now we save the UserProfile model instance.
+            photo.save() # Update our variable to indicate that the template registration was successful.
+            added = True
+        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
+            print(photo_form.errors)
+    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
+        photo_form = PhotoForm()
     return render(request, 'fooodie/addPic.html', context = {'photo_form' : photo_form,
                                                                'registered' : added})
 
@@ -278,17 +280,17 @@ def settingsusername(request):
     user = request.user
     profile=UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
-        name_form = ChangeUsername(request.POST) # If the form is valid... 
-        if name_form.is_valid(): 
-            user.username = name_form.cleaned_data['username'] 
+        name_form = ChangeUsername(request.POST) # If the form is valid...
+        if name_form.is_valid():
+            user.username = name_form.cleaned_data['username']
             print("Name given")
             user.save()
             print("name saved")
             print(user.username)
-        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal. 
-            print(name_form.errors) 
-    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input. 
-        name_form = ChangeUsername()  
+        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
+            print(name_form.errors)
+    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
+        name_form = ChangeUsername()
     return render(request, 'fooodie/changesettings.html', context={'change': 'username', 'form':name_form, 'profile':profile, 'originalvalue':profile.user.username})
 
 @login_required
@@ -298,16 +300,16 @@ def settingsemail(request):
     user = request.user
     profile=UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
-        email_form = ChangeEmail(request.POST) # If the form is valid... 
-        if email_form.is_valid(): 
-            user.email = email_form.cleaned_data['email'] 
+        email_form = ChangeEmail(request.POST) # If the form is valid...
+        if email_form.is_valid():
+            user.email = email_form.cleaned_data['email']
             print("email given")
             user.save()
             print(user.email)
-        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal. 
-            print(email_form.errors) 
-    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input. 
-        email_form = ChangeEmail()  
+        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
+            print(email_form.errors)
+    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
+        email_form = ChangeEmail()
     return render(request, 'fooodie/changesettings.html', context={'change': 'email', 'form':email_form, 'profile':profile, 'originalvalue':profile.user.email})
 
 @login_required
@@ -324,8 +326,25 @@ def settingsprofilepic(request):
 
 @login_required
 def settingspassword(request):
-    pass
-##SETTINGS END
+    context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
+    user = request.user
+    profile=UserProfile.objects.get(user=request.user)
+    if request.method=='POST':
+        password_form=ChangePassword(request.POST, request.user)
+        if password_form.is_valid():
+            user.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            #return redirect('settingspassword')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        password_form = ChangePassword()
+    return render(request, 'fooodie/changesettings.html', context={'change': 'password', 'form':password_form, 'profile':profile, 'originalvalue':profile.user.password})
+
+
+
 
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
@@ -349,6 +368,22 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
+
+def searchresult(request):
+    if request.method=='POST':
+        srch = request>POST['srh']
+
+        if srch:
+            match = user_profile.objects.filter(Q(userProfile))
+
+            if match:
+                return render(request, 'userProfile.html', {'sr':match})
+            else:
+                messages.error(request,'no result found')
+        else:
+            return HttpResponseRedirect('/search')
+
+    return render(request, 'fooodie/userprofile.html')
 
 
 
