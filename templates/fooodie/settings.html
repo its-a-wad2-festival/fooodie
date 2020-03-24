@@ -44,19 +44,20 @@
 			</section>
 			Your username: </br>
 				{{ profile.user.username }} </br>
-				<a class="nav-link" href="{% url 'fooodie:settingsusername' %}">Change your username</a> </br>
+				<a class="nav-link" href="{% url 'fooodie:settingsusername' %}">Change your username</a>
 				Your email: </br>
 				{{ profile.user.email }} </br>
-				<a class="nav-link" href="{% url 'fooodie:settingsemail' %}">Change your email</a> </br>
+				<a class="nav-link" href="{% url 'fooodie:settingsemail' %}">Change your email</a>
 				Your profile picture: </br>
 				{% if profile.picture %}
 					{{ profile.picture }} </br>
 				{% else %}
 					You don't have a profile picture </br>
 				{% endif %}
-				<a class="nav-link" href="{% url 'fooodie:settingsprofilepic' %}">Change your profile picture</a> </br>
+				<a class="nav-link" href="{% url 'fooodie:settingsprofilepic' %}">Change your profile picture</a> 
 				Click here if you wish to change your password!
 				<a class="nav-link" href="{% url 'fooodie:settingspassword' %}">Change your password</a> </br>
+				</br></br>
 		</div><!-- END fooodie-MAIN -->
 	</div><!-- END fooodie-PAGE -->
 </section>

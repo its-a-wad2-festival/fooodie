@@ -15,11 +15,11 @@
 <h1>Change your {{ change }} </h1> </br>
 Your current {{ change }} is {{ originalvalue }} 
 <form action="" method="post">
-    <table>
+    {% csrf_token %}
+	<table>
         {{ form.as_p }}
     </table>
-    {% csrf_token %}
-    <input type="submit" value="Submit">
+    <button type="submit">Save changes</button>
 </form>
 </section>
 {% endblock %}

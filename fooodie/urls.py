@@ -1,5 +1,6 @@
 from django.urls import path
 from fooodie import views
+from django.conf.urls import url
 
 app_name='fooodie'
 
@@ -12,7 +13,7 @@ urlpatterns = [
     path('myprofile/addfoodphoto/', views.addfoodphoto, name = 'addfoodphoto'),
     path('myprofile/settings/', views.settings, name = 'settings'),
     path('myprofile/settings/deletepic/<slug:photo_id>/', views.deletepic, name = 'deletepic'),
-    path('myprofile/settings/password/', views.settingspassword, name = 'settingspassword'),
+    url(r'^password/$', views.settingspassword, name='settingspassword'),
     path('myprofile/settings/username/', views.settingsusername, name = 'settingsusername'),
     path('myprofile/settings/profilepic/', views.settingsprofilepic, name = 'settingsprofilepic'),
     path('myprofile/settings/email/', views.settingsemail, name = 'settingsemail'),

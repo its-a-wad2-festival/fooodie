@@ -10,6 +10,7 @@ from fooodie.models import Photo, UserProfile
 from fooodie.forms import UserForm, UserProfileForm, PhotoForm, ChangeUsername, ChangeEmail, ChangePassword
 from datetime import datetime
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 import os, random
 
@@ -224,11 +225,11 @@ def myprofile(request): #User's manage account site
         pass
     context_dict['user'] = user
 
-    if 'search' in request.GET:
-        profile.user.username = request.GET['search']
+    #if 'search' in request.GET:
+    #    profile.user.username = request.GET['search']
         #fooodie = fooodie.filter(text__icontains=search_terms)
 
-    context = {'profile.user.username' : profile.user.username}
+    #context = {'profile.user.username' : profile.user.username}
 
     response = render(request, 'fooodie/myprofile.html', context = context_dict)
     return response
@@ -283,10 +284,8 @@ def settingsusername(request):
         name_form = ChangeUsername(request.POST) # If the form is valid...
         if name_form.is_valid():
             user.username = name_form.cleaned_data['username']
-            print("Name given")
             user.save()
-            print("name saved")
-            print(user.username)
+            return redirect(reverse("fooodie:settings"))
         else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
             print(name_form.errors)
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
@@ -303,9 +302,8 @@ def settingsemail(request):
         email_form = ChangeEmail(request.POST) # If the form is valid...
         if email_form.is_valid():
             user.email = email_form.cleaned_data['email']
-            print("email given")
             user.save()
-            print(user.email)
+            return redirect(reverse("fooodie:settings"))
         else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
             print(email_form.errors)
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
@@ -326,22 +324,22 @@ def settingsprofilepic(request):
 
 @login_required
 def settingspassword(request):
-    context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
     profile=UserProfile.objects.get(user=request.user)
-    if request.method=='POST':
-        password_form=ChangePassword(request.POST, request.user)
-        if password_form.is_valid():
-            user.save()
-            update_session_auth_hash(request, user)
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            #return redirect('settingspassword')
+            return redirect( reverse("fooodie:settings"))
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        password_form = ChangePassword()
-    return render(request, 'fooodie/changesettings.html', context={'change': 'password', 'form':password_form, 'profile':profile, 'originalvalue':profile.user.password})
+        form = PasswordChangeForm(request.user)
+    return render(request, 'fooodie/changesettings.html', {
+        'change': 'password', 'form':form, 'profile':profile, 'originalvalue':"Just kidding, displaying your password would be so unsafe!"
+    })
 
 
 
