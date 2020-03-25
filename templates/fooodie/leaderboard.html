@@ -33,7 +33,7 @@
 									<strong>No profile pic</strong>
 								{% endif %}
 									<ul>
-										<li>{{ profile.user.username}} has {{ profile.totalVotes}} votes</li>
+										<li><a href="user/{{ profile.user.slug }}">{{ profile.user.username}} has {{ profile.totalVotes}} votes</a></li>
 									</ul>
 								{% endfor %}
 								</ul>
@@ -53,7 +53,7 @@
 									<strong>No profile pic</strong>
 								{% endif %}
 									<ul>
-										<li>{{ profile.user.username}} has {{ profile.totalVotes}} votes</li>
+										<li><a href="user/{{ profile.user.slug }}">{{ profile.user.username}} has {{ profile.totalVotes}} votes</a></li>
 									</ul>
 								{% endfor %}
 								</ul>
@@ -70,6 +70,7 @@
 					{% if top_pics %}
 						{% for pic in top_pics %}
 						<div class="col-md-8">
+							<a href="user/{{ pic.user.user.slug }}">Author: {{ pic.user.user.username }}</a>
 										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
 										<div class="overlay"> </div>
 											<div class="text ml-6 mb-6">
