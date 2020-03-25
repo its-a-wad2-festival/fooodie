@@ -258,7 +258,7 @@ def addfoodphoto(request):
 
 ####SETTINGS VIEWS
 @login_required
-def settings(request):
+def user_settings(request):
     context_dict = {}
     context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
