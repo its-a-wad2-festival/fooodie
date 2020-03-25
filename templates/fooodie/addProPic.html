@@ -1,0 +1,21 @@
+{% extends 'fooodie/base.html' %} 
+{% load staticfiles %}
+{% block title_block %}
+Add a profile picture
+{% endblock %} 
+{% block body_block %}
+	<section class="mosh-portfolio-area section_padding_100_0 clearfix">
+		<h1>Add pro pic</h1>
+		{% if added %}
+			Fooodie says: <strong>Thank you for adding a profile picture!</strong>
+			<a href="{% url 'fooodie:home' %}">Return to the homepage.</a><br />
+		{% else %}
+			<strong>Add a profile picture here!</strong><br />
+			<form id="profile_pic_form" method="post" action="{% url 'fooodie:settingsprofilepic' %}" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ profile_pic_form.as_p }}
+				<input type="submit" name="submit" value="Add Profile Pic" />
+			</form>
+		{% endif %}
+	</section>
+{% endblock %}

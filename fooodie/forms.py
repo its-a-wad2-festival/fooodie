@@ -37,8 +37,11 @@ class ChangePassword(forms.Form):
                 raise forms.ValidationError(_("The two password fields did not match."))
         return self.cleaned_data
 
-class ChangePicture(forms.Form):
-    picture = forms.ImageField()
+class ChangePicture(forms.ModelForm):
+    #picture = forms.ImageField()
+    class Meta:
+        model = UserProfile
+        fields = ('picture',)
 
 class PhotoForm(forms.ModelForm):
     class Meta:

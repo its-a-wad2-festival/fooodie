@@ -20,7 +20,7 @@
 			<nav id="fooodie-main-menu" role="navigation">
 				<ul>
 					{% if profile %}
-					<li> <a href="/#"> Upload a profile Picture</a></li>
+					<li> <a href="{% url 'fooodie:settingsprofilepic' %}"> Upload a profile Picture</a></li>
 					<li><a href="{% url 'fooodie:addfoodphoto'%}">Upload a food plate</a></li>
 					<li><a href="/fooodie/myprofile/settings/">Settings</a></li>
 					{% else %}

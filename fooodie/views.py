@@ -7,12 +7,12 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from fooodie.models import Photo, UserProfile
-from fooodie.forms import UserForm, UserProfileForm, PhotoForm, ChangeUsername, ChangeEmail, ChangePassword
+from fooodie.forms import UserForm, UserProfileForm, PhotoForm, ChangeUsername, ChangeEmail, ChangePassword, ChangePicture
 from datetime import datetime
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
-import os, random
+import os, random, string
 
 
 def home(request):
@@ -310,17 +310,58 @@ def settingsemail(request):
         email_form = ChangeEmail()
     return render(request, 'fooodie/changesettings.html', context={'change': 'email', 'form':email_form, 'profile':profile, 'originalvalue':profile.user.email})
 
+##@login_required
+##def settingsprofilepic(request):
+##    context_dict = {}
+##    context_dict['userProfiles']=UserProfile.objects.all()
+##    user = request.user
+##    profile=UserProfile.objects.get(user=user)
+##    #Get Profilepic from forms
+##    profile.profilepic=newprofilepic
+##    profile.save()
+##    context_dict['change']
+##    return redirect(reverse('fooodie:settings'))
+
 @login_required
 def settingsprofilepic(request):
-    context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
-    user = request.user
-    profile=UserProfile.objects.get(user=user)
-    #Get Profilepic from forms
-    profile.profilepic=newprofilepic
-    profile.save()
-    context_dict['change']
-    return redirect(reverse('fooodie:settings'))
+    print('Called!')
+    added = False
+    profile = UserProfile.objects.get(user = request.user)
+
+    if request.method == 'POST':
+        profile_pic_form = ChangePicture(request.POST)
+        if profile_pic_form.is_valid():
+            profile_dir = os.path.join(settings.MEDIA_DIR, str(profile.id))
+            profile_pic_path = os.path.join(os.path.join(settings.MEDIA_DIR, str(profile.id)), str(profile.picture))
+            random_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
+
+            new_profile_pic = request.FILES['picture']
+            extension = new_profile_pic.name.split('.')[-1]
+
+            #If a profile picture exists in the directory, it is deleted
+##            for file in os.listdir(profile_dir):
+##                print('File is '+str(file))
+##                if file.startswith(str(profile.id)+'_propic'):
+##                    os.remove(os.path.join(profile_dir, file))
+
+            if os.path.isfile(profile_pic_path):
+                os.remove(profile_pic_path)
+                
+
+            path_to_profile_pic = default_storage.save(profile_dir+'\\'+str(profile.id)+'_propic_'+random_id+'.'+extension, ContentFile(new_profile_pic.read()))
+            profile.picture = path_to_profile_pic
+            profile.save()
+
+            added = True
+
+        else:
+            print(profile_pic_form.errors)
+
+    else:
+        profile_pic_form = ChangePicture()
+
+    return render(request, 'fooodie/addProPic.html', context = {'profile_pic_form' : profile_pic_form,
+                                                                'added' : added})
 
 @login_required
 def settingspassword(request):
