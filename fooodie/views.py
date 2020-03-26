@@ -239,7 +239,7 @@ def addfoodphoto(request):
             # Now sort out the UserProfile instance. # Since we need to set the user attribute ourselves, we set commit=False. This delays saving the model
             # until we're ready to avoid integrity problems.
             photo = photo_form.save(commit=False)
-            photo.user = user # Did the user provide a profile picture? If so, we need to get it from the input form and put it in the UserProfile model.
+            photo.user = profile # Did the user provide a profile picture? If so, we need to get it from the input form and put it in the UserProfile model.
             photo.photo = request.FILES['photo']
             # Now we save the UserProfile model instance.
             photo.save() # Update our variable to indicate that the template registration was successful.
@@ -249,7 +249,7 @@ def addfoodphoto(request):
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
         photo_form = PhotoForm()
     return render(request, 'fooodie/addPic.html', context = {'food_pic_form' : photo_form,
-                                                               'registered' : added})
+                                                               'added' : added})
 
 ####SETTINGS VIEWS
 @login_required
