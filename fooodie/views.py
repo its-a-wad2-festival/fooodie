@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from fooodie.models import Photo, UserProfile
-from fooodie.forms import UserForm, UserProfileForm, PhotoForm, ChangeUsername, ChangeEmail, ChangePassword, ChangePicture
+from fooodie.forms import UserForm, UserProfileForm, PhotoForm, ChangeUsername, ChangeEmail, ChangePicture
 from datetime import datetime
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -203,11 +203,6 @@ def user_profile(request, user_profile_slug):
         pass
     return render(request, 'fooodie/userprofile.html', context = context_dict)
 
-def add_food_photo(request):
-    context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
-    response=render(request, 'fooodie/uploadfoodphoto.html')
-
 @login_required
 def myprofile(request): #User's manage account site
     context_dict = {}
@@ -234,7 +229,7 @@ def myprofile(request): #User's manage account site
     response = render(request, 'fooodie/myprofile.html', context = context_dict)
     return response
 
-
+@login_required
 def addfoodphoto(request):
     added = False # If it's a HTTP POST, we're interested in processing form data.
     profile=UserProfile.objects.get(user=request.user)
@@ -253,7 +248,7 @@ def addfoodphoto(request):
             print(photo_form.errors)
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
         photo_form = PhotoForm()
-    return render(request, 'fooodie/addPic.html', context = {'photo_form' : photo_form,
+    return render(request, 'fooodie/addPic.html', context = {'food_pic_form' : photo_form,
                                                                'registered' : added})
 
 ####SETTINGS VIEWS
@@ -309,18 +304,6 @@ def settingsemail(request):
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
         email_form = ChangeEmail()
     return render(request, 'fooodie/changesettings.html', context={'change': 'email', 'form':email_form, 'profile':profile, 'originalvalue':profile.user.email})
-
-##@login_required
-##def settingsprofilepic(request):
-##    context_dict = {}
-##    context_dict['userProfiles']=UserProfile.objects.all()
-##    user = request.user
-##    profile=UserProfile.objects.get(user=user)
-##    #Get Profilepic from forms
-##    profile.profilepic=newprofilepic
-##    profile.save()
-##    context_dict['change']
-##    return redirect(reverse('fooodie:settings'))
 
 @login_required
 def settingsprofilepic(request):
@@ -381,9 +364,6 @@ def settingspassword(request):
     return render(request, 'fooodie/changesettings.html', {
         'change': 'password', 'form':form, 'profile':profile, 'originalvalue':"Just kidding, displaying your password would be so unsafe!"
     })
-
-
-
 
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)

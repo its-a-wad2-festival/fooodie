@@ -1,20 +1,21 @@
 {% extends 'fooodie/base.html' %} 
 {% load staticfiles %}
 {% block title_block %}
-Add a Page
+Add a profile picture
 {% endblock %} 
 {% block body_block %}
-	<h1>Register for Rango</h1>
-	{% if added %}
-		Fooodie says: <strong>Thank you for adding a photo!</strong>
-		<a href="/fooodie/">Return to the homepage.</a><br />
-	{% else %}
-		<strong>Add a photo here!</strong><br />
-		<form id="photo_form" method="post" action="{% url 'fooodie:addfoodphoto' %}" enctype="multipart/form-data">
-			{% csrf_token %}
-			{{ photo_form.as_p }}
-			<input type="submit" name="submit" value="Add Photo" />
-		</form>
-	{% endif %}
+	<section class="mosh-portfolio-area section_padding_100_0 clearfix">
+		<h1>Upload food photo</h1>
+		{% if added %}
+			Fooodie says: <strong>Thank you for uploading a food photo!</strong>
+			<a href="{% url 'fooodie:home' %}">Return to the homepage.</a><br />
+		{% else %}
+			<strong>Add a food photo here!</strong><br />
+			<form id="food_pic_form" method="post" action="{% url 'fooodie:addfoodphoto' %}" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ food_pic_form.as_p }}
+				<input type="submit" name="submit" value="Add food Pic"/>
+			</form>
+		{% endif %}
+	</section>
 {% endblock %}
-</html>

@@ -23,20 +23,6 @@ class ChangeUsername(forms.Form):
 class ChangeEmail(forms.Form):
     email = forms.EmailField()
 
-class ChangePassword(forms.Form):
-    password = forms.PasswordInput()
-
-    oldpassword = forms.CharField(max_length = 20, widget=forms.TextInput(attrs={'type':'password', 'placeholder':'your old Password',  'class' : 'span'}))
-    newpassword1 = forms.CharField(max_length = 20, widget=forms.TextInput(attrs={'type':'password', 'placeholder':'New Password',  'class' : 'span'}))
-    newpassword2 = forms.CharField(max_length = 20, widget=forms.TextInput(attrs={'type':'password', 'placeholder':'Confirm New Password',  'class' : 'span'}))
-
-
-    def clean(self):
-        if 'newpassword1' in self.cleaned_data and 'newpassword2' in self.cleaned_data:
-            if self.cleaned_data['newpassword1'] != self.cleaned_data['newpassword2']:
-                raise forms.ValidationError(_("The two password fields did not match."))
-        return self.cleaned_data
-
 class ChangePicture(forms.ModelForm):
     #picture = forms.ImageField()
     class Meta:
