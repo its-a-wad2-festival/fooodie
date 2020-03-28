@@ -11,11 +11,11 @@
 <section class="mosh-portfolio-area section_padding_100_0 clearfix">
 	<div id="fooodie-page">
 		<a href="#" class="js-fooodie-nav-toggle fooodie-nav-toggle"><i></i></a>
-		<aside id="fooodie-aside" role="complementary" class="js-fullheight text-center">
+		<aside id="fooodie-aside" role="complementary" class="text-center">
 			{% if profile.picture %}
 				<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({{ profile.picture.url}});"></span>{{ user.username }}</a></h1>
 			{% else %}
-				<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url();"></span>{{ user.username }}</a></h1>
+				<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({% static 'images/defaultprofilefoto.jpg' %});"></span>{{ user.username }}</a></h1>
 			{% endif %}
 			<nav id="fooodie-main-menu" role="navigation">
 				<ul>
@@ -54,9 +54,12 @@
 											<div class="text ml-4 mb-4">
 												<h3>{{ pic.name }}</h3>
 												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
-												<input class="btn btn-7" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';" value="Delete Photo" />
+												<button  class="mosh-btn2 btn-primary btn-sm" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';"> 
+												<i class="fas fa-trash-alt"></i>
+												</button>
 											</div>
 										</a>
+										
 									</div>
 								{% endif %}	
 							{% endfor %}
@@ -66,16 +69,6 @@
 					{% else %}
 						<strong>You're using a user that is NOT linked to a UserProfile, thus you have no photos available</strong>
 					{% endif %}
-					
-						<div class="col-md-4">
-							<a href="{% static 'images/rango.jpg' %}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({% static 'images/rango.jpg' %});">
-								<div class="overlay"></div>
-								<div class="text ml-4 mb-4">
-									<h3>Photo 01</h3>
-									<span class="tag">Model</span>
-								</div>
-							</a>
-						</div>
 					
 					</div>
 				</div>

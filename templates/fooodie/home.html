@@ -18,16 +18,18 @@
 						<!-- Single gallery Item Start -->
 						<div class="col-6">
 							<a href="{{ photo1.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ photo1.photo.url }});">
-								<div class="overlay"> </div>
+								<div class="overlay"></div>
 								<div class="text ml-4 mb-4">
-									<h3>{{ photo1.name }}</h3>
-									<span class="tag">Number of votes: {{ photo1.votes }}</span><br>
-									<button id="like_btn" data-categoryid="{{ photo1.vote }}" class="btn btn-primary btn-sm" type="button"> 
-									<span data-feather="thumbs-up"></span> Like Photo 
-									</button>
+									<h3>{{ photo2.name }}</h3>
+									<span class="tag">Author: {{ photo1.user.user.username }}</span>
+									<br>
+									<span class="tag">Number of votes: {{ photo1.votes }}</span>
+									<br>
 								</div>
 							</a>
-							
+							<button id="like_btn" data-categoryid="{{ photo1.vote }}" class="mosh-btn btn-primary btn-sm" type="button"> 
+								<i class="fas fa-thumbs-up"></i> 
+									</button>
 								</div>
 								<div class="col-6">
 							
@@ -36,13 +38,15 @@
 								<div class="overlay"> </div>
 								<div class="text ml-4 mb-4">
 									<h3>{{ photo2.name }}</h3>
+									<span class="tag">Author: {{ photo2.user.user.username }}</span>
+									<br>
 									<span class="tag">Number of votes: {{ photo2.votes }}</span>
 									<br>
-									<button id="like_btn" data-categoryid="{{ photo2.vote }}" class="btn btn-primary btn-sm" type="button"> 
-									<span data-feather="thumbs-up"></span> Like Photo 
-									</button>
 								</div>
 							</a>
+							<button id="like_btn" data-categoryid="{{ photo2.vote }}" class="mosh-btn btn-primary btn-sm" type="button"> 
+								<i class="fas fa-thumbs-up"></i> 
+									</button>
 						</div>
 				</div>
 			</div>
