@@ -202,6 +202,12 @@ def user_profile(request, user_profile_slug):
         context_dict['profile'] = profile
         photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
+        
+        #Variables Used for the counter
+        i = 0
+        for picture in photos:
+            i = i + 1
+        context_dict['totalPhotos'] = i #Variable Used in Counter
     except:
         pass
     return render(request, 'fooodie/userprofile.html', context = context_dict)
@@ -219,6 +225,14 @@ def myprofile(request): #User's manage account site
         context_dict['profile'] = profile
         photos = Photo.objects.filter(user__id = profile.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
+        
+        #Variables Used for the counter
+        i = 0
+        for picture in photos:
+            i = i + 1
+        context_dict['totalPhotos'] = i #Variable Used in Counter
+        
+        
     except:
         pass
     context_dict['user'] = user
@@ -251,8 +265,13 @@ def addfoodphoto(request):
             print(photo_form.errors)
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
         photo_form = PhotoForm()
-    return render(request, 'fooodie/addPic.html', context = {'food_pic_form' : photo_form,
-                                                               'added' : added})
+    
+    context_dict = {}
+    context_dict['food_pic_form'] = photo_form
+    context_dict['added'] = added
+    context_dict['profile'] = profile
+    
+    return render(request, 'fooodie/addPic.html', context = context_dict)
 
 ####SETTINGS VIEWS
 @login_required
@@ -345,9 +364,13 @@ def settingsprofilepic(request):
 
     else:
         profile_pic_form = ChangePicture()
+    
+    context_dict = {}
+    context_dict['profile_pic_form'] = profile_pic_form
+    context_dict['added'] = added
+    context_dict['profile'] = profile
 
-    return render(request, 'fooodie/addProPic.html', context = {'profile_pic_form' : profile_pic_form,
-                                                                'added' : added})
+    return render(request, 'fooodie/addProPic.html', context = context_dict )
 
 @login_required
 def settingspassword(request):
