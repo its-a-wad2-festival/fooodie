@@ -2,9 +2,6 @@
 {% load staticfiles %}
 
 
-	<head lang="en">
-		<meta charset="UTF-8" />
-
 		{% block title_block %}
 		Leaderboard
 		{% endblock %}
@@ -23,43 +20,46 @@
 				<h3>These are our best users</h3>
 				<div class="row">
 					<div class="col">
-						
-							{% if top_profiles1 %}
-								<ul>
-								{% for profile in top_profiles1 %}
-								{% if profile.picture %}
-									<img src="{{ profile.picture.url }}" height="200" width="200" /> 
-								{% else %}
-									<strong>No profile pic</strong>
-								{% endif %}
-									<ul>
-										<li><a href="{% url 'fooodie:user_profile' profile.slug %}">{{ profile.user.username}} has {{ profile.totalVotes}} votes</a></li>
-									</ul>
-								{% endfor %}
-								</ul>
-							{% else %}
-								<strong>There are no profiles</strong>
-							{% endif %}
-						
-					</div>	
-					<div class="col">
-						
-							{% if top_profiles2 %}
-								<ul>
-								{% for profile in top_profiles2 %}
-								{% if profile.picture %}
-									<img src="{{ profile.picture.url }}" height="200" width="200" /> 
-								{% else %}
-									<strong>No profile pic</strong>
-								{% endif %}
-									<ul>
-										<li><a href="{% url 'fooodie:user_profile' profile.slug %}">{{ profile.user.username}} has {{ profile.totalVotes}} votes</a></li>
-									</ul>
-								{% endfor %}
-								</ul>
-							{% else %}
-								<strong>There are no profiles</strong>
-							{% endif %}
+							<div class="fooodie-window">
+							  <div class="fooodie-window-header">
+							  </div>
+							  <div class="fooodie-window-body">
+								<div class="gui-window-awards">
+								  <ul class="fooodie-awards-row fooodie-awards-header">
+									<li class="fooodie-awards-header-star">Profile pic</li>
+									<li class="fooodie-awards-header-title">User</li>
+									<li class="fooodie-awards-header-time">Total Votes</li>
+									<li class="fooodie-awards-header-time">Position</li>
+								  </ul>
+								  {% if top_profiles %}
+								  {% for profile, position in top_profiles %}
+									<ul class="fooodie-awards-row fooodie-awards-row-even">
+									  {% if profile.picture %}
+										<li class="fooodie-awards-star"><img src="{{ profile.picture.url }}" class = "profile-pic-leaderboard"/></li>
+									  {% else %}
+										<li class="fooodie-awards-star"><img src="{% static 'images/defaultprofilefoto.jpg' %}" class = "profile-pic-leaderboard"/></li>
+									  {% endif %}
+									  <li class="fooodie-awards-title">{{profile.user.username}}
+									  {% if position == 1 %}
+										<div class="fooodie-awards-subtitle">Our favorite</div>
+										{% elif position == 2 %}
+										 <div class="fooodie-awards-subtitle">Not the best but good enough</div>
+										{% elif position == 3 %}
+										<div class="fooodie-awards-subtitle">Third one, well done</div>
+										{% else %}
+										<div class="fooodie-awards-subtitle">Nahhh just another loser</div>
+										{% endif %}
+										</li>
+										<li class="fooodie-awards-time">{{profile.totalVotes}}</li>
+										<li class="fooodie-awards-time">{{ position }}º</li>
+									  </ul>
+								  {% endfor %}
+								  {% else %}
+									<strong>There are no profiles</strong>
+								  {% endif %}
+								</div>
+							  </div>
+							</div>
 					</div>	
 				</div>
 				</div>
@@ -89,6 +89,8 @@
 			</div>
 		</div>
 	</div>
+	
+
 </section>
 {% endblock %}
 

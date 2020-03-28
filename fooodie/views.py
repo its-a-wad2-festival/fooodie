@@ -62,11 +62,14 @@ def leaderboard(request):
     top_pics = Photo.objects.order_by('-votes')[:3] #Top 3
     context_dict['top_pics'] = top_pics
 
-    top_profiles1 = UserProfile.objects.order_by('-totalVotes')[:8] #Top 0 - 8
-    context_dict['top_profiles1'] = top_profiles1
-
-    top_profiles2 = UserProfile.objects.order_by('-totalVotes')[8:16] #Top 8 - 16
-    context_dict['top_profiles2'] = top_profiles2
+    top_profiles_set = UserProfile.objects.order_by('-totalVotes')[:10] #Top 0 - 10
+    top_profiles = []
+    position_leaderboard = 1
+    for profile in top_profiles_set: #Creates new List containing tuples (UserProfile,Position)
+        top_profiles.append((profile,position_leaderboard))
+        position_leaderboard = position_leaderboard + 1
+        
+    context_dict['top_profiles'] = top_profiles
 
     response = render(request, 'fooodie/leaderboard.html', context = context_dict)
     return(response)

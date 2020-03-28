@@ -53,6 +53,8 @@
   box-sizing: border-box; }
 
 html {
+	position: relative;
+	height: 100%;
   font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
@@ -728,6 +730,8 @@ html {
     border: 1px solid #dee2e6 !important; } }
 
 body {
+	position: relative;
+	height:100%;
   font-family: "Montserrat", Arial, sans-serif;
   background: #fff;
   font-size: 15px;
@@ -773,8 +777,9 @@ h1, h2, h3, h4, h5,
 
 #fooodie-page {
   width: 100%;
+  height: 100%;
   overflow: hidden;
-  position: absolute; }
+  position: relative; }
 
 #fooodie-aside {
   padding-top: 3em;
@@ -986,6 +991,13 @@ h1, h2, h3, h4, h5,
     #fooodie-main {
       width: 78%; } }
 
+.fooodie-leaderboard-photo {
+    margin-bottom: 1.5em;
+    display: block;
+    width: 100%;
+    font-weight: 700;
+    font-size: 24px; }
+
 
 .photography-entry {
   height: 250px;
@@ -1156,10 +1168,6 @@ Different styling. I'll delete unnecesary styling when everything is functional
     padding: 0;
 }
 
-body,
-html {
-    font-family: 'Roboto', sans-serif;
-}
 
 h1,
 h2,
@@ -1213,6 +1221,7 @@ img {
 }
 
 .section_padding_100_0 {
+	
     padding-top: 100px;
     padding-bottom: 0;
 }
@@ -2077,7 +2086,9 @@ span.accor-open {
 -------------------------- */
 
 .footer-area {
-    position: fixed;
+	clear: both;
+    position: relative;
+    z-index: 10;
 	width: 100%;
 	bottom: 0;
 	z-index: 1;
@@ -2826,54 +2837,96 @@ span.accor-open {
 }
 
 /* -----------------------
-:: 20.0 Elements Area CSS
+:: 20.0 Leaderboard
 ----------------------- */
 
-.elements-title h2 {
-    margin-bottom: 60px;
-    font-size: 24px;
+
+}
+.fooodie-window {
+  position: absolute;
+  left:0; right:0;
+  top: 50px;
+  margin: auto;
+  width: 600px;
+  border-radius: 4px;
+  background: #fff;
+  overflow: hidden;
+}
+.fooodie-window-header {
+  padding: 20px 15px;
+  text-align:center;
+  position: relative;
 }
 
-.mosh-btn.mosh-btn-2 {
-    border: 2px solid #4a7aec;
-    color: #404551;
-    background-color: #fff;
+.fooodie-window-body {
+  background-color: #f9f9f9;
+}
+.fooodie-awards-row {
+  margin:0;
+  padding: 10px 40px;
+  list-style: none;
+}
+.fooodie-awards-row:after {
+  content: '';
+  display: table;
+  clear:both;
+}
+.fooodie-awards-row-even {
+  background-color: #fff;
+}
+.fooodie-awards-row li {
+  display:inline-block;
+  vertical-align: top;
+  float: left;
+}
+.fooodie-awards-header {
+  text-align: center;
+  padding: 20px 40px;
+}
+.fooodie-awards-star, .fooodie-awards-track, .fooodie-awards-time,
+.fooodie-awards-header-star, .fooodie-awards-header-track, .fooodie-awards-header-time{
+  min-width: 54px;
+  text-align: center;
+  width: 16%;
+}
+.fooodie-awards-title {
+  width: 40%;
+  min-width: 160px;
+  font-size: 18px;
+  font-weight: normal;
+  padding-top: 3px;
+}
+.fooodie-awards-header-title {
+  width: 40%;
+  min-width: 160px;
+}
+.fooodie-awards-subtitle {
+  color: #858585;
+  font-size: 14px;
+  font-weight: 300;
+}
+.fooodie-awards-track, .fooodie-awards-time {
+  width: 22%;
+  min-width: 80px;
+  font-size: 18px;
+  line-height: 45px
+}
+.fooodie-awards-header-track, .fooodie-awards-header-time {
+  width: 22%;
+  min-width: 80px;
+}
+.fooodie-awards-track .null, .fooodie-awards-time .null {
+  color:#bababa;
+}
+.profile-pic-leaderboard {
+  display:block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #bdc2c1;
+  background: #d6d6d6;  
 }
 
-.mosh-btn.mosh-btn-2:hover,
-.mosh-btn.mosh-btn-2:focus {
-    border: 2px solid #4a7aec;
-    color: #fff;
-    background-color: #4a7aec;
-}
-
-.mosh-btn.mosh-btn-3 {
-    border: none;
-    color: #404551;
-    background-color: #fff;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
-}
-
-.mosh-btn.mosh-btn-3:hover,
-.mosh-btn.mosh-btn-3:focus {
-    color: #fff;
-    background-color: #4a7aec;
-}
-
-.mosh-cool-facts-area {
-    width: 100%;
-}
-
-.mosh-cool-facts-area .counter-area > h3 {
-    color: #4a7aec;
-    font-size: 60px;
-    margin-bottom: 0;
-    line-height: 1;
-}
-
-.mosh-cool-facts-area .cool-facts-content > p {
-    color: #292d4f;
-}
 
 /* --------------------------------
 ============= The End =============
