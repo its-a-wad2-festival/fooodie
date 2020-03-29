@@ -24,6 +24,9 @@ urlpatterns = [
     path('register/', views.register, name = 'register'),
     path('loginregister/', views.user_signup_login, name='loginregister'),
     path('googleloggedin/', views.googleloggedin, name='GoogleLoggedIn'),    
+    
+    
+    path('like_photo/', views.LikePhoto.as_view(), name = 'like_photo'),
     ]
 """path('add_photo/', views.add_photo, name='add_photo'),
 path('user/<slug:user_name_slug>/', views.restricted, name='user'),
