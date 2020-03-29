@@ -12,6 +12,7 @@ class UserProfile(models.Model):
     picture=models.ImageField(blank=True)
     #picture=models.ImageField(upload_to=str(id), blank=True)
     totalVotes = models.IntegerField(default=0)
+    google=models.BooleanField(default=False)
     
     
     def save(self, *args, **kwargs):

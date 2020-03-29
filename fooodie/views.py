@@ -438,12 +438,9 @@ def googleloggedin(request):
         profile = profiles.get(user=user)
         print("c")
     except:
-        profile = None
-        print("d")
         profile = UserProfile(user=user)
-        print("e")
+        profile.google=True
         profile.save()
-        print("f")
     return redirect(reverse('fooodie:home'))
 
 class LikePhoto(View):
