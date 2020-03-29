@@ -429,6 +429,23 @@ def searchresult(request):
             return HttpResponseRedirect('/search')
 
     return render(request, 'fooodie/userprofile.html')
+    
+def googleloggedin(request):
+    user=request.user
+    print("a")
+    profiles=UserProfile.objects.all()
+    print("b")
+    try:
+        profile = profiles.get(user=user)
+        print("c")
+    except:
+        profile = None
+        print("d")
+        profile = UserProfile(user=user)
+        print("e")
+        profile.save()
+        print("f")
+    return redirect(reverse('fooodie:home'))
 
 
 

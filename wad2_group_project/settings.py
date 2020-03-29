@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fooodie',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,18 @@ MEDIA_URL = '/media/'
 # Login URL
 
 LOGIN_URL = 'fooodie:loginregister'
+
+
+#GOOGLE REGISTRATION STUFF
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1096098852729-6rob9t55nsi58499b3p1mg4qcqlb8i2u.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'llklrkK-ijIx6wiz1XgJj6oK'
+LOGIN_REDIRECT_URL='fooodie:GoogleLoggedIn'
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+
+#GOOGLE REGISTRATION STUFF ENDS
