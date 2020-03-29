@@ -13,7 +13,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 import os, random, string
-
+from django.views import View
 
 def home(request):
     context_dict = {}
@@ -190,7 +190,6 @@ def user_logout(request):
 def user_logout(request):
     logout(request) # Since we know the user is logged in, we can now just log them out.
     return redirect(reverse('fooodie:home'))
-
 
 def user_profile(request, user_profile_slug):
     context_dict = {}
@@ -430,6 +429,20 @@ def searchresult(request):
 
     return render(request, 'fooodie/userprofile.html')
 
+class LikePhoto(View):
+    def get(self, request):
+        photo_id = request.GET['photo_id']
 
+        try:
+            photo = Photo.objects.get(id = int(photo_id))
+        except Photo.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        photo.votes = photo.votes + 1
+        photo.save()
+
+        return HttpResponse(photo.votes)
 
 # Create your views here.

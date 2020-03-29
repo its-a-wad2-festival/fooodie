@@ -23,11 +23,11 @@
 									<h3>{{ photo1.name }}</h3>
 									<span class="tag">Author: {{ photo1.user.user.username }}</span>
 									<br>
-									<span class="tag">Number of votes: {{ photo1.votes }}</span>
+									<span id="photo1_likes" class="tag">Number of votes: {{ photo1.votes }}</span>
 									<br>
 								</div>
 							</a>
-							<button id="like_btn" data-categoryid="{{ photo1.vote }}" class="mosh-btn btn-primary btn-sm" type="button"> 
+							<button id="like_photo1_btn" data-photoid="{{ photo1.id }}" class="mosh-btn btn-primary btn-sm" type="button"> 
 								<i class="fas fa-thumbs-up"></i> 
 									</button>
 								</div>
@@ -40,18 +40,29 @@
 									<h3>{{ photo2.name }}</h3>
 									<span class="tag">Author: {{ photo2.user.user.username }}</span>
 									<br>
-									<span class="tag">Number of votes: {{ photo2.votes }}</span>
+									<span id="photo2_likes" class="tag">Number of votes: {{ photo2.votes }}</span>
 									<br>
 								</div>
 							</a>
-							<button id="like_btn" data-categoryid="{{ photo2.vote }}" class="mosh-btn btn-primary btn-sm" type="button"> 
+							<button id="like_photo2_btn" data-photoid="{{ photo2.id }}" class="mosh-btn btn-primary btn-sm" type="button"> 
 								<i class="fas fa-thumbs-up"></i> 
 									</button>
 						</div>
 				</div>
 			</div>
 		</section>
-	
+		
+		<div>
+			<strong id="like_count">{{ photo1.votes }}</strong> votes
+			<button id="like_btn"
+				data-categoryid="{{ photo1.id }}"
+				class="btn btn-primary btn-sm"
+				type="button">
+				<span data-feather="thumbs-up"></span>
+				Vote for photo 1
+			</button>
+		</div>
+			
 
 
 
