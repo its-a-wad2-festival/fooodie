@@ -193,37 +193,35 @@ def user_logout(request):
 
 @login_required
 def myprofile(request): #User's manage account site
-    context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
-
-    #profile.user.username=''
-
+    context_dict={}
+    context_dict['user'] = user
     try:
         profile = UserProfile.objects.get(user = user)
         context_dict['profile'] = profile
         photos = Photo.objects.filter(user__id = profile.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
-
-        #Variables Used for the counter
+        
+        #Leaderboard Ranking Calculation STARTS
+        top_profiles_set = UserProfile.objects.order_by('-totalVotes')
+        top_profiles = []
+        position_leaderboard = 1
+        for userprofile in top_profiles_set: #Creates new List containing tuples (UserProfile,Position)
+            if profile==userprofile:
+                break
+            position_leaderboard = position_leaderboard + 1
+        context_dict['position'] = position_leaderboard
+        #Leaderboard Ranking Calculation ENDS
+        
+        #NUMBER OF PICS COUNTER
         i = 0
         for picture in photos:
             i = i + 1
         context_dict['totalPhotos'] = i #Variable Used in Counter
-
-
+        #NUMBER OF PICS COUNTER ENDS
     except:
-        pass
-    context_dict['user'] = user
-
-    #if 'search' in request.GET:
-    #    profile.user.username = request.GET['search']
-        #fooodie = fooodie.filter(text__icontains=search_terms)
-
-    #context = {'profile.user.username' : profile.user.username}
-
-    response = render(request, 'fooodie/myprofile.html', context = context_dict)
-    return response
+        pass #IF THIS HAPPENS IT MEANS YOU'RE USING AN USER THAT DOESN'T HAVE A PROFILE, MOST LIKELY A SUPERUSER.
+    return render(request, 'fooodie/myprofile.html', context = context_dict)
 
 @login_required
 def addfoodphoto(request):
@@ -370,6 +368,7 @@ def settingspassword(request):
         'change': 'password', 'form':form, 'profile':profile, 'originalvalue':"Just kidding, displaying your password would be so unsafe!"
     })
 
+#COOKIE STUFF STARTS
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
     if not val:
@@ -392,6 +391,7 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
+#COOKIE STUFF ENDS
 
 #SEARCH AND USER PROFILE STARTS
 def user_search(request):
@@ -413,17 +413,27 @@ def user_profile(request, user_profile_slug):
         context_dict['profile'] = profile
         photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
+        
+        #Leaderboard Ranking Calculation STARTS
+        top_profiles_set = UserProfile.objects.order_by('-totalVotes')
+        top_profiles = []
+        position_leaderboard = 1
+        for userprofile in top_profiles_set: #Creates new List containing tuples (UserProfile,Position)
+            if profile==userprofile:
+                break
+            position_leaderboard = position_leaderboard + 1
+        context_dict['position'] = position_leaderboard
+        #Leaderboard Ranking Calculation ENDS
 
-        #Variables Used for the counter
+        #NUMBER OF PICTURE COUNTER STARTS
         i = 0
         for picture in photos:
             i = i + 1
-        context_dict['totalPhotos'] = i #Variable Used in Counter
+        context_dict['totalPhotos'] = i 
+        #NUMBER OF PICTURE COUNTER ENDS
     except:
-        print("BBBBBBBB")
         return render(request, 'fooodie/userprofile.html', context = {'user_searched' : user_profile_slug})
     return render(request, 'fooodie/userprofile.html', context = context_dict)
-
 #SEARCH AND USER PROFILE ENDS
 
 def googleloggedin(request):

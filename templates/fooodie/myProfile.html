@@ -44,6 +44,7 @@
 				<div class="photograhy">
 					<div class="row">
 					{% if profile %}
+						Ranking Position:{{ position }}
 						{% if photos %}
 							{% for pic in photos %}	
 								{% if pic.user.id == profile.id %}
