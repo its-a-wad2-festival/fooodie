@@ -17,11 +17,11 @@
 				<div class="row">
 						<!-- Single gallery Item Start -->
 						<div class="col-6">
-							<a href="{{ photo1.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ photo1.photo.url }});">
+							<a id="photo1pic" href="{{ photo1.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ photo1.photo.url }});">
 								<div class="overlay"></div>
 								<div class="text ml-4 mb-4">
-									<h3>{{ photo1.name }}</h3>
-									<span class="tag">Author: {{ photo1.user.user.username }}</span>
+									<h3 id="photo1name">{{ photo1.name }}</h3>
+									<span id="photo1author" class="tag">Author: {{ photo1.user.user.username }}</span>
 									<br>
 									<span id="photo1_likes" class="tag">Number of votes: {{ photo1.votes }}</span>
 									<br>
@@ -34,11 +34,11 @@
 								<div class="col-6">
 							
 							
-							<a href="{{ photo2.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ photo2.photo.url }});">
+							<a id="photo2pic" href="{{ photo2.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ photo2.photo.url }});">
 								<div class="overlay"> </div>
 								<div class="text ml-4 mb-4">
-									<h3>{{ photo2.name }}</h3>
-									<span class="tag">Author: {{ photo2.user.user.username }}</span>
+									<h3 id="photo2name">{{ photo2.name }}</h3>
+									<span id="photo2author" class="tag">Author: {{ photo2.user.user.username }}</span>
 									<br>
 									<span id="photo2_likes" class="tag">Number of votes: {{ photo2.votes }}</span>
 									<br>
