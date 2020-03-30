@@ -413,6 +413,12 @@ def visitor_cookie_handler(request):
 
     request.session['visits'] = visits
 
+#SEARCH STARTS
+def user_search(request):
+    username=request.GET.get('search')
+    profile=UserProfile.objects.get(user__username=username)
+    return redirect(reverse('fooodie:user_profile', args=[profile.slug]))
+
 def searchresult(request):
     if request.method=='POST':
         srch = request>POST['srh']
@@ -428,7 +434,7 @@ def searchresult(request):
             return HttpResponseRedirect('/search')
 
     return render(request, 'fooodie/userprofile.html')
-    
+#SEARCH ENDS   
 def googleloggedin(request):
     user=request.user
     print("a")
