@@ -209,7 +209,7 @@ def addfoodphoto(request):
     context_dict['added'] = added
     context_dict['profile'] = profile
 
-    return render(request, 'fooodie/addPic.html', context = context_dict)
+    return render(request, 'fooodie/addpic.html', context = context_dict)
 
 @login_required
 def deletepic(request, photo_id):
@@ -336,7 +336,7 @@ def settingsprofilepic(request):
     context_dict['added'] = added
     context_dict['profile'] = profile
 
-    return render(request, 'fooodie/addProPic.html', context = context_dict )
+    return render(request, 'fooodie/addpropic.html', context = context_dict )
 
 @login_required
 def settingspassword(request):
