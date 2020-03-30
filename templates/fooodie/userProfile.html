@@ -94,20 +94,17 @@
 				</section>
 			</div><!-- END fooodie-MAIN -->
 		{% else %}
-			<div id="fooodie-main">
-				<section class="ftco-section ftco-bread">
-					<div class="container">
-						<div class="row no-gutters slider-text justify-content-center align-items-center">
-						  <div class="col-md-8">
-							<h1 class="bread">{{ user_searched }} does not exist!</h1>
-						  </div>
-						</div>
+		<div class="notFoundPage">
+			<div id="notfound">
+				<div class="notfound">
+					<div class="notfound-404">
+						<h3>Oops! Page not found</h3>
+						<h1><span>4</span><span>0</span><span>4</span></h1>
 					</div>
-				</section>
-				<section class="ftco-section ftco-bread">
-					<strong><h3>You searched for an user that does not exist. Please try again. Remember you can only search for users using their exact username.</h3></strong>
-				</section>
+					<h2>we are sorry, but {{ user_searched }} was not found. Please try again. Remember you can only search for users using their exact username.</h2>
+				</div>
 			</div>
+		</div>
 		{% endif %}
 	</div><!-- END fooodie-PAGE -->
 </section>
