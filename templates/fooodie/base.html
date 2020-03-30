@@ -46,11 +46,14 @@
                                     {% endif %}
                                 </ul>
                                 <!-- Search Form Area Start -->
-									<form class="form-inline my-2 my-lg-1" action="{% url 'fooodie:user_search' %}">
+									<form class="form-inline my-2 my-lg-1">
 										<input
-												class="form-control mr-sm-2" type="search"
-												placeholder="Search" aria-label="Search"
-												name='search' value="">
+												class="form-control mr-sm-2"
+												type="search"
+												placeholder="Search"
+												aria-label="Search"
+												name='search'
+												value="{{profile.user.username}}">
 										<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 									</form>
                                 </div>
@@ -81,7 +84,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Foood
 </p>
                             </div>
                             <div class="footer-social-info">
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'fooodie:about' %}">About Us</a></li>
                             </div>
                         </div>
                     </div>
@@ -106,7 +109,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Foood
   <script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
   <script src="{% static 'js/scrollax.min.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
-  <script src="{% static 'js/fooodie-ajax.js' %}"></script>
       <!-- All Plugins js -->
     <script src="{% static 'js/plugins.js' %}"></script>
     <!-- Active js -->

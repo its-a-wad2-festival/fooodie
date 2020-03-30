@@ -52,7 +52,7 @@ def home(request):
 
 def about(request):
     context_dict = {}
-    context_dict['userProfiles']
+    #context_dict['userProfiles']
     response = render(request, 'fooodie/about.html')
     return(response)
 
@@ -68,7 +68,7 @@ def leaderboard(request):
     for profile in top_profiles_set: #Creates new List containing tuples (UserProfile,Position)
         top_profiles.append((profile,position_leaderboard))
         position_leaderboard = position_leaderboard + 1
-        
+
     context_dict['top_profiles'] = top_profiles
 
     response = render(request, 'fooodie/leaderboard.html', context = context_dict)
@@ -201,7 +201,7 @@ def user_profile(request, user_profile_slug):
         context_dict['profile'] = profile
         photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
-        
+
         #Variables Used for the counter
         i = 0
         for picture in photos:
@@ -224,14 +224,14 @@ def myprofile(request): #User's manage account site
         context_dict['profile'] = profile
         photos = Photo.objects.filter(user__id = profile.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
-        
+
         #Variables Used for the counter
         i = 0
         for picture in photos:
             i = i + 1
         context_dict['totalPhotos'] = i #Variable Used in Counter
-        
-        
+
+
     except:
         pass
     context_dict['user'] = user
@@ -264,12 +264,12 @@ def addfoodphoto(request):
             print(photo_form.errors)
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
         photo_form = PhotoForm()
-    
+
     context_dict = {}
     context_dict['food_pic_form'] = photo_form
     context_dict['added'] = added
     context_dict['profile'] = profile
-    
+
     return render(request, 'fooodie/addPic.html', context = context_dict)
 
 ####SETTINGS VIEWS
@@ -350,7 +350,7 @@ def settingsprofilepic(request):
 
             if os.path.isfile(profile_pic_path):
                 os.remove(profile_pic_path)
-                
+
 
             path_to_profile_pic = default_storage.save(profile_dir+'\\'+str(profile.id)+'_propic_'+random_id+'.'+extension, ContentFile(new_profile_pic.read()))
             profile.picture = path_to_profile_pic
@@ -363,7 +363,7 @@ def settingsprofilepic(request):
 
     else:
         profile_pic_form = ChangePicture()
-    
+
     context_dict = {}
     context_dict['profile_pic_form'] = profile_pic_form
     context_dict['added'] = added
@@ -421,7 +421,7 @@ def user_search(request):
     except:
         return redirect(reverse('fooodie:home'))
     return redirect(reverse('fooodie:user_profile', args=[profile.slug]))
-#SEARCH ENDS   
+#SEARCH ENDS
 
 def googleloggedin(request):
     user=request.user
