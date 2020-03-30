@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
@@ -448,9 +448,34 @@ class LikePhoto(View):
         except ValueError:
             return HttpResponse(-1)
 
+        author = UserProfile.objects.get(id = photo.user.id)
         photo.votes = photo.votes + 1
+        author.totalVotes = author.totalVotes + 1;
         photo.save()
+        author.save()
 
-        return HttpResponse(photo.votes)
+        pics = Photo.objects.order_by('?')
+
+        pics_to_choose = pics[:2]
+
+        photo1 = pics_to_choose.first()
+
+        photo2=pics_to_choose[1]
+
+        return_dict = {'photo1' :
+                       {'url' : photo1.photo.url,
+                        'name' : photo1.name,
+                        'username' : photo1.user.user.username,
+                        'votes' : photo1.votes,
+                        'id' : photo1.id},
+                       'photo2' :
+                       {'url' : photo2.photo.url,
+                        'name' : photo2.name,
+                        'username' : photo2.user.user.username,
+                        'votes' : photo2.votes,
+                        'id' : photo2.id}
+                       }
+
+        return JsonResponse(return_dict)
 
 # Create your views here.
