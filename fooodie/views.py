@@ -191,26 +191,6 @@ def user_logout(request):
     logout(request) # Since we know the user is logged in, we can now just log them out.
     return redirect(reverse('fooodie:home'))
 
-def user_profile(request, user_profile_slug):
-    context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
-    user = request.user
-    context_dict = {}
-    try:
-        profile = UserProfile.objects.get(slug = user_profile_slug)
-        context_dict['profile'] = profile
-        photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
-        context_dict['photos'] = photos
-
-        #Variables Used for the counter
-        i = 0
-        for picture in photos:
-            i = i + 1
-        context_dict['totalPhotos'] = i #Variable Used in Counter
-    except:
-        pass
-    return render(request, 'fooodie/userprofile.html', context = context_dict)
-
 @login_required
 def myprofile(request): #User's manage account site
     context_dict = {}
@@ -413,15 +393,38 @@ def visitor_cookie_handler(request):
 
     request.session['visits'] = visits
 
-#SEARCH STARTS
+#SEARCH AND USER PROFILE STARTS
 def user_search(request):
     username=request.GET.get('search')
     try:
         profile=UserProfile.objects.get(user__username=username)
     except:
-        return redirect(reverse('fooodie:home'))
+        print("AAAAAAAA")
+        return redirect(reverse('fooodie:user_profile', args=[username]))
     return redirect(reverse('fooodie:user_profile', args=[profile.slug]))
-#SEARCH ENDS
+
+def user_profile(request, user_profile_slug):
+    context_dict = {}
+    context_dict['userProfiles']=UserProfile.objects.all()
+    user = request.user
+    try:
+        context_dict = {}
+        profile = UserProfile.objects.get(slug = user_profile_slug)
+        context_dict['profile'] = profile
+        photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
+        context_dict['photos'] = photos
+
+        #Variables Used for the counter
+        i = 0
+        for picture in photos:
+            i = i + 1
+        context_dict['totalPhotos'] = i #Variable Used in Counter
+    except:
+        print("BBBBBBBB")
+        return render(request, 'fooodie/userprofile.html', context = {'user_searched' : user_profile_slug})
+    return render(request, 'fooodie/userprofile.html', context = context_dict)
+
+#SEARCH AND USER PROFILE ENDS
 
 def googleloggedin(request):
     user=request.user

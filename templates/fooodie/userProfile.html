@@ -12,86 +12,103 @@
 {% block body_block %}
 <section class="mosh-portfolio-area section_padding_100_0 clearfix">
 	<div id="fooodie-page">
-		<a href="#" class="js-fooodie-nav-toggle fooodie-nav-toggle"><i></i></a>
-		<aside id="fooodie-aside" role="complementary" class="text-center">
-			{% if profile.picture %}
-			<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({{ profile.picture.url}});"></span>{{ profile.user.username }}</a></h1>
-			{% else %}
-			<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({% static 'images/defaultprofilefoto.jpg' %});"></span>{{ profile.user.username }}</a></h1>
-			{% endif %}
-		</aside> <!-- END fooodie-ASIDE -->
-		<div id="fooodie-main">
-			<section class="ftco-section ftco-bread">
-				<div class="container">
-					<div class="row no-gutters slider-text justify-content-center align-items-center">
-					  <div class="col-md-8">
-						<h1 class="bread">{{ profile.user.username }}'s Profile</h1>
-					  </div>
+		{% if profile %}
+			<a href="#" class="js-fooodie-nav-toggle fooodie-nav-toggle"><i></i></a>
+			<aside id="fooodie-aside" role="complementary" class="text-center">
+				{% if profile.picture %}
+				<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({{ profile.picture.url}});"></span>{{ profile.user.username }}</a></h1>
+				{% else %}
+				<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({% static 'images/defaultprofilefoto.jpg' %});"></span>{{ profile.user.username }}</a></h1>
+				{% endif %}
+			</aside> <!-- END fooodie-ASIDE -->
+			<div id="fooodie-main">
+				<section class="ftco-section ftco-bread">
+					<div class="container">
+						<div class="row no-gutters slider-text justify-content-center align-items-center">
+						  <div class="col-md-8">
+							<h1 class="bread">{{ profile.user.username }}'s Profile</h1>
+						  </div>
+						</div>
 					</div>
-				</div>
-			</section>
-			<section class="ftco-section-3">
-				<div class="photograhy">
-					<div class="row">
-					{% if profile %}
-						{% if photos %}
-							{% for pic in photos %}	
-								{% if pic.user.id == profile.id %}
-									<!-- Actual food photo -->
-									<div class="col-md-4">
-										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
-										<div class="overlay"></div>
-											<div class="text ml-4 mb-4">
-												<h3>{{ pic.name }}</h3>
-												<span class="tag">Number of votes: {{ pic.votes }}</span>
-											</div>
-										</a>
-									</div>
-								{% endif %}	
-							{% endfor %}
-						{% else %}
-							<strong>This user has no pictures uploaded</strong>
-						{% endif %}
-					{% endif %}					
+				</section>
+				<section class="ftco-section-3">
+					<div class="photograhy">
+						<div class="row">
+						{% if profile %}
+							{% if photos %}
+								{% for pic in photos %}	
+									{% if pic.user.id == profile.id %}
+										<!-- Actual food photo -->
+										<div class="col-md-4">
+											<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
+											<div class="overlay"></div>
+												<div class="text ml-4 mb-4">
+													<h3>{{ pic.name }}</h3>
+													<span class="tag">Number of votes: {{ pic.votes }}</span>
+												</div>
+											</a>
+										</div>
+									{% endif %}	
+								{% endfor %}
+							{% else %}
+								<strong>This user has no pictures uploaded</strong>
+							{% endif %}
+						{% endif %}					
+						</div>
 					</div>
-				</div>
-			</section>
-			<!-- BEGINS fooodie-Counter -->
-		<section class="ftco-section ftco-counter img" id="section-counter">
-	    	<div class="container">
-	    		<div class="row justify-content-start">
-	    			<div class="col-md-10">
-			    		<div class="row center-text">
-			          <div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
-			            <div class="block-18">
-			              <div class="text d-flex align-items-center">
-			                <strong class="number" data-number="{{ totalPhotos }}">0</strong>
-			                <span>Uploaded Pictures</span>
-			              </div>
-			            </div>
-			          </div>
-			          <div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
-			            <div class="block-18">
-			              <div class="text d-flex align-items-center">
-			                <strong class="number" data-number="{{profile.totalVotes}}">0</strong>
-			                <span>Total Votes</span>
-			              </div>
-			            </div>
-			          </div>
-			          <div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
-			            <div class="block-18">
-			              <div class="text d-flex align-items-center">
-			                <strong class="number" data-number="{{position}}">0</strong>
-			                <span>In Leaderboard</span>
-			              </div>
-			            </div>
-			          </div>
-			        </div>
-		        </div>
-	        </div>
-	    	</div>
-	    </section>
-		</div><!-- END fooodie-MAIN -->
+				</section>
+				<!-- BEGINS fooodie-Counter -->
+				<section class="ftco-section ftco-counter img" id="section-counter">
+					<div class="container">
+						<div class="row justify-content-start">
+							<div class="col-md-10">
+								<div class="row center-text">
+							  <div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
+								<div class="block-18">
+								  <div class="text d-flex align-items-center">
+									<strong class="number" data-number="{{ totalPhotos }}">0</strong>
+									<span>Uploaded Pictures</span>
+								  </div>
+								</div>
+							  </div>
+							  <div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
+								<div class="block-18">
+								  <div class="text d-flex align-items-center">
+									<strong class="number" data-number="{{profile.totalVotes}}">0</strong>
+									<span>Total Votes</span>
+								  </div>
+								</div>
+							  </div>
+							  <div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
+								<div class="block-18">
+								  <div class="text d-flex align-items-center">
+									<strong class="number" data-number="{{position}}">0</strong>
+									<span>In Leaderboard</span>
+								  </div>
+								</div>
+							  </div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</section>
+			</div><!-- END fooodie-MAIN -->
+		{% else %}
+			<div id="fooodie-main">
+				<section class="ftco-section ftco-bread">
+					<div class="container">
+						<div class="row no-gutters slider-text justify-content-center align-items-center">
+						  <div class="col-md-8">
+							<h1 class="bread">{{ user_searched }} does not exist!</h1>
+						  </div>
+						</div>
+					</div>
+				</section>
+				<section class="ftco-section ftco-bread">
+					<strong><h3>You searched for an user that does not exist. Please try again. Remember you can only search for users using their exact username.</h3></strong>
+				</section>
+			</div>
+		{% endif %}
 	</div><!-- END fooodie-PAGE -->
 </section>
 {% endblock %}

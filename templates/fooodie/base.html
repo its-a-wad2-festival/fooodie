@@ -46,14 +46,11 @@
                                     {% endif %}
                                 </ul>
                                 <!-- Search Form Area Start -->
-									<form class="form-inline my-2 my-lg-1">
+									<form class="form-inline my-2 my-lg-1" action="{% url 'fooodie:user_search' %}">
 										<input
-												class="form-control mr-sm-2"
-												type="search"
-												placeholder="Search"
-												aria-label="Search"
-												name='search'
-												value="{{profile.user.username}}">
+												class="form-control mr-sm-2" type="search"
+												placeholder="Search" aria-label="Search"
+												name='search' value="">
 										<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 									</form>
                                 </div>
