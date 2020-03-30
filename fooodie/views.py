@@ -17,7 +17,6 @@ from django.views import View
 
 def home(request):
     context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
 ##    #Ordering all photos randomly, picking first two
 ##    pics_to_choose = Photo.objects.order_by(?)[:1]
 ##    context_dict['pics_to_choose'] = pics_to_choose
@@ -58,7 +57,6 @@ def about(request):
 
 def leaderboard(request):
     context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
     top_pics = Photo.objects.order_by('-votes')[:3] #Top 3
     context_dict['top_pics'] = top_pics
 
@@ -74,6 +72,7 @@ def leaderboard(request):
     response = render(request, 'fooodie/leaderboard.html', context = context_dict)
     return(response)
 
+#REGISTRATION/LOG IN/LOG OUT STARTS    
 #This will simply display the forms; the associated template will call
 #one of the functions below dependent on button clicked
 def user_signup_login(request):
@@ -84,11 +83,7 @@ def user_signup_login(request):
     return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
                                                                'profile_form' : profile_form,
                                                                'registered' : registered})
-##    context_dict = {}
-##    context_dict['userProfiles']=UserProfile.objects.all()
-##
-##    response = render(request, 'fooodie/home.html')
-##    return response
+
 
 #Will focus on the registration/login logic first, implement into a single view later
 def user_login(request):
@@ -185,12 +180,44 @@ def register(request):
 @login_required
 def user_logout(request):
     logout(request) # Since we know the user is logged in, we can now just log them out.
+    return redirect(reverse('fooodie:home'))
+#REGISTRATION/LOG IN/LOG OUT ENDS    
+
+#ADD AND DELETE PICTURE FUNCTIONALITY STARTS
+@login_required
+def addfoodphoto(request):
+    added = False # If it's a HTTP POST, we're interested in processing form data.
+    profile=UserProfile.objects.get(user=request.user)
+    if request.method == 'POST':
+        photo_form = PhotoForm(request.POST) # If the form is valid...
+        if photo_form.is_valid(): # Save the photo form data to the database.
+            # Now sort out the UserProfile instance. # Since we need to set the user attribute ourselves, we set commit=False. This delays saving the model
+            # until we're ready to avoid integrity problems.
+            photo = photo_form.save(commit=False)
+            photo.user = profile # Did the user provide a profile picture? If so, we need to get it from the input form and put it in the UserProfile model.
+            photo.photo = request.FILES['photo']
+            # Now we save the UserProfile model instance.
+            photo.save() # Update our variable to indicate that the template registration was successful.
+            added = True
+        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
+            print(photo_form.errors)
+    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
+        photo_form = PhotoForm()
+
+    context_dict = {}
+    context_dict['food_pic_form'] = photo_form
+    context_dict['added'] = added
+    context_dict['profile'] = profile
+
+    return render(request, 'fooodie/addPic.html', context = context_dict)
 
 @login_required
-def user_logout(request):
-    logout(request) # Since we know the user is logged in, we can now just log them out.
-    return redirect(reverse('fooodie:home'))
+def deletepic(request, photo_id):
+    Photo.objects.filter(id = photo_id).delete()
+    return redirect(reverse('fooodie:settings'))
+#ADD AND DELETE PICTURE FUNCTIONALITY ENDS
 
+#MYPROFILE AND MYPROFILE SETTINGS START
 @login_required
 def myprofile(request): #User's manage account site
     user = request.user
@@ -222,39 +249,10 @@ def myprofile(request): #User's manage account site
     except:
         pass #IF THIS HAPPENS IT MEANS YOU'RE USING AN USER THAT DOESN'T HAVE A PROFILE, MOST LIKELY A SUPERUSER.
     return render(request, 'fooodie/myprofile.html', context = context_dict)
-
-@login_required
-def addfoodphoto(request):
-    added = False # If it's a HTTP POST, we're interested in processing form data.
-    profile=UserProfile.objects.get(user=request.user)
-    if request.method == 'POST':
-        photo_form = PhotoForm(request.POST) # If the form is valid...
-        if photo_form.is_valid(): # Save the photo form data to the database.
-            # Now sort out the UserProfile instance. # Since we need to set the user attribute ourselves, we set commit=False. This delays saving the model
-            # until we're ready to avoid integrity problems.
-            photo = photo_form.save(commit=False)
-            photo.user = profile # Did the user provide a profile picture? If so, we need to get it from the input form and put it in the UserProfile model.
-            photo.photo = request.FILES['photo']
-            # Now we save the UserProfile model instance.
-            photo.save() # Update our variable to indicate that the template registration was successful.
-            added = True
-        else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
-            print(photo_form.errors)
-    else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
-        photo_form = PhotoForm()
-
-    context_dict = {}
-    context_dict['food_pic_form'] = photo_form
-    context_dict['added'] = added
-    context_dict['profile'] = profile
-
-    return render(request, 'fooodie/addPic.html', context = context_dict)
-
-####SETTINGS VIEWS
+    
 @login_required
 def user_settings(request):
     context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
     profile = UserProfile.objects.get(user = user)
     context_dict['profile'] = profile
@@ -264,14 +262,7 @@ def user_settings(request):
     return response
 
 @login_required
-def deletepic(request, photo_id):
-    Photo.objects.filter(id = photo_id).delete()
-    return redirect(reverse('fooodie:settings'))
-
-@login_required
 def settingsusername(request):
-    context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
     profile=UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
@@ -288,8 +279,6 @@ def settingsusername(request):
 
 @login_required
 def settingsemail(request):
-    context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
     profile=UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
@@ -367,6 +356,7 @@ def settingspassword(request):
     return render(request, 'fooodie/changesettings.html', {
         'change': 'password', 'form':form, 'profile':profile, 'originalvalue':"Just kidding, displaying your password would be so unsafe!"
     })
+#MYPROFILE SETTINGS END
 
 #COOKIE STUFF STARTS
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -405,7 +395,6 @@ def user_search(request):
 
 def user_profile(request, user_profile_slug):
     context_dict = {}
-    context_dict['userProfiles']=UserProfile.objects.all()
     user = request.user
     try:
         context_dict = {}
@@ -436,19 +425,17 @@ def user_profile(request, user_profile_slug):
     return render(request, 'fooodie/userprofile.html', context = context_dict)
 #SEARCH AND USER PROFILE ENDS
 
+#GOOGLE ACCOUNT LOG IN STARTS
 def googleloggedin(request):
     user=request.user
-    print("a")
-    profiles=UserProfile.objects.all()
-    print("b")
     try:
         profile = profiles.get(user=user)
-        print("c")
     except:
         profile = UserProfile(user=user)
         profile.google=True
         profile.save()
     return redirect(reverse('fooodie:home'))
+# GOOGLE ACCOUNT LOG IN ENDS
 
 class LikePhoto(View):
     def get(self, request):
