@@ -22,9 +22,9 @@
 					{% if profile %}
 					<li> <a href="{% url 'fooodie:settingsprofilepic' %}"> Upload a profile Picture</a></li>
 					<li><a href="{% url 'fooodie:addfoodphoto'%}">Upload a food plate</a></li>
-					<li><a href="/fooodie/myprofile/settings/">Settings</a></li>
+					<li><a href="{% url 'fooodie:settings' %}">Settings</a></li>
 					{% else %}
-						<strong>You're using a user that is NOT linked to a UserProfile, thus you have no profile picture options available</strong>
+						<strong>You're using a user that is NOT linked to a UserProfile, which means you're most likely a dev with a superuser, so none of this options are available for you to avoid cheating.</strong>
 					{% endif %}
 				</ul>
 			</nav>
@@ -46,22 +46,20 @@
 					{% if profile %}
 						{% if photos %}
 							{% for pic in photos %}	
-								{% if pic.user.id == profile.id %}
-									<!-- Actual food photo -->
-									<div class="col-md-4">
-										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
-										<div class="overlay"> </div>
-											<div class="text ml-4 mb-4">
-												<h3>{{ pic.name }}</h3>
-												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
-												<button  class="fooodie-btn2 btn-primary btn-sm" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';"> 
-												<i class="fas fa-trash-alt"></i>
-												</button>
-											</div>
-										</a>
-										
-									</div>
-								{% endif %}	
+								<!-- Actual food photo -->
+								<div class="col-md-4">
+									<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
+									<div class="overlay"> </div>
+										<div class="text ml-4 mb-4">
+											<h3>{{ pic.name }}</h3>
+											<span class="tag">Number of votes: {{ pic.votes }}</span><br>
+											<button  class="fooodie-btn2 btn-primary btn-sm" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';"> 
+											<i class="fas fa-trash-alt"></i>
+											</button>
+										</div>
+									</a>
+									
+								</div>
 							{% endfor %}
 						{% else %}
 							<strong>There are no pictures</strong>

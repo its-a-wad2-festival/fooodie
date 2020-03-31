@@ -206,6 +206,8 @@ def addfoodphoto(request):
             # Now we save the UserProfile model instance.
             photo.save() # Update our variable to indicate that the template registration was successful.
             added = True
+            
+            return redirect(reverse('fooodie:myprofile'))
         else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
             print(photo_form.errors)
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
@@ -213,7 +215,6 @@ def addfoodphoto(request):
 
     context_dict = {}
     context_dict['food_pic_form'] = photo_form
-    context_dict['added'] = added
     context_dict['profile'] = profile
 
     return render(request, 'fooodie/addpic.html', context = context_dict)
@@ -221,7 +222,7 @@ def addfoodphoto(request):
 @login_required
 def deletepic(request, photo_id):
     Photo.objects.filter(id = photo_id).delete()
-    return redirect(reverse('fooodie:settings'))
+    return redirect(reverse('fooodie:myprofile'))
 #ADD AND DELETE PICTURE FUNCTIONALITY ENDS
 
 #MYPROFILE AND MYPROFILE SETTINGS START
