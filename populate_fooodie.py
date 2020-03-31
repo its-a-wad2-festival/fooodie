@@ -53,6 +53,8 @@ def add_photo(userProfile):
     shutil.copy(photo_old_path,photo_new_path) #Physically moves photo to user's photo file
 
 if __name__ == '__main__':
+    if os.path.isdir(MEDIA_DIR)==False:
+        os.mkdir(MEDIA_DIR)
     print('Starting fooodie population script...')
     for i in range (0,20):
         create_user_profile()
