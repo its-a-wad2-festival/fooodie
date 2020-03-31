@@ -33,18 +33,22 @@ Add a profile picture
 					</div>
 				</div>
 			</section>
-			<h1>Add pro pic</h1>
-		{% if added %}
-			Fooodie says: <strong>Thank you for adding a profile picture!</strong>
-			<a href="{% url 'fooodie:home' %}">Return to the homepage.</a><br />
-		{% else %}
-			<strong>Add a profile picture here!</strong><br />
+			<h1>Upload a {{ photo_type }}</h1>
+			<strong>Add a {{ photo_type }} here!</strong><br />
+			{% if food %}
+			<form id="food_pic_form" method="post" action="{% url 'fooodie:addfoodphoto' %}" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" name="submit" value="Add Pic"/>
+			</form>
+			{% else %}
 			<form id="profile_pic_form" method="post" action="{% url 'fooodie:settingsprofilepic' %}" enctype="multipart/form-data">
 				{% csrf_token %}
-				{{ profile_pic_form.as_p }}
-				<input type="submit" name="submit" value="Add Profile Pic" />
+				{{ form.as_p }}
+				<input type="submit" name="submit" value="Add Pic" />
 			</form>
-		{% endif %}
+			{% endif %}
+			
 		</div><!-- END fooodie-MAIN -->
 	</div><!-- END fooodie-PAGE -->
 </section>

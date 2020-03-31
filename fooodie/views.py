@@ -193,7 +193,6 @@ def user_logout(request):
 #ADD AND DELETE PICTURE FUNCTIONALITY STARTS
 @login_required
 def addfoodphoto(request):
-    added = False # If it's a HTTP POST, we're interested in processing form data.
     profile=UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
         photo_form = PhotoForm(request.POST) # If the form is valid...
@@ -205,7 +204,6 @@ def addfoodphoto(request):
             photo.photo = request.FILES['photo']
             # Now we save the UserProfile model instance.
             photo.save() # Update our variable to indicate that the template registration was successful.
-            added = True
             
             return redirect(reverse('fooodie:myprofile'))
         else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
@@ -214,10 +212,12 @@ def addfoodphoto(request):
         photo_form = PhotoForm()
 
     context_dict = {}
-    context_dict['food_pic_form'] = photo_form
+    context_dict['form'] = photo_form
     context_dict['profile'] = profile
-
-    return render(request, 'fooodie/addpic.html', context = context_dict)
+    context_dict['photo_type']="food photo"
+    context_dict['food']=True
+    
+    return render(request, 'fooodie/addpropic.html', context = context_dict)
 
 @login_required
 def deletepic(request, photo_id):
@@ -303,9 +303,7 @@ def settingsemail(request):
 
 @login_required
 def settingsprofilepic(request):
-    added = False
     profile = UserProfile.objects.get(user = request.user)
-
     if request.method == 'POST':
         profile_pic_form = ChangePicture(request.POST)
         if profile_pic_form.is_valid():
@@ -331,7 +329,7 @@ def settingsprofilepic(request):
             profile.picture = path_to_profile_pic
             profile.save()
 
-            added = True
+            return redirect(reverse('fooodie:myprofile'))
 
         else:
             print(profile_pic_form.errors)
@@ -340,9 +338,9 @@ def settingsprofilepic(request):
         profile_pic_form = ChangePicture()
 
     context_dict = {}
-    context_dict['profile_pic_form'] = profile_pic_form
-    context_dict['added'] = added
+    context_dict['form'] = profile_pic_form
     context_dict['profile'] = profile
+    context_dict['photo_type']="profile picture"
 
     return render(request, 'fooodie/addpropic.html', context = context_dict )
 
