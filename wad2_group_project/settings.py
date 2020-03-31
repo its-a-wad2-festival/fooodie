@@ -142,7 +142,7 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1096098852729-6rob9t55nsi58499b3p1mg4qcqlb8i2u.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'llklrkK-ijIx6wiz1XgJj6oK'
-LOGIN_REDIRECT_URL='fooodie:GoogleLoggedIn'
+LOGIN_REDIRECT_URL='fooodie:googleloggedin'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 
