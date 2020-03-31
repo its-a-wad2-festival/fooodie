@@ -295,7 +295,6 @@ def settingsemail(request):
 
 @login_required
 def settingsprofilepic(request):
-    print('Called!')
     added = False
     profile = UserProfile.objects.get(user = request.user)
 
@@ -304,6 +303,7 @@ def settingsprofilepic(request):
         if profile_pic_form.is_valid():
             profile_dir = os.path.join(settings.MEDIA_DIR, str(profile.id))
             profile_pic_path = os.path.join(os.path.join(settings.MEDIA_DIR, str(profile.id)), str(profile.picture))
+            print(profile_pic_path)
             random_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
 
             new_profile_pic = request.FILES['picture']
