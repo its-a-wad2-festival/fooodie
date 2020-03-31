@@ -37,7 +37,7 @@
 									  {% else %}
 										<li class="fooodie-awards-star"><img src="{% static 'images/defaultprofilefoto.jpg' %}" class = "profile-pic-leaderboard"/></li>
 									  {% endif %}
-									  <li class="fooodie-awards-title"><a href="{% url 'fooodie:user_profile' profile.slug %}">{{ profile.user.username }}</a>
+									  <li class="fooodie-awards-title"><a href="{% url 'fooodie:userprofile' profile.slug %}">{{ profile.user.username }}</a>
 									  {% if position == 1 %}
 										<div class="fooodie-awards-subtitle">Our favorite</div>
 										{% elif position == 2 %}
@@ -74,6 +74,7 @@
 											<div class="text ml-6 mb-6">
 												<h3>{{ pic.name }}</h3>
 												<span class="tag">Author: {{ pic.user.user.username }}</span><br>
+												<span class="tag">Date uploaded: {{ pic.date }}</span><br>
 												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
 												
 											</div>

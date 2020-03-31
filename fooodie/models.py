@@ -56,6 +56,7 @@ class Photo(models.Model):
     votes=models.IntegerField(default=0) #Number of votes the picture has
     user= models.ForeignKey(UserProfile, on_delete=models.CASCADE) #User which uploaded the photo, 1 to MANY relation, so primary key on MANY side
     photo = models.ImageField(blank=True, upload_to = get_upload_filename) #Uploaded photo
+    date=models.DateField(auto_now=True)
     
     def __str__(self):
         return self.name

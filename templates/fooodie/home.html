@@ -65,14 +65,15 @@
 					{% for pic in random_pics %}
 						<!-- Single gallery Item Start -->
 						<div class="col-md-4">
-										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }}); height: 250px;">
-										<div class="overlay"> </div>
-											<div class="text ml-3 mb-3">
-												<h3>{{ pic.name }}</h3>
-												<span class="tag">Author: {{ pic.user.user.username }}</span><br>
-												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
-											</div>
-										</a>
+							<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }}); height: 250px;">
+								<div class="overlay"> </div>
+								<div class="text ml-3 mb-3">
+									<h3>{{ pic.name }}</h3>
+									<span class="tag">Author: {{ pic.user.user.username }}</span><br>
+									<span class="tag">Date uploaded: {{ pic.date }}</span><br>
+									<span class="tag">Number of votes: {{ pic.votes }}</span><br>
+								</div>
+							</a>
 						</div>
 					{% endfor %}
 				</div>
