@@ -15,6 +15,25 @@ from django.contrib import messages
 import os, random, string
 from django.views import View
 
+#####################################HELPER FUNCTIONS START
+def profile_leaderboard(profile):
+    top_profiles_set = UserProfile.objects.order_by('-totalVotes')
+    top_profiles = []
+    position_leaderboard = 0
+    profile_votes=['-1']
+    for userprofile in top_profiles_set: #Creates new List containing tuples (UserProfile,Position)
+        if profile_votes[len(profile_votes)-1]!=userprofile.totalVotes:
+            print(profile_votes[len(profile_votes)-1])
+            position_leaderboard +=  1
+        profile_votes.append(userprofile.totalVotes)
+        if profile==userprofile:
+            break
+    print(position_leaderboard)
+    return position_leaderboard    
+
+####################################HELPER FUNCTIONS END
+
+###########VIEWS
 def home(request):
     context_dict = {}
 ##    #Ordering all photos randomly, picking first two
@@ -235,19 +254,9 @@ def myprofile(request): #User's manage account site
     try:
         profile = UserProfile.objects.get(user = user)
         context_dict['profile'] = profile
-        photos = Photo.objects.filter(user__id = profile.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
+        photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
-        
-        #Leaderboard Ranking Calculation STARTS
-        top_profiles_set = UserProfile.objects.order_by('-totalVotes')
-        top_profiles = []
-        position_leaderboard = 1
-        for userprofile in top_profiles_set: #Creates new List containing tuples (UserProfile,Position)
-            if profile==userprofile:
-                break
-            position_leaderboard = position_leaderboard + 1
-        context_dict['position'] = position_leaderboard
-        #Leaderboard Ranking Calculation ENDS
+        context_dict['position'] = profile_leaderboard(profile)
         
         #NUMBER OF PICS COUNTER
         i = 0
@@ -401,26 +410,14 @@ def user_search(request):
     return redirect(reverse('fooodie:user_profile', args=[profile.slug]))
 
 def user_profile(request, user_profile_slug):
-    context_dict = {}
-    user = request.user
     try:
-        context_dict = {}
         profile = UserProfile.objects.get(slug = user_profile_slug)
+        context_dict = {}
         context_dict['profile'] = profile
         photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
+        context_dict['position'] = profile_leaderboard(profile) #Function declared at bottom of page
         
-        #Leaderboard Ranking Calculation STARTS
-        top_profiles_set = UserProfile.objects.order_by('-totalVotes')
-        top_profiles = []
-        position_leaderboard = 1
-        for userprofile in top_profiles_set: #Creates new List containing tuples (UserProfile,Position)
-            if profile==userprofile:
-                break
-            position_leaderboard = position_leaderboard + 1
-        context_dict['position'] = position_leaderboard
-        #Leaderboard Ranking Calculation ENDS
-
         #NUMBER OF PICTURE COUNTER STARTS
         i = 0
         for picture in photos:
@@ -447,7 +444,6 @@ def googleloggedin(request):
 class LikePhoto(View):
     def get(self, request):
         photo_id = request.GET['photo_id']
-
         try:
             photo = Photo.objects.get(id = int(photo_id))
         except Photo.DoesNotExist:
@@ -484,5 +480,7 @@ class LikePhoto(View):
                        }
 
         return JsonResponse(return_dict)
+
+
 
 # Create your views here.
