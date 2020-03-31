@@ -231,6 +231,7 @@ def myprofile(request): #User's manage account site
     user = request.user
     context_dict={}
     context_dict['user'] = user
+    context_dict['my_profile']=True
     try:
         profile = UserProfile.objects.get(user = user)
         context_dict['profile'] = profile
@@ -256,7 +257,7 @@ def myprofile(request): #User's manage account site
         #NUMBER OF PICS COUNTER ENDS
     except:
         pass #IF THIS HAPPENS IT MEANS YOU'RE USING AN USER THAT DOESN'T HAVE A PROFILE, MOST LIKELY A SUPERUSER.
-    return render(request, 'fooodie/myprofile.html', context = context_dict)
+    return render(request, 'fooodie/profile.html', context = context_dict)
     
 @login_required
 def user_settings(request):
@@ -427,8 +428,8 @@ def user_profile(request, user_profile_slug):
         context_dict['totalPhotos'] = i 
         #NUMBER OF PICTURE COUNTER ENDS
     except:
-        return render(request, 'fooodie/userprofile.html', context = {'user_searched' : user_profile_slug})
-    return render(request, 'fooodie/userprofile.html', context = context_dict)
+        return render(request, 'fooodie/profile.html', context = {'user_searched' : user_profile_slug})
+    return render(request, 'fooodie/profile.html', context = context_dict)
 #SEARCH AND USER PROFILE ENDS
 
 #GOOGLE ACCOUNT LOG IN STARTS

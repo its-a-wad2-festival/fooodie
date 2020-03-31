@@ -1,0 +1,133 @@
+{% extends 'fooodie/base.html' %}
+{% load static %}
+
+
+	{% block title_block %}
+		MyProfile
+	{% endblock %}
+
+<!--Just a layout, with placeholders still need actual obejcts-->
+{% block body_block %}
+<section class="section_padding_100_0 clearfix">
+	<div id="fooodie-page">
+		{% if profile %}
+			<a href="#" class="js-fooodie-nav-toggle fooodie-nav-toggle"><i></i></a>
+			<aside id="fooodie-aside" role="complementary" class="text-center">
+				{% if profile.picture %}
+					<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({{ profile.picture.url}});"></span>{{ profile.user.username }}</a></h1>
+				{% else %}
+					<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({% static 'images/defaultprofilefoto.jpg' %});"></span>{{ profile.user.username }}</a></h1>
+				{% endif %}
+				<nav id="fooodie-main-menu" role="navigation">
+					{% if my_profile %}
+						<ul>
+							<li> <a href="{% url 'fooodie:settingsprofilepic' %}"> Upload a profile Picture</a></li>
+							<li><a href="{% url 'fooodie:addfoodphoto'%}">Upload a food plate</a></li>
+							<li><a href="{% url 'fooodie:settings' %}">Settings</a></li>
+						</ul>
+					{% endif %}
+				</nav>
+			</aside> <!-- END fooodie-ASIDE -->
+			
+			<div id="fooodie-main">
+				<section class="ftco-bread">
+					<div class="container">
+						<div class="row no-gutters slider-text justify-content-center align-items-center">
+							<div class="col-md-8">
+								<h1 class="bread">My Profile</h1>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="section_padding_50_20 clearfix">
+					<div class="photograhy">
+						<div class="row">
+							{% if photos %}
+								{% for pic in photos %}	
+									<!-- Actual food photo -->
+									<div class="col-md-4">
+										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
+											<div class="overlay"> </div>
+											<div class="text ml-4 mb-4">
+												<h3>{{ pic.name }}</h3>
+												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
+												{% if my_profile %}
+													<button  class="fooodie-btn2 btn-primary btn-sm" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';"> 
+													<i class="fas fa-trash-alt"></i>
+													</button>
+												{% endif %}
+											</div>
+										</a>			
+									</div>
+								{% endfor %}
+							{% else %}
+								{% if my_profile %}
+									<strong>You have no pictures uploaded :(</strong>
+								{% else %}
+									{{ profile.user.username }} has no pictures uploaded :(
+								{% endif %}
+							{% endif %}
+						</div>
+					</div>
+				</section>
+					<!-- BEGINS fooodie-Counter -->
+				<section class="ftco-section ftco-counter img" id="section-counter">
+					<div class="container">
+						<div class="row justify-content-start">
+							<div class="col-md-10">
+								<div class="row center-text">
+									<div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
+										<div class="block-18">
+											<div class="text d-flex align-items-center">
+												<strong class="number" data-number="{{ totalPhotos }}">0</strong>
+												<span>Uploaded Pictures</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
+										<div class="block-18">
+										  <div class="text d-flex align-items-center">
+											<strong class="number" data-number="{{profile.totalVotes}}">0</strong>
+											<span>Total Votes</span>
+										  </div>
+										</div>
+									</div>
+									<div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
+										<div class="block-18">
+											<div class="text d-flex align-items-center">
+												<strong class="number" data-number="{{position}}">0</strong>
+												<span>In Leaderboard</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>					
+				</section>
+			{% else %}		
+				<div class="notFoundPage">
+					<div id="notfound">
+						<div class="notfound">
+							<div class="notfound-404">
+								{% if my_profile %}
+									<h3>User not linked to a UserProfile</h3>
+								{% else %}
+									<h3>Oops! Page not found</h3>
+								{% endif %}
+								<h1><span>4</span><span>0</span><span>4</span></h1>
+							</div>
+							{% if my_profile %}
+								<h2>You're using a user that is NOT linked to a UserProfile, which means you're most likely a dev with a superuser, so none of this options are available for you. This is done to avoid cheating by superusers. If you want to check this part out make a normal profile like everyone else</h2>
+							{% else %}
+								<h2>We are sorry, but {{ user_searched }} was not found. Please try again. Remember you can only search for users using their exact username.</h2>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</div><!-- END fooodie-MAIN -->
+	</div><!-- END fooodie-COUNTER -->
+
+</section>
+{% endblock %}
