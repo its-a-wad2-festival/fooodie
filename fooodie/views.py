@@ -429,7 +429,7 @@ def user_profile(request, user_profile_slug):
 def googleloggedin(request):
     user=request.user
     try:
-        profile = profiles.get(user=user)
+        profile = UserProfiles.objects.get(user=user)
     except:
         profile = UserProfile(user=user)
         profile.google=True
