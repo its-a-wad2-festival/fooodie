@@ -25,7 +25,7 @@ SECRET_KEY = '6csdnryn_ll%mzij$*tb2ge4=va0u!%3*%!-b3rdvp8f0sw9yk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['teamfooodiewebapp.pythonanywhere.com']
+ALLOWED_HOSTS = ['teamfooodiewebapp.pythonanywhere.com', '127.0.0.1']
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(os.path.join(BASE_DIR, 'static'))
