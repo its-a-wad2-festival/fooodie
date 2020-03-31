@@ -42,7 +42,7 @@ def add_photo(userProfile):
     votes= random.randint(100,500)
     p.votes = votes
     photo = random.choice(population_photos)
-    p.name = str(photo)
+    p.name = str(photo)[:-4]
     p.photo = get_upload_filename(p,p.name) #Same function we use in models to assign the destination folder of the pictures
     photo_old_path = os.path.join(population_photos_old_path,photo)
     photo_new_path = os.path.join(os.path.join(MEDIA_DIR,str(userProfile.id)),str(p.photo.url.split("/")[-1])) #Rename file to point to p.photo.url
@@ -53,6 +53,8 @@ def add_photo(userProfile):
     shutil.copy(photo_old_path,photo_new_path) #Physically moves photo to user's photo file
 
 if __name__ == '__main__':
+    if os.path.isdir(MEDIA_DIR)==False:
+        os.mkdir(MEDIA_DIR)
     print('Starting fooodie population script...')
     for i in range (0,20):
         create_user_profile()

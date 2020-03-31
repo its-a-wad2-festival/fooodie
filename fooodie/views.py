@@ -209,7 +209,7 @@ def addfoodphoto(request):
     context_dict['added'] = added
     context_dict['profile'] = profile
 
-    return render(request, 'fooodie/addPic.html', context = context_dict)
+    return render(request, 'fooodie/addpic.html', context = context_dict)
 
 @login_required
 def deletepic(request, photo_id):
@@ -295,7 +295,6 @@ def settingsemail(request):
 
 @login_required
 def settingsprofilepic(request):
-    print('Called!')
     added = False
     profile = UserProfile.objects.get(user = request.user)
 
@@ -304,6 +303,7 @@ def settingsprofilepic(request):
         if profile_pic_form.is_valid():
             profile_dir = os.path.join(settings.MEDIA_DIR, str(profile.id))
             profile_pic_path = os.path.join(os.path.join(settings.MEDIA_DIR, str(profile.id)), str(profile.picture))
+            print(profile_pic_path)
             random_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
 
             new_profile_pic = request.FILES['picture']
@@ -336,7 +336,7 @@ def settingsprofilepic(request):
     context_dict['added'] = added
     context_dict['profile'] = profile
 
-    return render(request, 'fooodie/addProPic.html', context = context_dict )
+    return render(request, 'fooodie/addpropic.html', context = context_dict )
 
 @login_required
 def settingspassword(request):
@@ -429,7 +429,7 @@ def user_profile(request, user_profile_slug):
 def googleloggedin(request):
     user=request.user
     try:
-        profile = profiles.get(user=user)
+        profile = UserProfiles.objects.get(user=user)
     except:
         profile = UserProfile(user=user)
         profile.google=True
