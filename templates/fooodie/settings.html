@@ -21,13 +21,9 @@
 			{% endif %}
 			<nav id="fooodie-main-menu" role="navigation">
 				<ul>
-					{% if profile %}
 					<li> <a href="{% url 'fooodie:settingsprofilepic' %}"> Upload a profile Picture</a></li>
 					<li><a href="{% url 'fooodie:addfoodphoto'%}">Upload a food plate</a></li>
 					<li><a href="/fooodie/myprofile/settings/">Settings</a></li>
-					{% else %}
-						<strong>You're using a user that is NOT linked to a UserProfile, thus you have no profile picture options available</strong>
-					{% endif %}
 				</ul>
 			</nav>
 		</aside> <!-- END fooodie-ASIDE -->
@@ -42,24 +38,25 @@
 					</div>
 				</div>
 			</section>
-			Your username: </br>
+			<strong>Your username:</strong> </br>
 				{{ profile.user.username }} </br>
-				<a class="nav-link" href="{% url 'fooodie:settingsusername' %}">Change your username</a>
-				Your profile picture: </br>
+				<p><a class="nav-link" href="{% url 'fooodie:settingsusername' %}">Change your username</a></p>
+				<strong>Your profile picture: </strong> </br>
 				{% if profile.picture %}
 					{{ profile.picture }} </br>
 				{% else %}
 					You don't have a profile picture </br>
 				{% endif %}
-				<a class="nav-link" href="{% url 'fooodie:settingsprofilepic' %}">Change your profile picture</a> 
+				<p><a class="nav-link" href="{% url 'fooodie:settingsprofilepic' %}">Change your profile picture</a></p>
 				{% if profile.google %}
-					Accounts made with google have no password nor an option to change your email.
+					Your account is a Google Account. When Google first amde the Google Account it was deigned for you not to have to remember multiple passwords nor emails. We took this step a bit further. You do NOT need to remember your password as... You don't have one! <br>
+					So great isn't it? As long as you're logged into your google account you can easily log into fooodie too! Isn't that ideal? Go password free!
 				{% else %}
-					Your email: </br>
+					<strong>Your email:</strong> </br>
 					{{ profile.user.email }} </br>
-					<a class="nav-link" href="{% url 'fooodie:settingsemail' %}">Change your email</a>
-					Click here if you wish to change your password!
-					<a class="nav-link" href="{% url 'fooodie:settingspassword' %}">Change your password</a> </br>
+					<p><a class="nav-link" href="{% url 'fooodie:settingsemail' %}">Change your email</a></p>
+					Click below on 'Change your password' if you wish to change your password!
+					<p><a class="nav-link" href="{% url 'fooodie:settingspassword' %}">Change your password</a></p> </br>
 					</br></br>
 				{% endif %}
 		</div><!-- END fooodie-MAIN -->
