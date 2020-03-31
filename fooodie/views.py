@@ -100,7 +100,7 @@ def user_login(request):
                 print("Login success!")
                 print("Is user thenticated?")
                 print(user.is_authenticated)
-                return redirect(reverse('fooodie:home'))
+                return redirect(reverse('fooodie:myprofile'))
             else:
                 return HttpResponse("Your account is disabled")
         else:
@@ -172,7 +172,14 @@ def register(request):
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-
+    
+    if registered==True: 
+        user.backend='django.contrib.auth.backends.ModelBackend' 
+        #Specify backend used for log in as we have 2 log in backends (Social and standard Django)
+        login(request, user)
+        return redirect(reverse('fooodie:myprofile'))
+        
+        
     return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
                                                                'profile_form' : profile_form,
                                                                'registered' : registered})
