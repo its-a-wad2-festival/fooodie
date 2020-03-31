@@ -94,7 +94,7 @@ def leaderboard(request):
 #REGISTRATION/LOG IN/LOG OUT STARTS    
 #This will simply display the forms; the associated template will call
 #one of the functions below dependent on button clicked
-def usersignuplogin(request):
+def loginregister(request):
     registered = False
     user_form = UserForm()
     profile_form = UserProfileForm()

@@ -18,18 +18,15 @@ urlpatterns = [
     path('myprofile/settings/profilepic/', views.settingsprofilepic, name = 'settingsprofilepic'),
     path('myprofile/settings/email/', views.settingsemail, name = 'settingsemail'),
 
-    path('user_search/', views.user_search, name='usersearch'),
-    path('user/<slug:user_profile_slug>/', views.user_profile, name='userprofile'),
+    path('usersearch/', views.usersearch, name='usersearch'),
+    path('user/<slug:user_profile_slug>/', views.userprofile, name='userprofile'),
 
     path('logout/', views.userlogout, name='logout'),
     path('login/', views.userlogin, name='login'),
     path('register/', views.register, name = 'register'),
-    path('loginregister/', views.usersignup_login, name='loginregister'),
+    path('loginregister/', views.loginregister, name='loginregister'),
     path('googleloggedin/', views.googleloggedin, name='googleloggedin'),
 
 
     path('like_photo/', views.LikePhoto.as_view(), name = 'likephoto'),
     ]
-"""path('add_photo/', views.add_photo, name='add_photo'),
-path('user/<slug:user_name_slug>/', views.restricted, name='user'),
-path('logout/', views.user_logout, name='logout'),"""

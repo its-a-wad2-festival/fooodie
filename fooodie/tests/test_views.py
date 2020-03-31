@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from fooodie.models import UserProfile, Photo, UserFactory
 
 class UserFactoryTestCase(factory.django.DjangoModelFactory):
