@@ -94,7 +94,7 @@ def leaderboard(request):
 #REGISTRATION/LOG IN/LOG OUT STARTS    
 #This will simply display the forms; the associated template will call
 #one of the functions below dependent on button clicked
-def user_signup_login(request):
+def usersignuplogin(request):
     registered = False
     user_form = UserForm()
     profile_form = UserProfileForm()
@@ -105,7 +105,7 @@ def user_signup_login(request):
 
 
 #Will focus on the registration/login logic first, implement into a single view later
-def user_login(request):
+def userlogin(request):
     if request.method == 'POST':
         #Need to consider allowing email OR username potentially
         username = request.POST.get('username')
@@ -204,7 +204,7 @@ def register(request):
                                                                'registered' : registered})
 
 @login_required
-def user_logout(request):
+def userlogout(request):
     logout(request) # Since we know the user is logged in, we can now just log them out.
     return redirect(reverse('fooodie:home'))
 #REGISTRATION/LOG IN/LOG OUT ENDS    
@@ -269,7 +269,7 @@ def myprofile(request): #User's manage account site
     return render(request, 'fooodie/profile.html', context = context_dict)
     
 @login_required
-def user_settings(request):
+def usersettings(request):
     context_dict = {}
     user = request.user
     profile = UserProfile.objects.get(user = user)
@@ -400,16 +400,16 @@ def visitor_cookie_handler(request):
 #COOKIE STUFF ENDS
 
 #SEARCH AND USER PROFILE STARTS
-def user_search(request):
+def usersearch(request):
     username=request.GET.get('search')
     try:
         profile=UserProfile.objects.get(user__username=username)
     except:
         print("AAAAAAAA")
-        return redirect(reverse('fooodie:user_profile', args=[username]))
-    return redirect(reverse('fooodie:user_profile', args=[profile.slug]))
+        return redirect(reverse('fooodie:userprofile', args=[username]))
+    return redirect(reverse('fooodie:userprofile', args=[profile.slug]))
 
-def user_profile(request, user_profile_slug):
+def userprofile(request, user_profile_slug):
     try:
         profile = UserProfile.objects.get(slug = user_profile_slug)
         context_dict = {}
@@ -480,7 +480,5 @@ class LikePhoto(View):
                        }
 
         return JsonResponse(return_dict)
-
-
 
 # Create your views here.
