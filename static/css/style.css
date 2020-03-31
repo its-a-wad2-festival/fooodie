@@ -123,7 +123,7 @@ img {
 
 .fooodie-btn {
 	position: absolute;
-  top: 80%;
+  top: 90%;
   left: 92%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -213,6 +213,7 @@ img {
     color: #fff;
     display: block;
     font-size: 15px;
+	font-family: "Montserrat"
     -webkit-transition-duration: 500ms;
     transition-duration: 500ms;
     padding: 0 15px;
@@ -276,203 +277,32 @@ img {
 }
 
 /* -------------------------
-:: 17.0 Clients Area
+:: 17.0 Home
 ------------------------- */
+.question {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #756213;
+	background-image: linear-gradient(315deg, #756213 0%, #000000 74%);
+	box-shadow: 0px 7px 8px -1px rgba(0,0,0,0.75);
 
-.fooodie-clients-testimonials-area {
-    background-color: #211b31;
+    overflow: hidden;	
     position: relative;
-    z-index: 1;
 }
 
-.fooodie-clients-testimonials-area .section-heading h2 {
-    color: #fff;
-}
 
-.testimonial-content span {
-    font-size: 60px;
-    color: #fff;
-    line-height: 1;
-    font-weight: 900;
-}
-
-.testimonial-content p {
-    margin-bottom: 0;
-}
-
-.testimonials-meta .testimonial-thumb {
-    width: 52px;
-    height: 52px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    border: 3px solid #211b31;
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
-    position: relative;
-    z-index: 1;
-    margin-top: 40px;
-}
-
-.testimonials-meta > h6 {
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 5px;
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
-}
-
-.testimonials-meta > p {
-    margin-bottom: 0;
-    font-weight: 700;
-    letter-spacing: 2px;
-    font-size: 12px;
-    text-transform: uppercase;
-}
-
-.testimonials-slides {
-    position: relative;
-    z-index: 1;
-}
-
-.testimonials-slides:before {
+.or {
     position: absolute;
-    width: 33.33333%;
-    text-align: center;
-    content: "Previous";
-    top: 0;
-    left: 0;
-    z-index: -5;
-    height: 100%;
-    color: #fff;
-}
-
-.testimonials-slides:after {
-    position: absolute;
-    width: 33.33333%;
-    text-align: center;
-    content: "Next";
-    top: 0;
-    right: 0;
-    z-index: -5;
-    height: 100%;
-    color: #fff;
-}
-
-.testimonials-slides .owl-prev,
-.testimonials-slides .owl-next {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-color: transparent;
-    line-height: 60px;
-    text-align: center;
-    top: 21%;
-    margin-top: -30px;
-    left: -25px;
-    border-radius: 50%;
-    color: #a2baff;
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
-}
-
-.testimonials-slides .owl-next {
-    left: auto;
-    right: -25px;
-}
-
-.testimonials-slides .single-testimonial-area .testimonial-content {
-    display: none;
-}
-
-.testimonials-slides .center .single-testimonial-area .testimonial-content {
-    display: block;
-}
-
-.single-testimonial-area:hover .testimonials-meta > h6,
-.testimonials-slides .center .single-testimonial-area .testimonials-meta > h6 {
-    color: #fff;
-}
-
-.single-testimonial-area:hover .testimonials-meta .testimonial-thumb {
-    border: 3px solid #4a7aec;
-}
-
-/* Sonar CSS */
-
-.testimonial-thumb:before {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    width: calc(100% - 6px);
-    height: calc(100% - 6px);
-    border-radius: 50%;
-    top: 3px;
-    left: 3px;
-    -webkit-animation: sonar-effect 1s ease-in-out 0s infinite;
-    animation: sonar-effect 1s ease-in-out 0s infinite;
-    z-index: -1
-}
-
-.testimonials-slides .center .testimonial-thumb:before {
-    display: none;
-}
-
-@-webkit-keyframes sonar-effect {
-    0% {
-        opacity: 0;
-        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    }
-    50% {
-        opacity: 0.5;
-        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-        box-shadow: 0 0 0 3px #4a7aec, 0 0 5px 5px #4a7aec, 0 0 0 5px #4a7aec;
-    }
-    100% {
-        box-shadow: 0 0 0 3px #4a7aec, 0 0 5px 5px #4a7aec, 0 0 0 5px #4a7aec;
-        -webkit-transform: scale(1.4);
-        transform: scale(1.4);
-        opacity: 0;
-        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    }
-}
-
-
-@keyframes sonar-effect {
-    0% {
-        opacity: 0;
-        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    }
-    50% {
-        opacity: 0.5;
-        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-        box-shadow: 0 0 0 3px #4a7aec, 0 0 5px 5px #4a7aec, 0 0 0 5px #4a7aec;
-    }
-    100% {
-        box-shadow: 0 0 0 3px #4a7aec, 0 0 5px 5px #4a7aec, 0 0 0 5px #4a7aec;
-        -webkit-transform: scale(1.4);
-        transform: scale(1.4);
-        opacity: 0;
-        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    }
-}
-
-.fooodie-cool-facts-area.service-page {
-    width: 100%;
-    position: relative;
-    z-index: 1;
-    height: 500px;
-}
-
-.fooodie-cool-facts-area.service-page .counter-area h3,
-.fooodie-cool-facts-area.service-page .cool-facts-content p {
-    color: #fff;
-}
-
-.skills-text > p {
-    padding-right: 30px;
-}
-
-.skills-text > p:last-child {
-    padding-right: 0;
+    left: 50%;
+    top: 50%;
+    margin-top: -35px;
+    margin-left: -35px;
+    width: 72px;
+    height: 71px;
+    background-image: url(https://static.either.io/v2/img/yr-common-sprite.gz.png);
+    background-position: -97px -79px;
+    background-repeat: none;
+    z-index: 5;
 }
 
 /* -----------------------
@@ -481,6 +311,7 @@ img {
 body {
 	position: relative;
 	height:100%;
+	width: 100%;
   font-family: "Montserrat", Arial, sans-serif;
   background: #fff;
   font-size: 15px;
@@ -728,12 +559,14 @@ h1, h2, h3, h4, h5,
 
 
 .photography-entry {
-  height: 250px;
+  height: 350px;
   display: inline-block;
   z-index: 0;
   position: relative;
-  margin: 0 auto;
-  margin-bottom: 30px; }
+  top: 10;
+  margin: 0;
+  margin-bottom: 0px; }
+
   .photography-entry .overlay {
     position: absolute;
     top: 0;
@@ -851,6 +684,11 @@ h1, h2, h3, h4, h5,
 ----------------------- */
 .heading-leaderboard {
     margin-bottom: 10px;
+}
+
+#h3_heading {
+    font-family: "Poppins", Arial, sans-serif;
+	font-weight: 800;
 }
 
 }

@@ -17,7 +17,7 @@
 		<div class="row">
 			<div class="col">
 				<div class="heading-leaderboard text-center">
-				<h3>These are our best users</h3>
+				<h3 id="h3_heading"> Our best users</h3>
 				<div class="row">
 					<div class="col">
 							<div class="fooodie-window">
@@ -63,12 +63,13 @@
 				</div>
 			</div>
 			<div class="col">
-				<h3> Here are the top ranking photos </h3>
+				<h3 id="h3_heading"> Top ranking photos </h3>
 					<div class="section-heading text-center">
 					{% if top_pics %}
 						{% for pic in top_pics %}
 						<div class="row">
-										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }}); width: 75%;">
+										<a href="{{ pic.photo.url }}" class="photography-entry leaderboard img image-popup d-flex justify-content-start align-items-end" 
+										style="background-image: url({{ pic.photo.url }}); width: 75%; margin-bottom: 25px; margin-left: 15%;">
 										<div class="overlay"> </div>
 											<div class="text ml-6 mb-6">
 												<h3>{{ pic.name }}</h3>
