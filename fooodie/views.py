@@ -29,6 +29,15 @@ def profile_leaderboard(profile):
             break
     return position_leaderboard
 
+def random_dif_pics():
+    pics = Photo.objects.order_by('?')
+    pics_to_choose = pics[:2]
+    pic1= pics_to_choose.first()
+    pic2=pics_to_choose[1]
+    if pic1==pic2:
+        return random_dif_pics()
+    return pic1, pic2
+
 ####################################HELPER FUNCTIONS END
 
 ###########VIEWS
@@ -404,9 +413,9 @@ class LikePhoto(View):
         try:
             photo = Photo.objects.get(id = int(photo_id))
         except Photo.DoesNotExist:
-            return HttpResponse(-1)
+            return redirect(reverse('fooodie:home'))
         except ValueError:
-            return HttpResponse(-1)
+            return redirect(reverse('fooodie:home'))
 
         author = UserProfile.objects.get(id = photo.user.id)
         photo.votes = photo.votes + 1
@@ -414,13 +423,7 @@ class LikePhoto(View):
         photo.save()
         author.save()
 
-        pics = Photo.objects.order_by('?')
-
-        pics_to_choose = pics[:2]
-
-        photo1 = pics_to_choose.first()
-
-        photo2=pics_to_choose[1]
+        photo1, photo2=random_dif_pics()
 
         return_dict = {'photo1' :
                        {'url' : photo1.photo.url,
