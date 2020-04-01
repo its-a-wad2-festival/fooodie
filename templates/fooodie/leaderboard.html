@@ -10,7 +10,7 @@
 <section class="section_padding_100_0 clearfix">
 <div class="section-heading text-center">
 <p><h1 style="font-size:65px; font-weight: 800; font-family:'Codebold';" align="center";>Leaderboard</h1></p>
-<p><h1 style="font-size:25px; font-weight: 500; font-family:'Code';" align="center";>Our best users and the best pictures!</h1></p>
+<p><h1 style="font-size:25px; font-weight: 800; font-family:'Code';" align="center";>Our best users and the best pictures!</h1></p>
 </div>
 
 <div class="section-heading text-center">
@@ -68,14 +68,14 @@
 					{% if top_pics %}
 						{% for pic in top_pics %}
 						<div class="row">
-										<a href="{{ pic.photo.url }}" class="photography-entry leaderboard img image-popup d-flex justify-content-start align-items-end" 
+										<a href="{{ pic.photo.url }}" class="photography-entry leaderboard img image-popup d-flex" 
 										style="background-image: url({{ pic.photo.url }}); width: 75%; margin-bottom: 25px; margin-left: 15%;">
 										<div class="overlay"> </div>
-											<div class="text ml-6 mb-6">
+											<div class="text d-flex flex-column ml-4 mb-4 justify-content-end align-items-start">
 												<h3>{{ pic.name }}</h3>
-												<span class="tag">Author: {{ pic.user.user.username }}</span><br>
-												<span class="tag">Posted: {{ pic.date }}</span><br>
-												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
+												<span class="tag">Author: {{ pic.user.user.username }}</span>
+												<span class="tag">Posted: {{ pic.date }}</span>
+												<span class="tag">Number of votes: {{ pic.votes }}</span>
 												
 											</div>
 										</a>
