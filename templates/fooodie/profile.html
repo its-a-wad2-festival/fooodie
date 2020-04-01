@@ -21,7 +21,7 @@
 				<nav id="fooodie-main-menu" role="navigation">
 					{% if my_profile %}
 						<ul>
-							<li> <a href="{% url 'fooodie:settingsprofilepic' %}"> Upload a profile Picture</a></li>
+							<li> <a href="{% url 'fooodie:settingsprofilepic' %}"> Upload a profile Picture </a></li>
 							<li><a href="{% url 'fooodie:addfoodphoto'%}">Upload a food plate</a></li>
 							<li><a href="{% url 'fooodie:settings' %}">Settings</a></li>
 						</ul>
@@ -33,9 +33,11 @@
 				<section class="ftco-bread">
 					
 						<div class="row no-gutters slider-text justify-content-center align-items-center" style = "position: relative; top: 0;">
-							
-								<h1 class="bread" style = "position: relative; top: 0;">My Profile</h1>
-							
+								{% if my_profile %}
+								<h1 class="bread" style = "position: relative; top: 0; font-family:'Codebold';">My Profile</h1>
+								{% else %}
+								<h1 class="bread" style = "position: relative; top: 0; font-family:'Codebold';">{{ profile.user.username }}'s Profile</h1>
+								{% endif %}
 						</div>
 						<!-- counter --->
 						
@@ -64,7 +66,7 @@
 										<div class="block-18">
 											<div class="text d-flex align-items-center">
 												<strong class="number" data-number="{{position}}">0</strong>
-												<span>In Leaderboard</span>
+												<span>  In Leaderboard  </span>
 											</div>
 										</div>
 									</div>

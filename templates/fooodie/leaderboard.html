@@ -9,15 +9,15 @@
 {% block body_block %}
 <section class="section_padding_100_0 clearfix">
 <div class="section-heading text-center">
-<p><h1 style="font-size:65px; font-weight: 800;" align="center";>Leaderboard</h1></p>
-<p><h1 style="font-size:25px; font-weight: 200;" align="center";>Our best users and the best pictures!</h1></p>
+<p><h1 style="font-size:65px; font-weight: 800; font-family:'Codebold';" align="center";>Leaderboard</h1></p>
+<p><h1 style="font-size:25px; font-weight: 500; font-family:'Code';" align="center";>Our best users and the best pictures!</h1></p>
 </div>
 
 <div class="section-heading text-center">
 		<div class="row">
 			<div class="col">
 				<div class="heading-leaderboard text-center">
-				<h3 id="h3_heading"> Our best users</h3>
+				<h3 id="h3_heading" style = "text-decoration: underline; font-family:'Codebold';"> Our best users</h3>
 				<div class="row">
 					<div class="col">
 							<div class="fooodie-window">
@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<div class="col">
-				<h3 id="h3_heading"> Top ranking photos </h3>
+				<h3 id="h3_heading" style = "text-decoration: underline; font-family:'Codebold';"> Top ranking photos </h3>
 					<div class="section-heading text-center">
 					{% if top_pics %}
 						{% for pic in top_pics %}

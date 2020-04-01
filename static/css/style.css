@@ -583,6 +583,7 @@ h1, h2, h3, h4, h5,
     -ms-transition: all 1s ease;
     transition: all 1s ease; }
   .photography-entry .text {
+	font-family: 'Code','Montserrat';
     opacity: 0;
     -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
@@ -868,6 +869,23 @@ notfound {
   margin-top: 0px;
   margin-bottom: 25px;
 }
+
+/* -----------------------
+:: Importing Custom Fonts
+----------------------- */
+@font-face {
+  font-family: 'Code';
+  src: local('Code'),
+       url('../fonts/CODELight.otf') format("opentype");
+}
+
+@font-face {
+				font-family: 'Codebold';
+				font-weight: bold;
+					src: local('Code'),
+						url('../fonts/CODEBold.otf') format("opentype");
+
+
 
 /* --------------------------------
 ============= The End =============

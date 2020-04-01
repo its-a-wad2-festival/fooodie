@@ -11,18 +11,22 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-
+	
 		<link rel="stylesheet" href="{% static 'css/style.css' %}">
 		<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+		
+		
 		<title>
+		
         Fooodie - {% block title_block %}{% endblock %}
 		</title>
 </head>
 
 <body>
+
 <!-- ***** Header Area Start ***** -->
-    <header class="header_area clearfix">
+    <header class="header_area clearfix" >
         <div class="container-fluid h-100">
             <div class="row h-100">
                 <!-- Menu Area Start -->
@@ -35,19 +39,19 @@
                             <!-- Menu Area -->
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#fooodie-navbar" aria-controls="fooodie-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
-                            <div class="collapse navbar-collapse justify-content-end" id="fooodie-navbar">
-                                <ul class="navbar-nav animated" id="nav">
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'fooodie:home' %}">Home</a></li>
-									<li class="nav-item"><a class="nav-link" href="{% url 'fooodie:leaderboard' %}">Leaderboard</a></li>
+                            <div class="collapse navbar-collapse justify-content-end" id="fooodie-navbar" style="font-family:'Codebold';">
+                                <ul class="navbar-nav animated" id="nav" style = "max-width:100%">
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'fooodie:home' %}"><i class="fas fa-home"></i> Home</a></li>
+									<li class="nav-item"><a class="nav-link" href="{% url 'fooodie:leaderboard' %}"><i class="fas fa-trophy"></i> Leaderboard</a></li>
 									{% if user.is_authenticated %}
-										<li class="nav-item"><a class="nav-link" href="{% url 'fooodie:myprofile' %}">My profile</a></li>
-										<li class="nav-item"><a class="nav-link" href="{% url 'fooodie:logout' %}">Log Out</a></li>
+										<li class="nav-item"><a class="nav-link" href="{% url 'fooodie:myprofile' %}"><i class="far fa-user"></i> My profile</a></li>
+										<li class="nav-item"><a class="nav-link" href="{% url 'fooodie:logout' %}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
 									{% else %}
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'fooodie:loginregister' %}">Login - SignUp</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'fooodie:loginregister' %}"><i class="fas fa-sign-in-alt"></i> Login - SignUp</a></li>
                                     {% endif %}
                                 </ul>
                                 <!-- Search Form Area Start -->
-									<form class="form-inline my-2 my-lg-1" action="{% url 'fooodie:usersearch' %}">
+									<form class="form-inline my-2 my-lg-1" action="{% url 'fooodie:usersearch' %}" style = "font-family: 'Montserrat';">
 										<input
 												class="form-control mr-sm-2" type="search"
 												placeholder="Search" aria-label="Search"
