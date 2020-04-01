@@ -121,9 +121,6 @@ def userlogin(request):
         if user:
             if user.is_active:
                 login(request, user)
-                print("Login success!")
-                print("Is user thenticated?")
-                print(user.is_authenticated)
                 return redirect(reverse('fooodie:myprofile'))
             else:
                 return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form , 'registered' : False, 'login_error' : "Your account has been disabled. We'd apologize... But you probably did something to earn this.",})
@@ -180,30 +177,30 @@ def userlogout(request):
 @login_required
 def addfoodphoto(request):
     profile=UserProfile.objects.get(user=request.user)
+    context_dict = {}
+    context_dict['profile'] = profile
+    context_dict['photo_type']="food photo"
+    context_dict['food']=True
     if request.method == 'POST':
         photo_form = PhotoForm(request.POST) # If the form is valid...
         if photo_form.is_valid(): # Save the photo form data to the database.
             # Now sort out the UserProfile instance. # Since we need to set the user attribute ourselves, we set commit=False. This delays saving the model
             # until we're ready to avoid integrity problems.
-            photo = photo_form.save(commit=False)
-            photo.user = profile # Did the user provide a profile picture? If so, we need to get it from the input form and put it in the UserProfile model.
-            photo.photo = request.FILES['photo']
-            # Now we save the UserProfile model instance.
-            photo.save() # Update our variable to indicate that the template registration was successful.
-
-            return redirect(reverse('fooodie:myprofile'))
+            try:
+                photo = photo_form.save(commit=False)
+                photo.user = profile # Did the user provide a profile picture? If so, we need to get it from the input form and put it in the UserProfile model.
+                photo.photo = request.FILES['photo']
+                # Now we save the UserProfile model instance.
+                photo.save() # Update our variable to indicate that the template registration was successful.
+                return redirect(reverse('fooodie:myprofile'))
+            except:
+                context_dict['error']="There was something wrong with your upload. Please try again. When this happens it's usually because you didn't upload a picture"
         else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
-            print(photo_form.errors)
+            context_dict['error']=photo_form.errors
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
         photo_form = PhotoForm()
         photo_form.fields['name'].widget.attrs['maxlength']='20'
-
-    context_dict = {}
     context_dict['form'] = photo_form
-    context_dict['profile'] = profile
-    context_dict['photo_type']="food photo"
-    context_dict['food']=True
-
     return render(request, 'fooodie/addpropic.html', context = context_dict)
 
 @login_required
@@ -282,23 +279,24 @@ def settingsemail(request):
 @login_required
 def settingsprofilepic(request):
     profile = UserProfile.objects.get(user = request.user)
+    context_dict = {}
     if request.method == 'POST':
         profile_pic_form = ChangePicture(request.POST)
         if profile_pic_form.is_valid():
-            picture=request.FILES['picture']
-            picture.name=str(profile.id)+".jpg"
-            profile.picture=picture
-            profile.save()
-
-            return redirect(reverse('fooodie:myprofile'))
-
+            try:
+                picture=request.FILES['picture']
+                picture.name=str(profile.id)+".jpg"
+                profile.picture=picture
+                profile.save()
+                return redirect(reverse('fooodie:myprofile'))
+            except:
+                context_dict['error']="There was something wrong with your upload. Please try again. When this happens it's usually because you didn't upload a picture"
         else:
-            print(profile_pic_form.errors)
+            profile_pic_form = ChangePicture()
+            context_dict['error']=profile_pic_form.errors
 
     else:
         profile_pic_form = ChangePicture()
-
-    context_dict = {}
     context_dict['form'] = profile_pic_form
     context_dict['profile'] = profile
     context_dict['photo_type']="profile picture"

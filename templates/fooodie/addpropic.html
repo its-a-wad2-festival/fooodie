@@ -35,6 +35,9 @@ Add a profile picture
 			</section>
 			<div class="section-heading text-center">
 			<h1>Upload a new {{ photo_type }}</h1>
+			{% if error %}
+				{{ error }}<br>
+			{% endif %}
 			<strong>Add a {{ photo_type }} here!</strong><br />
 			{% if food %}
 			<form id="food_pic_form" method="post" action="{% url 'fooodie:addfoodphoto' %}" enctype="multipart/form-data">
