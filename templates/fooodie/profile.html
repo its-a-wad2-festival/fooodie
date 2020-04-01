@@ -31,51 +31,18 @@
 			
 			<div id="fooodie-main">
 				<section class="ftco-bread">
-					<div class="container">
-						<div class="row no-gutters slider-text justify-content-center align-items-center">
-							<div class="col-md-8">
-								<h1 class="bread">My Profile</h1>
-							</div>
+					
+						<div class="row no-gutters slider-text justify-content-center align-items-center" style = "position: relative; top: 0;">
+							
+								<h1 class="bread" style = "position: relative; top: 0;">My Profile</h1>
+							
 						</div>
-					</div>
-				</section>
-				<section class="section_padding_50_20 clearfix">
-					<div class="photograhy">
-						<div class="row">
-							{% if photos %}
-								{% for pic in photos %}	
-									<!-- Actual food photo -->
-									<div class="col-md-4">
-										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }});">
-											<div class="overlay"> </div>
-											<div class="text ml-4 mb-4">
-												<h3>{{ pic.name }}</h3>
-												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
-												<span class="tag">Posted on: {{ pic.date }}</span><br>
-												{% if my_profile %}
-													<button  class="fooodie-btn2 btn-primary btn-sm" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';"> 
-													<i class="fas fa-trash-alt"></i>
-													</button>
-												{% endif %}
-											</div>
-										</a>			
-									</div>
-								{% endfor %}
-							{% else %}
-								{% if my_profile %}
-									<strong>You have no pictures uploaded :(</strong>
-								{% else %}
-									{{ profile.user.username }} has no pictures uploaded :(
-								{% endif %}
-							{% endif %}
-						</div>
-					</div>
-				</section>
-					<!-- BEGINS fooodie-Counter -->
-				<section class="ftco-section ftco-counter img" id="section-counter">
+						<!-- counter --->
+						
+					<section class="ftco-section ftco-counter img" id="section-counter">
 					<div class="container">
 						<div class="row justify-content-start">
-							<div class="col-md-10">
+							<div class="col-md-12">
 								<div class="row center-text">
 									<div class="col-xl-4 col-md-6 d-flex justify-content-center counter-wrap">
 										<div class="block-18">
@@ -102,10 +69,46 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							
 						</div>
 					</div>					
 				</section>
+				<!-- counter -->
+				</section>
+				<section class="section_padding_50_20 clearfix" style="background-image: url({% static 'images/backgroundProfile.png' %}); min-height: 660px;">
+					<div class="photograhy">
+						<div class="row">
+							{% if photos %}
+								{% for pic in photos %}	
+									<!-- Actual food photo -->
+									<div class="col-md-4">
+										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }}); height: 250px; margin-bottom: 25px;">
+											<div class="overlay"> </div>
+											<div class="text ml-4 mb-4">
+												<h3>{{ pic.name }}</h3>
+												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
+												<span class="tag">Posted on: {{ pic.date }}</span><br>
+												{% if my_profile %}
+													<button  class="fooodie-btn2 btn-primary btn-sm" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';"> 
+													<i class="fas fa-trash-alt"></i>
+													</button>
+												{% endif %}
+											</div>
+										</a>			
+									</div>
+								{% endfor %}
+							{% else %}
+								{% if my_profile %}
+									<strong>You have no pictures uploaded :(</strong>
+								{% else %}
+									{{ profile.user.username }} has no pictures uploaded :(
+								{% endif %}
+							{% endif %}
+						</div>
+					</div>
+					
+				</section>
+				
 			{% else %}		
 				<div class="notFoundPage">
 					<div id="notfound">
@@ -128,7 +131,6 @@
 				</div>
 			{% endif %}
 		</div><!-- END fooodie-MAIN -->
-	</div><!-- END fooodie-COUNTER -->
-
+	</div>
 </section>
 {% endblock %}

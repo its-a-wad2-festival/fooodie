@@ -426,7 +426,7 @@ h1, h2, h3, h4, h5,
 #fooodie-page {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
   position: relative; }
 
 #fooodie-aside {
@@ -538,6 +538,7 @@ h1, h2, h3, h4, h5,
 
 
 #fooodie-main {
+  
   width: 100%;
   min-height: 900px;	
   float: right;
@@ -607,8 +608,11 @@ h1, h2, h3, h4, h5,
 
 .ftco-bread {
   background: #ccb78f !important;
-  margin-bottom: 10px !important;
-  padding: 4em 1.8em !important; }
+  padding-top: 1em !important;
+  padding-bottom: 2em !important; 
+  padding-left: 1.8em !important;
+  padding-right: 1.8em !important;
+  }
   .ftco-bread .breadcrumbs {
     text-transform: uppercase;
     font-size: 13px;
@@ -632,7 +636,10 @@ h1, h2, h3, h4, h5,
 
 #section-counter {
   position: relative;
-  z-index: 0; }
+  width: 100%;
+  z-index: 0;
+	bottom: 0;
+  right: 0;	}
   #section-counter:after {
     position: absolute;
     top: 0;
@@ -642,14 +649,14 @@ h1, h2, h3, h4, h5,
     content: '';
     z-index: -1;
     opacity: 1;
-    background: #242423; }
+    background: transparent; }
 	
 .ftco-counter {
   padding: 1%; }
   .ftco-counter .text strong.number {
     font-weight: 400;
     font-size: 40px;
-    color: #ccb78f;
+    color: #fff;
     width: 50%; }
   .ftco-counter .text span {
     width: 50%;
@@ -663,7 +670,7 @@ h1, h2, h3, h4, h5,
     display: block;
     font-size: 72px;
     font-weight: bold;
-    color: #ccb78f; }
+    color: #fff; }
   .ftco-counter .ftco-label {
     font-size: 12px;
     text-transform: uppercase;
@@ -672,6 +679,13 @@ h1, h2, h3, h4, h5,
 .ftco-animate {
   opacity: 0;
   visibility: hidden; }
+  
+.counterContainer {
+	position:absolute;  
+	bottom: 0;
+	margin-top: 100px;
+	width: 100%;;
+}
 
 /* -----------------------
 :: 20.0 Leaderboard
