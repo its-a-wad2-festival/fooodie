@@ -19,13 +19,18 @@ population_photos_old_path=os.path.join(BASE_DIR,'population_photos')
 
 #Might be useful to create random data for users: stackoverflow.com/questions/33024510/populate-django-database
 
-
-
+def create_user():
+    try:
+        user = UserFactory() #User created with UserFactory() in models
+        user.set_password("JoseIsAwesome") #Facts
+        #Passowrd given to ALL random users so we can access them if necessary
+        user.save()
+        return user
+    except:
+        create_user()
+    
 def create_user_profile():
-    user = UserFactory() #User created with UserFactory() in models
-    user.set_password("JoseIsAwesome") #Facts
-    #Passowrd given to ALL random users so we can access them if necessary
-    user.save()
+    user=create_user()
     profile = UserProfile(user=user)
     profile.save()
     folder_path = os.path.join(MEDIA_DIR, str(profile.id))
