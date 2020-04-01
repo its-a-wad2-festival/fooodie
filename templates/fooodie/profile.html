@@ -80,10 +80,8 @@
 				<section class="section_padding_50_20 clearfix" style="background-image: url({% static 'images/backgroundProfile.png' %}); min-height: 660px;">
 					<div class="photograhy">
 						<div class="row">
-						    {{ profile.picture.url }}  CACA
 							{% if photos %}
 								{% for pic in photos %}
-								    {{ pic.photo.url }} CACA
 									<!-- Actual food photo -->
 									<div class="col-md-4">
 										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }}); height: 250px; margin-bottom: 25px;">
