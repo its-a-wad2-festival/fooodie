@@ -27,7 +27,7 @@ def profile_leaderboard(profile):
         profile_votes.append(userprofile.totalVotes)
         if profile==userprofile:
             break
-    return position_leaderboard    
+    return position_leaderboard
 
 ####################################HELPER FUNCTIONS END
 
@@ -59,7 +59,7 @@ def home(request):
         context_dict['random_pics'] = random_pics
     except:
         return HttpResponse("DEV NOTE: If this happens, it means there has been an issue when populating the database... Delete fooodie/db.sqlite3 and delete fooodie/media with all its contents. Then in command line from workspace/fooodie/ run python manage.py migrate, once done run python populate_fooodie.py")
-    
+
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
 
@@ -92,7 +92,7 @@ def leaderboard(request):
     response = render(request, 'fooodie/leaderboard.html', context = context_dict)
     return(response)
 
-#REGISTRATION/LOG IN/LOG OUT STARTS    
+#REGISTRATION/LOG IN/LOG OUT STARTS
 #This will simply display the forms; the associated template will call
 #one of the functions below dependent on button clicked
 def loginregister(request):
@@ -114,7 +114,7 @@ def userlogin(request):
         password = request.POST.get('password')
 
         user = authenticate(username = username, password = password)
-        
+
         profile_form=UserProfileForm()
         user_form=UserForm()
         user_form.fields['username'].widget.attrs['maxlength']='20'
@@ -182,18 +182,18 @@ def register(request):
                 path_to_profile_pic = default_storage.save(profile_pic_path, ContentFile(profile_pic.read()))
                 profile.picture = path_to_profile_pic
                 profile.save()
-            
+
             registered = True
-            user.backend='django.contrib.auth.backends.ModelBackend' 
+            user.backend='django.contrib.auth.backends.ModelBackend'
             #Specify backend used for log in as we have 2 log in backends (Social and standard Django)
             login(request, user)
             return redirect(reverse('fooodie:myprofile'))
 
         else:
-            register_error=user_form.errors    
+            register_error=user_form.errors
     user_form = UserForm()
-    user_form.fields['username'].widget.attrs['maxlength']='20'    
-    
+    user_form.fields['username'].widget.attrs['maxlength']='20'
+
     return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
                                                                'profile_form' : UserProfileForm(),
                                                                'registered' : registered, 'register_error':register_error})
@@ -202,7 +202,7 @@ def register(request):
 def userlogout(request):
     logout(request) # Since we know the user is logged in, we can now just log them out.
     return redirect(reverse('fooodie:home'))
-#REGISTRATION/LOG IN/LOG OUT ENDS    
+#REGISTRATION/LOG IN/LOG OUT ENDS
 
 #ADD AND DELETE PICTURE FUNCTIONALITY STARTS
 @login_required
@@ -218,20 +218,20 @@ def addfoodphoto(request):
             photo.photo = request.FILES['photo']
             # Now we save the UserProfile model instance.
             photo.save() # Update our variable to indicate that the template registration was successful.
-            
+
             return redirect(reverse('fooodie:myprofile'))
         else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
             print(photo_form.errors)
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
         photo_form = PhotoForm()
-        photo_form.fields['username'].widget.attrs['maxlength']='20' 
+        photo_form.fields['name'].widget.attrs['maxlength']='20'
 
     context_dict = {}
     context_dict['form'] = photo_form
     context_dict['profile'] = profile
     context_dict['photo_type']="food photo"
     context_dict['food']=True
-    
+
     return render(request, 'fooodie/addpropic.html', context = context_dict)
 
 @login_required
@@ -253,7 +253,7 @@ def myprofile(request): #User's manage account site
         photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
         context_dict['position'] = profile_leaderboard(profile)
-        
+
         #NUMBER OF PICS COUNTER
         i = 0
         for picture in photos:
@@ -263,7 +263,7 @@ def myprofile(request): #User's manage account site
     except:
         pass #IF THIS HAPPENS IT MEANS YOU'RE USING AN USER THAT DOESN'T HAVE A PROFILE, MOST LIKELY A SUPERUSER.
     return render(request, 'fooodie/profile.html', context = context_dict)
-    
+
 @login_required
 def usersettings(request):
     context_dict = {}
@@ -318,7 +318,7 @@ def settingsprofilepic(request):
             new_profile_pic = request.FILES['picture']
             file_ending=new_profile_pic.name.split('.')[len(new_profile_pic.name.split('.'))-1]
             profile_pic_path = profile_pic_path+"."+file_ending
-            
+
             if os.path.isfile(profile_pic_path):
                 os.remove(profile_pic_path)
 
@@ -348,7 +348,7 @@ def deleteaccount(request):
     logout(request)
     user.delete()
     return redirect(reverse('fooodie:home'))
-    
+
 
 @login_required
 def settingspassword(request):
@@ -413,12 +413,12 @@ def userprofile(request, user_profile_slug):
         photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
         context_dict['position'] = profile_leaderboard(profile) #Function declared at bottom of page
-        
+
         #NUMBER OF PICTURE COUNTER STARTS
         i = 0
         for picture in photos:
             i = i + 1
-        context_dict['totalPhotos'] = i 
+        context_dict['totalPhotos'] = i
         #NUMBER OF PICTURE COUNTER ENDS
     except:
         return render(request, 'fooodie/profile.html', context = {'user_searched' : user_profile_slug})

@@ -14,7 +14,7 @@
 			<a href="#" class="js-fooodie-nav-toggle fooodie-nav-toggle"><i></i></a>
 			<aside id="fooodie-aside" role="complementary" class="text-center">
 				{% if profile.picture %}
-					<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({{ profile.picture.url}});"></span>{{ profile.user.username }}</a></h1>
+					<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({{ profile.picture.url }});"></span>{{ profile.user.username }}</a></h1>
 				{% else %}
 					<h1 id="fooodie-logo"><a href="/#"><span class="img" style="background-image: url({% static 'images/defaultprofilefoto.jpg' %});"></span>{{ profile.user.username }}</a></h1>
 				{% endif %}
@@ -28,10 +28,10 @@
 					{% endif %}
 				</nav>
 			</aside> <!-- END fooodie-ASIDE -->
-			
+
 			<div id="fooodie-main">
 				<section class="ftco-bread">
-					
+
 						<div class="row no-gutters slider-text justify-content-center align-items-center" style = "position: relative; top: 0;">
 								{% if my_profile %}
 								<h1 class="bread" style = "position: relative; top: 0; font-family:'Codebold';">My Profile</h1>
@@ -40,7 +40,7 @@
 								{% endif %}
 						</div>
 						<!-- counter --->
-						
+
 					<section class="ftco-section ftco-counter img" id="section-counter">
 					<div class="container">
 						<div class="row justify-content-start">
@@ -71,17 +71,19 @@
 										</div>
 									</div>
 								</div>
-							
+
 						</div>
-					</div>					
+					</div>
 				</section>
 				<!-- counter -->
 				</section>
 				<section class="section_padding_50_20 clearfix" style="background-image: url({% static 'images/backgroundProfile.png' %}); min-height: 660px;">
 					<div class="photograhy">
 						<div class="row">
+						    {{ profile.picture.url }}  CACA
 							{% if photos %}
-								{% for pic in photos %}	
+								{% for pic in photos %}
+								    {{ pic.photo.url }} CACA
 									<!-- Actual food photo -->
 									<div class="col-md-4">
 										<a href="{{ pic.photo.url }}" class="photography-entry img image-popup d-flex justify-content-start align-items-end" style="background-image: url({{ pic.photo.url }}); height: 250px; margin-bottom: 25px;">
@@ -91,12 +93,12 @@
 												<span class="tag">Number of votes: {{ pic.votes }}</span><br>
 												<span class="tag">Posted on: {{ pic.date }}</span><br>
 												{% if my_profile %}
-													<button  class="fooodie-btn2 btn-primary btn-sm" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';"> 
+													<button  class="fooodie-btn2 btn-primary btn-sm" type="button" onclick="location.href='settings/deletepic/{{ pic.id }}/';">
 													<i class="fas fa-trash-alt"></i>
 													</button>
 												{% endif %}
 											</div>
-										</a>			
+										</a>
 									</div>
 								{% endfor %}
 							{% else %}
@@ -108,10 +110,10 @@
 							{% endif %}
 						</div>
 					</div>
-					
+
 				</section>
-				
-			{% else %}		
+
+			{% else %}
 				<div class="notFoundPage">
 					<div id="notfound">
 						<div class="notfound">
