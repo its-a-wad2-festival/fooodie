@@ -24,7 +24,6 @@ class ChangeEmail(forms.Form):
     email = forms.EmailField()
 
 class ChangePicture(forms.ModelForm):
-    #picture = forms.ImageField()
     class Meta:
         model = UserProfile
         fields = ('picture',)
