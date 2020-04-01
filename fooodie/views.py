@@ -144,34 +144,9 @@ def register(request):
             user.set_password(user.password)
             user.save()
 
-            #print('user id: '+str(user.id))
-
-            #Creating the user's folder so we can put the profile pic into it
-##            folder_path = os.path.join(settings.MEDIA_DIR, str(user.id))
-##            os.mkdir(folder_path)
-##
-##            print('folder path: '+folder_path)
-##
-##            folder_path_str = str(folder_path)
-
-            ##Think about placing the photo in the directory THEN just linking to that
-            ##photo, like profile.picture = path_to_file
-
-##            if 'picture' in request.FILES:
-##                pro_pic = request.FILES['picture']
-##                pro_pic2 = Image.open(pro_pic)
-##                pro_pic2.filename = str(user.id)+'.jpg'
-##                print('filename: '+pro_pic2.filename)
-##                #filename = pro_pic.filename
-##                pro_pic2.save(folder_path)
-
-            #profile = UserProfile(user = user, slug = user.username)
-##            profile_pic = request.FILES['picture']
-##            path = default_storage.save(folder_path+'\\image.jpeg', ContentFile(profile_pic.read()))
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.slug = user.username
-            #profile.picture = path
             profile.save()
 
             if 'picture' in request.FILES:
