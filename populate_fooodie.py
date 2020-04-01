@@ -64,6 +64,7 @@ def add_photo(userProfile):
 if __name__ == '__main__':
     if os.path.isdir(MEDIA_DIR)==False:
         os.mkdir(MEDIA_DIR)
+        os.mkdir(os.path.join(MEDIA_DIR('profilepics')))
     print('Starting fooodie population script...')
     for i in range (0,20):
         create_user_profile()

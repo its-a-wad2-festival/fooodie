@@ -172,22 +172,17 @@ def register(request):
             profile.user = user
             profile.slug = user.username
             #profile.picture = path
-
             profile.save()
 
-            profile_pic_path = os.path.join(settings.MEDIA_DIR, str(profile.id))
-            os.mkdir(profile_pic_path)
-
             if 'picture' in request.FILES:
+                profile_pic_path = os.path.join(os.path.join(settings.MEDIA_DIR, "profilepics"), str(profile.id))
                 profile_pic = request.FILES['picture']
-                extension = profile_pic.name.split('.')[-1] #Gets the string after the last period, to deal with name.txt.jpg situations
-                path_to_pic = default_storage.save(profile_pic_path+'\\'+str(profile.id)+'_propic.'+extension, ContentFile(profile_pic.read()))
-                profile.picture = path_to_pic
+                file_ending=profile_pic.name.split('.')[-1]
+                profile_pic_path = profile_pic_path+"."+file_ending
+                path_to_profile_pic = default_storage.save(profile_pic_path, ContentFile(profile_pic.read()))
+                profile.picture = path_to_profile_pic
                 profile.save()
-        
-            print('So USER id is '+str(user.id)+' and PROFILE id is '+str(profile.id)+' and picture is '+str(profile.picture))
-
-
+            
             registered = True
             user.backend='django.contrib.auth.backends.ModelBackend' 
             #Specify backend used for log in as we have 2 log in backends (Social and standard Django)
@@ -318,25 +313,17 @@ def settingsprofilepic(request):
     if request.method == 'POST':
         profile_pic_form = ChangePicture(request.POST)
         if profile_pic_form.is_valid():
-            profile_dir = os.path.join(settings.MEDIA_DIR, str(profile.id))
-            profile_pic_path = os.path.join(os.path.join(settings.MEDIA_DIR, str(profile.id)), str(profile.picture))
-            print(profile_pic_path)
-            random_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
-
+            profile_dir = os.path.join(settings.MEDIA_DIR, "profilepics")
+            profile_pic_path = os.path.join(profile_dir, str(profile.id))
             new_profile_pic = request.FILES['picture']
-            extension = new_profile_pic.name.split('.')[-1]
-
-            #If a profile picture exists in the directory, it is deleted
-##            for file in os.listdir(profile_dir):
-##                print('File is '+str(file))
-##                if file.startswith(str(profile.id)+'_propic'):
-##                    os.remove(os.path.join(profile_dir, file))
-
+            file_ending=new_profile_pic.name.split('.')[len(new_profile_pic.name.split('.'))-1]
+            profile_pic_path = profile_pic_path+"."+file_ending
+            
             if os.path.isfile(profile_pic_path):
                 os.remove(profile_pic_path)
 
 
-            path_to_profile_pic = default_storage.save(profile_dir+'\\'+str(profile.id)+'_propic_'+random_id+'.'+extension, ContentFile(new_profile_pic.read()))
+            path_to_profile_pic = default_storage.save(profile_pic_path, ContentFile(new_profile_pic.read()))
             profile.picture = path_to_profile_pic
             profile.save()
 
