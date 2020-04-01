@@ -25,6 +25,7 @@
 									<h3 id="photo1name">{{ photo1.name }}</h3>
 									<span id="photo1author" class="tag">Author: {{ photo1.user.user.username }}</span>
 									<br>
+									<span id="photo1_date" class="tag">Posted on: {{ photo1.date }}</span><br>
 									<span id="photo1_likes" class="tag">Number of votes: {{ photo1.votes }}</span>
 									<br>
 								</div>
@@ -44,6 +45,7 @@
 									<h3 id="photo2name">{{ photo2.name }}</h3>
 									<span id="photo2author" class="tag">Author: {{ photo2.user.user.username }}</span>
 									<br>
+									<span id="photo1_date" class="tag">Posted on: {{ photo2.date }}</span><br>
 									<span id="photo2_likes" class="tag">Number of votes: {{ photo2.votes }}</span>
 									<br>
 								</div>
@@ -70,7 +72,7 @@
 								<div class="text ml-3 mb-3">
 									<h3>{{ pic.name }}</h3>
 									<span class="tag">Author: {{ pic.user.user.username }}</span><br>
-									<span class="tag">Date uploaded: {{ pic.date }}</span><br>
+									<span class="tag">Posted on: {{ pic.date }}</span><br>
 									<span class="tag">Number of votes: {{ pic.votes }}</span><br>
 								</div>
 							</a>
