@@ -125,9 +125,11 @@ def userlogin(request):
                 return HttpResponse("Your account is disabled")
         else:
             print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied")
+            return render(request, 'fooodie/loginregister.html', context = {'user_form' : UserForm(),
+                                                               'profile_form' : UserProfileForm(),
+                                                               'registered' : False, 'login_error':"Invalid login details supplied"})
     else:
-        return render(request, 'fooodie/loginregister.html')
+        return redirect(reverse('fooodie:loginregister'))
 
 #Will focus on the registration/login logic first, implement into a single view later
 def register(request):
@@ -193,13 +195,14 @@ def register(request):
 
         else:
             print(user_form.errors)
+            register_error=user_form.errors
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
                 
-    return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
-                                                               'profile_form' : profile_form,
-                                                               'registered' : registered})
+    return render(request, 'fooodie/loginregister.html', context = {'user_form' : UserForm(),
+                                                               'profile_form' : UserProfileForm(),
+                                                               'registered' : registered, 'register_error':register_error})
 
 @login_required
 def userlogout(request):
