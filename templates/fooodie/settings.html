@@ -38,27 +38,37 @@
 					</div>
 				</div>
 			</section>
-			<strong>Your username:</strong> </br>
-				{{ profile.user.username }} </br>
-				<p><a class="nav-link" href="{% url 'fooodie:settingsusername' %}">Change your username</a></p>
-				<strong>Your profile picture: </strong> </br>
-				{% if profile.picture %}
-					{{ profile.picture }} </br>
-				{% else %}
-					You don't have a profile picture </br>
-				{% endif %}
-				<p><a class="nav-link" href="{% url 'fooodie:settingsprofilepic' %}">Change your profile picture</a></p>
-				{% if profile.google %}
-					Your account is a Google Account. When Google first amde the Google Account it was deigned for you not to have to remember multiple passwords nor emails. We took this step a bit further. You do NOT need to remember your password as... You don't have one! <br>
-					So great isn't it? As long as you're logged into your google account you can easily log into fooodie too! Isn't that ideal? Go password free!
-				{% else %}
-					<strong>Your email:</strong> </br>
-					{{ profile.user.email }} </br>
-					<p><a class="nav-link" href="{% url 'fooodie:settingsemail' %}">Change your email</a></p>
-					Click below on 'Change your password' if you wish to change your password!
-					<p><a class="nav-link" href="{% url 'fooodie:settingspassword' %}">Change your password</a></p> </br>
-					</br></br>
-				{% endif %}
+			<div class="section-heading text-center">
+				<div class="tab-content py-4">
+					<div class="tab-pane active">
+						<h3 class="mb-3">User Profile Settings</h3>
+						<div class="row">
+							<div class="col">
+								<h6>Your username:</h6> {{ profile.user.username }}
+								<p>
+									<a class="nav-link-settings" href="{% url 'fooodie:settingsusername' %}">Change your username</a>
+								</p>
+								{% if profile.picture %}
+								<h6>Your profile picture:</h6> {{ profile.picture }}
+								{% else %}
+								<h6>Your profile picture:</h6> You don't have a profile picture
+								{% endif %}
+								<p>
+									<a class="nav-link-settings" href="{% url 'fooodie:settingsprofilepic' %}">Change your profile picture</a>
+								</p>
+								{% if profile.google %}
+								<h6>Accounts made with google have no password nor an option to change your email.</h6> 
+								{% else %}
+								<h6>Your email:</h6> {{ profile.user.email }}
+								<p>
+									<a class="nav-link-settings" href="{% url 'fooodie:settingsemail' %}">Change your email</a>
+								</p>
+								{% endif %}	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div><!-- END fooodie-MAIN -->
 	</div><!-- END fooodie-PAGE -->
 </section>
