@@ -98,6 +98,7 @@ def leaderboard(request):
 def loginregister(request):
     registered = False
     user_form = UserForm()
+    user_form.fields['username'].widget.attrs['maxlength']='20'
     profile_form = UserProfileForm()
 
     return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
@@ -113,7 +114,10 @@ def userlogin(request):
         password = request.POST.get('password')
 
         user = authenticate(username = username, password = password)
-
+        
+        profile_form=UserProfileForm()
+        user_form=UserForm()
+        user_form.fields['username'].widget.attrs['maxlength']='20'
         if user:
             if user.is_active:
                 login(request, user)
@@ -122,9 +126,9 @@ def userlogin(request):
                 print(user.is_authenticated)
                 return redirect(reverse('fooodie:myprofile'))
             else:
-                return render(request, 'fooodie/loginregister.html', context = {'user_form' : UserForm(), 'profile_form' : UserProfileForm(), 'registered' : False, 'login_error' : "Your account has been disabled. We'd apologize... But you probably did something to earn this.",})
+                return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form , 'registered' : False, 'login_error' : "Your account has been disabled. We'd apologize... But you probably did something to earn this.",})
         else:
-            return render(request, 'fooodie/loginregister.html', context = {'user_form' : UserForm(), 'profile_form' : UserProfileForm(), 'registered' : False, 'login_error':"Invalid login details supplied."})
+            return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form, 'registered' : False, 'login_error':"Invalid login details supplied."})
     else:
         return redirect(reverse('fooodie:loginregister'))
 
@@ -191,13 +195,11 @@ def register(request):
             return redirect(reverse('fooodie:myprofile'))
 
         else:
-            print(user_form.errors)
-            register_error=user_form.errors
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-                
-    return render(request, 'fooodie/loginregister.html', context = {'user_form' : UserForm(),
+            register_error=user_form.errors    
+    user_form = UserForm()
+    user_form.fields['username'].widget.attrs['maxlength']='20'    
+    
+    return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
                                                                'profile_form' : UserProfileForm(),
                                                                'registered' : registered, 'register_error':register_error})
 
