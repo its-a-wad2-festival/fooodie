@@ -175,12 +175,9 @@ def register(request):
             profile.save()
 
             if 'picture' in request.FILES:
-                profile_pic_path = os.path.join(os.path.join(settings.MEDIA_DIR, "profilepics"), str(profile.id))
-                profile_pic = request.FILES['picture']
-                file_ending=profile_pic.name.split('.')[-1]
-                profile_pic_path = profile_pic_path+"."+file_ending
-                path_to_profile_pic = default_storage.save(profile_pic_path, ContentFile(profile_pic.read()))
-                profile.picture = path_to_profile_pic
+                picture=request.FILES['picture']
+                picture.name=str(profile.id)+".jpg"
+                profile.picture=picture
                 profile.save()
 
             registered = True
@@ -313,18 +310,9 @@ def settingsprofilepic(request):
     if request.method == 'POST':
         profile_pic_form = ChangePicture(request.POST)
         if profile_pic_form.is_valid():
-            profile_dir = os.path.join(settings.MEDIA_DIR, "profilepics")
-            profile_pic_path = os.path.join(profile_dir, str(profile.id))
-            new_profile_pic = request.FILES['picture']
-            file_ending=new_profile_pic.name.split('.')[len(new_profile_pic.name.split('.'))-1]
-            profile_pic_path = profile_pic_path+"."+file_ending
-
-            if os.path.isfile(profile_pic_path):
-                os.remove(profile_pic_path)
-
-
-            path_to_profile_pic = default_storage.save(profile_pic_path, ContentFile(new_profile_pic.read()))
-            profile.picture = path_to_profile_pic
+            picture=request.FILES['picture']
+            picture.name=str(profile.id)+".jpg"
+            profile.picture=picture
             profile.save()
 
             return redirect(reverse('fooodie:myprofile'))

@@ -9,7 +9,7 @@ import factory.django
 class UserProfile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.CASCADE) #Links UserProfile to a User model instance.  
     slug=models.SlugField(unique=True) #Slug field for when we try to view other user's profiles (Part of the urls)
-    picture=models.ImageField(blank=True)
+    picture=models.ImageField(blank=True, upload_to='profilepics')
     #picture=models.ImageField(upload_to=str(id), blank=True)
     totalVotes = models.IntegerField(default=0)
     google=models.BooleanField(default=False)
