@@ -23,12 +23,10 @@ def profile_leaderboard(profile):
     profile_votes=['-1']
     for userprofile in top_profiles_set: #Creates new List containing tuples (UserProfile,Position)
         if profile_votes[len(profile_votes)-1]!=userprofile.totalVotes:
-            print(profile_votes[len(profile_votes)-1])
             position_leaderboard +=  1
         profile_votes.append(userprofile.totalVotes)
         if profile==userprofile:
             break
-    print(position_leaderboard)
     return position_leaderboard    
 
 ####################################HELPER FUNCTIONS END
@@ -81,10 +79,13 @@ def leaderboard(request):
 
     top_profiles_set = UserProfile.objects.order_by('-totalVotes')[:10] #Top 0 - 10
     top_profiles = []
-    position_leaderboard = 1
+    position_leaderboard = 0
+    profile_votes=['-1']
     for profile in top_profiles_set: #Creates new List containing tuples (UserProfile,Position)
+        if profile_votes[len(profile_votes)-1]!=profile.totalVotes:
+            position_leaderboard +=  1
         top_profiles.append((profile,position_leaderboard))
-        position_leaderboard = position_leaderboard + 1
+        profile_votes.append(profile.totalVotes)
 
     context_dict['top_profiles'] = top_profiles
 
