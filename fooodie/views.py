@@ -229,6 +229,7 @@ def addfoodphoto(request):
             print(photo_form.errors)
     else: # Not a HTTP POST, so we render our form using two ModelForm instances. # These forms will be blank, ready for user input.
         photo_form = PhotoForm()
+        photo_form.fields['username'].widget.attrs['maxlength']='20' 
 
     context_dict = {}
     context_dict['form'] = photo_form

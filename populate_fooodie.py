@@ -27,8 +27,11 @@ def create_user():
         user.save()
         return user
     except:
-        create_user()
-    
+        return create_user()
+    if length(user.username<20):
+        user.delete()
+        return create_user()
+        
 def create_user_profile():
     user=create_user()
     profile = UserProfile(user=user)
@@ -36,7 +39,7 @@ def create_user_profile():
     folder_path = os.path.join(MEDIA_DIR, str(profile.id))
     os.mkdir(folder_path)
     try:
-        for i in range (0,5):
+        for i in range (0,random.randint(1,5)):
             add_photo(profile)
             print("PROFILE: "+str(profile.id)+" " "Photo " + str(i) +" added.")
     except:
@@ -48,7 +51,7 @@ def add_photo(userProfile):
     votes= random.randint(0,120)
     p.votes = votes
     photo = random.choice(population_photos)
-    p.name = str(photo)[:-4]
+    p.name = str(photo).replace('_',' ')[:-4].capitalize()
     p.photo = get_upload_filename(p,str(photo)) #Same function we use in models to assign the destination folder of the pictures
     photo_old_path = os.path.join(population_photos_old_path,photo)
     photo_new_path = os.path.join(os.path.join(MEDIA_DIR,str(userProfile.id)),str(p.photo.url.split("/")[-1])) #Rename file to point to p.photo.url
