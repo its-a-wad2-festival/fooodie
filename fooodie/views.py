@@ -46,22 +46,22 @@ def home(request):
 ##    context_dict['random_pics'] = random_pics
 
     #Above will definitely work, this SHOULD work
-
     pics = Photo.objects.order_by('?')
+    try:
+        pics_to_choose = pics[:2]
+        photo1=pics_to_choose.first()
+        context_dict['photo1']=photo1
 
-    pics_to_choose = pics[:2]
+        photo2=pics_to_choose[1]
+        context_dict['photo2']=photo2
 
-    photo1=pics_to_choose.first()
-    context_dict['photo1']=photo1
+        context_dict['pics_to_choose'] = pics_to_choose
 
-    photo2=pics_to_choose[1]
-    context_dict['photo2']=photo2
-
-    context_dict['pics_to_choose'] = pics_to_choose
-
-    random_pics = pics[:3]
-    context_dict['random_pics'] = random_pics
-
+        random_pics = pics[:3]
+        context_dict['random_pics'] = random_pics
+    except:
+        return HttpResponse("DEV NOTE: If this happens, it means there has been an issue when populating the database... Delete fooodie/db.sqlite3 and delete fooodie/media with all its contents. Then in command line from workspace/fooodie/ run python manage.py migrate, once done run python populate_fooodie.py")
+    
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
 
@@ -180,25 +180,22 @@ def register(request):
                 path_to_pic = default_storage.save(profile_pic_path+'\\'+str(profile.id)+'_propic.'+extension, ContentFile(profile_pic.read()))
                 profile.picture = path_to_pic
                 profile.save()
-
+        
             print('So USER id is '+str(user.id)+' and PROFILE id is '+str(profile.id)+' and picture is '+str(profile.picture))
 
 
             registered = True
+            user.backend='django.contrib.auth.backends.ModelBackend' 
+            #Specify backend used for log in as we have 2 log in backends (Social and standard Django)
+            login(request, user)
+            return redirect(reverse('fooodie:myprofile'))
 
         else:
             print(user_form.errors)
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-    
-    if registered==True: 
-        user.backend='django.contrib.auth.backends.ModelBackend' 
-        #Specify backend used for log in as we have 2 log in backends (Social and standard Django)
-        login(request, user)
-        return redirect(reverse('fooodie:myprofile'))
-        
-        
+                
     return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
                                                                'profile_form' : profile_form,
                                                                'registered' : registered})
@@ -433,7 +430,7 @@ def userprofile(request, user_profile_slug):
 def googleloggedin(request):
     user=request.user
     try:
-        profile = UserProfiles.objects.get(user=user)
+        profile = UserProfile.objects.get(user=user)
     except:
         profile = UserProfile(user=user)
         profile.google=True

@@ -15,10 +15,6 @@ class TestUrls(TestCase):
         profile=UserProfile.objects.create(user=user1, totalVotes=10)
         return profile
         
-    def TestUrlIsResolved(self, name):
-        url=reverse(name)
-        self.assertEquals(resolve(url).func, urls_views[name])
-        
     def test_home_url_is_resolved(self):
         url=reverse('fooodie:home')
         self.assertEquals(resolve(url).func, home)
