@@ -36,15 +36,16 @@ def create_user_profile():
     folder_path = os.path.join(MEDIA_DIR, str(profile.id))
     os.mkdir(folder_path)
     try:
-        add_photo(profile)
-        print("photo added "+str(profile.id))
+        for i in range (0,5):
+            add_photo(profile)
+            print("PROFILE: "+str(profile.id)+" " "Photo " + str(i) +" added.")
     except:
         print("couldn't add photo")
         pass
     
 def add_photo(userProfile):
     p = Photo(user=userProfile) #Makes photo
-    votes= random.randint(100,500)
+    votes= random.randint(0,120)
     p.votes = votes
     photo = random.choice(population_photos)
     p.name = str(photo)[:-4]
