@@ -17,6 +17,7 @@ urlpatterns = [
     path('myprofile/settings/username/', views.settingsusername, name = 'settingsusername'),
     path('myprofile/settings/profilepic/', views.settingsprofilepic, name = 'settingsprofilepic'),
     path('myprofile/settings/email/', views.settingsemail, name = 'settingsemail'),
+    path('myprofile/settings/deleteaccount', views.deleteaccount, name='deleteaccount'),
 
     path('usersearch/', views.usersearch, name='usersearch'),
     path('user/<slug:user_profile_slug>/', views.userprofile, name='userprofile'),

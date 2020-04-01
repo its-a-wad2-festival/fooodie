@@ -122,12 +122,9 @@ def userlogin(request):
                 print(user.is_authenticated)
                 return redirect(reverse('fooodie:myprofile'))
             else:
-                return HttpResponse("Your account is disabled")
+                return render(request, 'fooodie/loginregister.html', context = {'user_form' : UserForm(), 'profile_form' : UserProfileForm(), 'registered' : False, 'login_error' : "Your account has been disabled. We'd apologize... But you probably did something to earn this.",})
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return render(request, 'fooodie/loginregister.html', context = {'user_form' : UserForm(),
-                                                               'profile_form' : UserProfileForm(),
-                                                               'registered' : False, 'login_error':"Invalid login details supplied"})
+            return render(request, 'fooodie/loginregister.html', context = {'user_form' : UserForm(), 'profile_form' : UserProfileForm(), 'registered' : False, 'login_error':"Invalid login details supplied."})
     else:
         return redirect(reverse('fooodie:loginregister'))
 
@@ -354,6 +351,14 @@ def settingsprofilepic(request):
     context_dict['photo_type']="profile picture"
 
     return render(request, 'fooodie/addpropic.html', context = context_dict )
+
+@login_required
+def deleteaccount(request):
+    user=request.user
+    logout(request)
+    user.delete()
+    return redirect(reverse('fooodie:home'))
+    
 
 @login_required
 def settingspassword(request):
