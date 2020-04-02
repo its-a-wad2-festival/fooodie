@@ -11,6 +11,7 @@ class ViewsTestCaseWithoutLogIn(TestCase):
         client=Client()
         response=self.client.get(reverse('fooodie:home'))
         self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'fooodie/home.html')
         #We do not check for template as response should be an HTTP message to devs cause database was not populated.
     
     def test_about_view_status_200(self):
