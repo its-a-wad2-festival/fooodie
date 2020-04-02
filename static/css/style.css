@@ -798,6 +798,28 @@ h1, h2, h3, h4, h5,
 :: 21.0 Settings - Confirmation Delete Account
 ----------------------- */
 
+#fooodie-picture {
+    margin-bottom: 1.5em;
+    display: block;
+    width: 100%;
+    font-weight: 700;
+    font-size: 24px; }
+    #fooodie-picture span.img {
+      display: block;
+      width: 160px;
+      height: 160px;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      border-radius: 50%;
+      margin: 0 auto;
+      margin-bottom: 10px; }
+    @media (max-width: 991.98px) {
+      #fooodie-logo {
+        margin-bottom: 20px; } }
+
+
+
  {box-sizing: border-box}
 
 /* Set a style for all buttons */

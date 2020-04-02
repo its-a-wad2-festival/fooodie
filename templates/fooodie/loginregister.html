@@ -60,7 +60,7 @@
 						<span class="bg-light">OR</span>
 					</p>
 					{% if login_error %}
-						<span style="color: black"> There's an error with your log in: {{ login_error }} </span>
+						<span style="color: red"> There's an error with your log in: {{ login_error }} </span>
 					{% endif %}	
 					<form id="user_form" method="post" action="{% url 'fooodie:login' %}" enctype="multipart/form-data" >
 						<article class="card-body mx-auto" style="d-flex justify-content-center; max-width: 400px;" >

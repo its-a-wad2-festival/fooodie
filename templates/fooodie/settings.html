@@ -40,7 +40,7 @@
 			<div class="section-heading text-center">
 				<div class="tab-content py-4">
 					<div class="tab-pane active">
-						<h3 class="mb-3">User Profile Settings</h3>
+						<h3 class="mb-3" style ="text-decoration: underline;">User Profile Settings</h3>
 						<div class="row">
 							<div class="col">
 								<h6>Your username:</h6> {{ profile.user.username }}
@@ -48,7 +48,7 @@
 									<a class="nav-link-settings" href="{% url 'fooodie:settingsusername' %}">Change your username</a>
 								</p>
 								{% if profile.picture %}
-									<h6>Your profile picture:</h6> {{ profile.picture }}
+									<h6>Your profile picture:</h6> <h1 id="fooodie-picture"><span class="img" style="background-image: url({{ profile.picture.url}});"></span></h1>
 								{% else %}
 									<h6>Your profile picture:</h6> You don't have a profile picture
 								{% endif %}
