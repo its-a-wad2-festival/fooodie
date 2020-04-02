@@ -100,11 +100,22 @@
 									</div>
 								{% endfor %}
 							{% else %}
-								{% if my_profile %}
-									<strong>You have no pictures uploaded :(</strong>
-								{% else %}
-									{{ profile.user.username }} has no pictures uploaded :(
-								{% endif %}
+							<div class="d-flex justify-content-start col-md-12" style = "margin-left: 200px;"> 
+							
+								<div class="notfound" style = "margin: 0;">
+								
+									<div class="notfound-404">
+											<h3>NO UPLOADED PICTURES</h3>
+										<h1><span>E</span><span>M</span><span>P</span><span>T</span><span>Y</span></h1>
+									</div>
+									{% if my_profile %}
+									<strong>YOU HAVE NO PICTURES UPLOADED :(</strong>
+									{% else %}
+									<strong>{{ profile.user.username }} HAS NO PICTURES UPLOADED :(</strong>
+									{% endif %}
+									</div>
+							
+						</div>
 							{% endif %}
 						</div>
 					</div>

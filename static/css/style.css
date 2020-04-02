@@ -212,6 +212,8 @@ img {
 .menu_area #nav .nav-link {
     color: #fff;
     display: block;
+	margin-left: 15px;
+	margin-right: 15px;
     font-size: 15px;
 	font-family: "Montserrat"
     -webkit-transition-duration: 500ms;
@@ -823,13 +825,12 @@ h1, h2, h3, h4, h5,
 /* Add a color to the cancel button */
 .cancelbtn {
   background-color: #ccc;
-  color: white;
+  color: black;
 }
 
 /* Add a color to the delete button */
 .deletebtn {
   background-color: #f44336;
-  color: white;
 }
 
 /* Add padding and center-align text to the container */
