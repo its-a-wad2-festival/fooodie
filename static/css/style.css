@@ -823,13 +823,12 @@ h1, h2, h3, h4, h5,
 /* Add a color to the cancel button */
 .cancelbtn {
   background-color: #ccc;
-  color: white;
+  color: black;
 }
 
 /* Add a color to the delete button */
 .deletebtn {
   background-color: #f44336;
-  color: white;
 }
 
 /* Add padding and center-align text to the container */
