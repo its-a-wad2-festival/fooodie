@@ -1,0 +1,23 @@
+{% extends 'fooodie/base.html' %}
+{% load static %}
+
+	{% block title_block %}
+		Error
+	{% endblock %}
+
+<!--Just a layout, with placeholders still need actual obejcts-->
+{% block body_block %}
+<section class="section_padding_100_0 clearfix">
+	<div id="fooodie-page" style="min-height: 600px;">
+		<div class="d-flex justify-content-center col-md-12"> 					
+			<div class="notfound" style = "margin: 0;">
+				<div class="notfound-404">
+					<h3>ERROR</h3>
+					<h1><span>4</span><span>0</span><span>4</span></h1>
+				</div>
+					<strong>Here the custom message error will appear. Stop breaking our website moron</strong> <!-- Jose put here the custom text and delete the comment after it -->
+			</div>					
+		</div>
+	</div><!-- END fooodie-PAGE -->
+</section>
+{% endblock %}

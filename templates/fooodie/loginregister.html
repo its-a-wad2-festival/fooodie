@@ -65,9 +65,9 @@
 					<form id="user_form" method="post" action="{% url 'fooodie:login' %}" enctype="multipart/form-data" >
 						<article class="card-body mx-auto" style="d-flex justify-content-center; max-width: 400px;" >
 						{% csrf_token %}
-						Username: <input type="text" name="username" value="" size="50" />
+						Username: <input type="text" name="username" value="" size="20" />
 						<br>
-						Password: <input type="password" name="password" value="" size="50" />
+						Password: <input type="password" name="password" value="" size="20" />
 						<br>
 						<br>
 						<div class="form-group">
