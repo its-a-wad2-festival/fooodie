@@ -114,29 +114,27 @@ def loginregister(request):
                                                                'profile_form' : profile_form,
                                                                'registered' : registered})
 
-
-#Will focus on the registration/login logic first, implement into a single view later
 def userlogin(request):
+    user_form=UserForm()
+    user_form.fields['username'].widget.attrs['maxlength']='20'
+    profile_form=UserProfileForm()
     if request.method == 'POST':
         #Need to consider allowing email OR username potentially
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        
         user = authenticate(username = username, password = password)
-
-        profile_form=UserProfileForm()
-        user_form=UserForm()
-        user_form.fields['username'].widget.attrs['maxlength']='20'
         if user:
             if user.is_active:
                 login(request, user)
+                print(user.is_authenticated)
                 return redirect(reverse('fooodie:myprofile'))
             else:
                 return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form , 'login_error' : "Your account has been disabled. We'd apologize... But you probably did something to earn this.",})
         else:
             return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form, 'login_error':"Invalid login details supplied."})
     else:
-        return redirect(reverse('fooodie:loginregister'))
+        return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form, 'login_error':"There was an error, please try again."})
 
 #Will focus on the registration/login logic first, implement into a single view later
 def register(request):
