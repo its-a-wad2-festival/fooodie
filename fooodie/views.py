@@ -51,12 +51,11 @@ def home(request):
         visitor_cookie_handler(request)
         context_dict['visits'] = request.session['visits']
     except:
-        context_dict['error']="DEV NOTE: If this happens, it means there has been an issue when populating the database... Maybe you forgot to migrate or you didn't run the populate script. As long as you don't click on anything it is fine though. First stop running the server. Then go to your files and delete both [workspace]/fooodie/db.sqlite3, and [workspace]/fooodie/media with all its contents. Then in command line go to [workspace]/fooodie/ and first run 'python manage.py migrate', second run 'python populate_fooodie.py'. PLEASE DO NOT CLICK ON ANYTHING ON THE PAGE UNTIL YOU DO THIS. YOU'LL ONLY BREAK IT EVEN MORE"
+        return render(request, 'fooodie/error.html', context={'error' : "DEV NOTE: If this happens, it means there has been an issue when populating the database... Maybe you forgot to migrate or you didn't run the populate script. As long as you don't click on anything it is fine though. First stop running the server. Then go to your files and delete both [workspace]/fooodie/db.sqlite3, and [workspace]/fooodie/media with all its contents. Then in command line go to [workspace]/fooodie/ and first run 'python manage.py migrate', second run 'python populate_fooodie.py'. PLEASE DO NOT CLICK ON ANYTHING ON THE PAGE UNTIL YOU DO THIS. YOU'LL ONLY BREAK IT EVEN MORE"})
     return render(request, 'fooodie/home.html', context = context_dict)
 
 def about(request):
     context_dict = {}
-    #context_dict['userProfiles']
     response = render(request, 'fooodie/about.html')
     return(response)
 
@@ -84,6 +83,8 @@ def leaderboard(request):
 #This will simply display the forms; the associated template will call
 #one of the functions below dependent on button clicked
 def loginregister(request):
+    if request.user.is_authenticated:
+        return render(request, 'fooodie/error.html', context={'error':"You're already logged in. If you want to log in as someone else, please log out first."})
     registered = False
     user_form = UserForm()
     user_form.fields['username'].widget.attrs['maxlength']='20'
@@ -94,6 +95,8 @@ def loginregister(request):
                                                                'registered' : registered})
 
 def userlogin(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('fooodie:loginregister'))
     user_form=UserForm()
     user_form.fields['username'].widget.attrs['maxlength']='20'
     profile_form=UserProfileForm()
@@ -106,17 +109,18 @@ def userlogin(request):
         if user:
             if user.is_active:
                 login(request, user)
-                print(user.is_authenticated)
                 return redirect(reverse('fooodie:myprofile'))
             else:
                 return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form , 'login_error' : "Your account has been disabled. We'd apologize... But you probably did something to earn this.",})
         else:
             return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form, 'login_error':"Invalid login details supplied."})
     else:
-        return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form, 'login_error':"There was an error, please try again."})
+        return redirect(reverse('fooodie:loginregister'))
 
 #Will focus on the registration/login logic first, implement into a single view later
 def register(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('fooodie:loginregister'))
     context_dict={}
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -145,12 +149,13 @@ def register(request):
 
         else:
             context_dict['register_error']=user_form.errors
-    user_form = UserForm()
-    user_form.fields['username'].widget.attrs['maxlength']='20'
-    
-    context_dict['user_form'] = user_form
-    context_dict['profile_form']=UserProfileForm()                
-    return render(request, 'fooodie/loginregister.html', context = context_dict)
+            user_form = UserForm()
+            user_form.fields['username'].widget.attrs['maxlength']='20'
+            context_dict['user_form'] = user_form
+            context_dict['profile_form']=UserProfileForm()                
+            return render(request, 'fooodie/loginregister.html', context = context_dict)
+    else:
+        return(redirect(reverse('fooodie:loginregister')))
 
 @login_required
 def userlogout(request):
@@ -249,6 +254,8 @@ def settingsusername(request):
 def settingsemail(request):
     user = request.user
     profile=UserProfile.objects.get(user=request.user)
+    if profile.google:
+        return render(request, 'fooodie/error.html', context={'error' : 'An account made with google cannot change its email!'})
     if request.method == 'POST':
         email_form = ChangeEmail(request.POST) # If the form is valid...
         if email_form.is_valid():
@@ -300,6 +307,8 @@ def deleteaccount(request):
 def settingspassword(request):
     user = request.user
     profile=UserProfile.objects.get(user=request.user)
+    if profile.google:
+        return render(request, 'fooodie/error.html', context={'error' : 'An account made with google works without a password, so you cannot change it!'})
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -347,8 +356,7 @@ def usersearch(request):
     try:
         profile=UserProfile.objects.get(user__username=username)
     except:
-        print("AAAAAAAA")
-        return redirect(reverse('fooodie:userprofile', args=[username]))
+        return render(request, 'fooodie/error.html', context={'error' :"We're sorry but the user "+username+" does not exist. Please try again. Remember you have to write the user's exact name. Uppercase and lowercase matters! (You can check names in the leaderboard)"})
     return redirect(reverse('fooodie:userprofile', args=[profile.slug]))
 
 def userprofile(request, user_profile_slug):
