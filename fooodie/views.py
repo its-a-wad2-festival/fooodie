@@ -43,16 +43,6 @@ def random_dif_pics():
 ###########VIEWS
 def home(request):
     context_dict = {}
-##    #Ordering all photos randomly, picking first two
-##    pics_to_choose = Photo.objects.order_by(?)[:1]
-##    context_dict['pics_to_choose'] = pics_to_choose
-##
-##    #Will change this to use the same QuerySet eventually, to avoid double
-##    #search and having the same picture be both a voting pic and random pic
-##    random_pics = Photo.objects.order_by(?)[:3]
-##    context_dict['random_pics'] = random_pics
-
-    #Above will definitely work, this SHOULD work
     pics = Photo.objects.order_by('?')
     try:
         photo1, photo2=random_dif_pics()
@@ -62,8 +52,7 @@ def home(request):
         context_dict['visits'] = request.session['visits']
     except:
         context_dict['error']="DEV NOTE: If this happens, it means there has been an issue when populating the database... Maybe you forgot to migrate or you didn't run the populate script. As long as you don't click on anything it is fine though. First stop running the server. Then go to your files and delete both [workspace]/fooodie/db.sqlite3, and [workspace]/fooodie/media with all its contents. Then in command line go to [workspace]/fooodie/ and first run 'python manage.py migrate', second run 'python populate_fooodie.py'. PLEASE DO NOT CLICK ON ANYTHING ON THE PAGE UNTIL YOU DO THIS. YOU'LL ONLY BREAK IT EVEN MORE"
-    response = render(request, 'fooodie/home.html', context = context_dict)
-    return(response)
+    return render(request, 'fooodie/home.html', context = context_dict)
 
 def about(request):
     context_dict = {}
