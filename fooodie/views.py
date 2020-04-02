@@ -132,15 +132,15 @@ def userlogin(request):
                 login(request, user)
                 return redirect(reverse('fooodie:myprofile'))
             else:
-                return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form , 'registered' : False, 'login_error' : "Your account has been disabled. We'd apologize... But you probably did something to earn this.",})
+                return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form , 'login_error' : "Your account has been disabled. We'd apologize... But you probably did something to earn this.",})
         else:
-            return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form, 'registered' : False, 'login_error':"Invalid login details supplied."})
+            return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form, 'profile_form' : profile_form, 'login_error':"Invalid login details supplied."})
     else:
         return redirect(reverse('fooodie:loginregister'))
 
 #Will focus on the registration/login logic first, implement into a single view later
 def register(request):
-    registered=True
+    context_dict={}
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
@@ -161,20 +161,19 @@ def register(request):
                 profile.picture=picture
                 profile.save()
 
-            registered = True
             user.backend='django.contrib.auth.backends.ModelBackend'
             #Specify backend used for log in as we have 2 log in backends (Social and standard Django)
             login(request, user)
             return redirect(reverse('fooodie:myprofile'))
 
         else:
-            register_error=user_form.errors
+            context_dict['register_error']=user_form.errors
     user_form = UserForm()
     user_form.fields['username'].widget.attrs['maxlength']='20'
-
-    return render(request, 'fooodie/loginregister.html', context = {'user_form' : user_form,
-                                                               'profile_form' : UserProfileForm(),
-                                                               'registered' : registered, 'register_error':register_error})
+    
+    context_dict['user_form'] = user_form
+    context_dict['profile_form']=UserProfileForm()                
+    return render(request, 'fooodie/loginregister.html', context = context_dict)
 
 @login_required
 def userlogout(request):

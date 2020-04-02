@@ -32,23 +32,23 @@ class ViewsTestCase(TestCase):
         response=self.client.get(reverse('fooodie:register'))
         self.assertEquals(response.status_code, 200)
 
-    def test_userlogout_view_status_200(self):
+    def test_userlogout_view_status_302(self):
         response=self.client.get(reverse('fooodie:logout'))
         self.assertEquals(response.status_code, 302)
 
-    def test_addfoodphoto_view_status_200(self):
+    def test_addfoodphoto_view_status_302(self):
         response=self.client.get(reverse('fooodie:addfoodphoto'))
         self.assertEquals(response.status_code, 302)
 
-    def test_deletepic_view_status_200(self):
+    def test_deletepic_view_status_302(self):
         response=self.client.get(reverse('fooodie:deletepic', args={'user_profile_slug': 7}))
         self.assertEquals(response.status_code, 302)
 
-    def test_myprofile_view_status_200(self):
+    def test_myprofile_view_status_302(self):
         response=self.client.get(reverse('fooodie:myprofile'))
         self.assertEquals(response.status_code, 302)
 
-    def test_settingsemail_view_status_200(self):
+    def test_settingsemail_view_status_302(self):
         response=self.client.get(reverse('fooodie:settingsemail'))
         self.assertEquals(response.status_code, 302)
 
@@ -56,11 +56,11 @@ class ViewsTestCase(TestCase):
         response=self.client.post(reverse('fooodie:settingsprofilepic'))
         self.assertEquals(response.status_code, 302)
 
-    def test_settingspassword_view_status_200(self):
+    def test_settingspassword_view_status_302(self):
         response=self.client.get(reverse('fooodie:settingspassword'))
         self.assertEquals(response.status_code, 302)
         
-    def test_usersearch_view_status_200(self):
+    def test_usersearch_view_status_302(self):
         response=self.client.get(reverse('fooodie:usersearch'))
         self.assertEquals(response.status_code, 302)
     
