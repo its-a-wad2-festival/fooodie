@@ -212,6 +212,8 @@ img {
 .menu_area #nav .nav-link {
     color: #fff;
     display: block;
+	margin-left: 15px;
+	margin-right: 15px;
     font-size: 15px;
 	font-family: "Montserrat"
     -webkit-transition-duration: 500ms;

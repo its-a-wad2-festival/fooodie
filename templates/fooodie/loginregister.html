@@ -59,6 +59,9 @@
 					<p class="divider-text">
 						<span class="bg-light">OR</span>
 					</p>
+					{% if login_error %}
+						<span style="color: black"> There's an error with your log in: {{ login_error }} </span>
+					{% endif %}	
 					<form id="user_form" method="post" action="{% url 'fooodie:login' %}" enctype="multipart/form-data" >
 						<article class="card-body mx-auto" style="d-flex justify-content-center; max-width: 400px;" >
 						{% csrf_token %}
@@ -72,10 +75,7 @@
 						</div> <!-- form-group// -->                                                                      
 						</article>
 					</form>
-					{% if login_error %}
-						There's an error with your log in: <br>
-						{{ login_error }}
-					{% endif %}	
+					
 			</div> <!-- card.// -->
 		
 		</div>
