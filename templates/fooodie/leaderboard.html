@@ -69,8 +69,16 @@
 						{% for pic in top_pics %}
 						<div class="row">
 										<a href="{{ pic.photo.url }}" class="photography-entry leaderboard img image-popup d-flex" 
-										style="background-image: url({{ pic.photo.url }}); width: 75%; margin-bottom: 25px; margin-left: 15%;">
-										<div class="overlay"> </div>
+										style="background-image: url({{ pic.photo.url }}); width: 75%; height: 265px; margin-bottom: 25px; margin-left: 15%;">
+										<div class="overlay"> 
+										{% if forloop.counter == 1 %}
+										<span class="fooodie-awards-star"><img src="{% static 'images/1st.png' %}" style = "height: 30%; width: 25%;"/></span>
+										{% elif forloop.counter == 2 %}
+										<span class="fooodie-awards-star"><img src="{% static 'images/2nd.png' %}" style = "height: 30%; width: 25%;"/></span>
+										{% else %}
+										<span class="fooodie-awards-star"><img src="{% static 'images/3rd.png' %}" style = "height: 30%; width: 25%;"/></span>
+										{% endif %}
+										</div>
 											<div class="text d-flex flex-column ml-4 mb-4 justify-content-end align-items-start">
 												<h3>{{ pic.name }}</h3>
 												<span class="tag">Author: {{ pic.user.user.username }}</span>
@@ -78,6 +86,7 @@
 												<span class="tag">Number of votes: {{ pic.votes }}</span>
 												
 											</div>
+											
 										</a>
 						</div>
 						{% endfor %}

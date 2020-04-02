@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
-<section class="section_padding_150 clearfix">
+<section class="section_padding_150 clearfix" style = "margin-top: 130px;">
 <div class="section-heading text-center">
 		<div class="row">
 			<div class="col-6">
@@ -59,13 +59,14 @@
 					<p class="divider-text">
 						<span class="bg-light">OR</span>
 					</p>
-					<form id="user_form" method="post" action="{% url 'fooodie:login' %}" enctype="multipart/form-data">
-						<article class="card-body mx-auto" style="max-width: 400px;">
+					<form id="user_form" method="post" action="{% url 'fooodie:login' %}" enctype="multipart/form-data" >
+						<article class="card-body mx-auto" style="d-flex justify-content-center; max-width: 400px;" >
 						{% csrf_token %}
 						Username: <input type="text" name="username" value="" size="50" />
-						<br />
+						<br>
 						Password: <input type="password" name="password" value="" size="50" />
-						<br />
+						<br>
+						<br>
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary btn-block"> Login  </button>
 						</div> <!-- form-group// -->                                                                      
