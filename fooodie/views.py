@@ -197,7 +197,14 @@ def addfoodphoto(request):
 
 @login_required
 def deletepic(request, photo_id):
-    Photo.objects.filter(id = photo_id).delete()
+    photo = Photo.objects.get(id = photo_id)
+
+    #Author's totalVotes must be decreased to reflect deletion of photo and thus non-contribution of the photo's votes
+    author = UserProfile.objects.get(id = photo.user.id)
+    author.totalVotes = author.totalVotes - photo.votes
+    author.save()
+    
+    photo.delete()
     return redirect(reverse('fooodie:myprofile'))
 #ADD AND DELETE PICTURE FUNCTIONALITY ENDS
 
