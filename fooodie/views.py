@@ -198,12 +198,8 @@ def addfoodphoto(request):
 @login_required
 def deletepic(request, photo_id):
     photo = Photo.objects.get(id = photo_id)
-
     #Author's totalVotes must be decreased to reflect deletion of photo and thus non-contribution of the photo's votes
-    author = UserProfile.objects.get(id = photo.user.id)
-    author.totalVotes = author.totalVotes - photo.votes
-    author.save()
-    
+    photo.decrease_votes(photo.votes)
     photo.delete()
     return redirect(reverse('fooodie:myprofile'))
 #ADD AND DELETE PICTURE FUNCTIONALITY ENDS
@@ -412,12 +408,7 @@ class LikePhoto(View):
             return redirect(reverse('fooodie:home'))
 
         #Increments the the vote tallies of the picture and the picture's associated user
-        author = UserProfile.objects.get(id = photo.user.id)
-        photo.votes = photo.votes + 1
-        author.totalVotes = author.totalVotes + 1;
-        photo.save()
-        author.save()
-
+        photo.increase_votes(1)
         photo1, photo2=random_dif_pics()
 
         #Construct JSON-formatted response data. AJAX handles a plain text (HTML), JSON or

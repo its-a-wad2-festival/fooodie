@@ -14,6 +14,13 @@ class UserProfile(models.Model):
     totalVotes = models.IntegerField(default=0)
     google=models.BooleanField(default=False)
     
+    def increase_votes(self, num):
+        self.totalVotes=self.totalVotes+num
+        self.save()
+
+    def decrease_votes(self, num):
+        self.totalVotes=self.totalVotes-num
+        self.save()
     
     def save(self, *args, **kwargs):
         self.slug=slugify(self.user.username)
@@ -49,8 +56,7 @@ def get_upload_filename(userpic,name):
                           str(time()).replace('.', '_'),
                           name)
         
-class Photo(models.Model):
- 
+class Photo(models.Model): 
     NAME_MAX_LENGTH=128
     name = models.CharField(max_length=NAME_MAX_LENGTH) #The name the user wants to give to the picture he has uploaded
     votes=models.IntegerField(default=0) #Number of votes the picture has
@@ -60,4 +66,15 @@ class Photo(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def increase_votes(self, num):
+        self.votes=self.votes+num
+        self.user.increase_votes(num)
+        self.save()
         
+        
+    def decrease_votes(self, num):
+        self.votes=self.votes-num
+        profile=UserProfile.objects.get(id=self.user.id)
+        profile.decrease_votes(num)
+        self.save()

@@ -22,7 +22,7 @@ population_photos_old_path=os.path.join(BASE_DIR,'population_photos')
 def create_user():
     try:
         user = UserFactory() #User created with UserFactory() in models
-        user.set_password("JoseIsAwesome") #Facts
+        user.set_password("FooodieIsAwesome") #Facts
         #Passowrd given to ALL random users so we can access them if necessary
         user.save()
         return user
@@ -48,16 +48,14 @@ def create_user_profile():
     
 def add_photo(userProfile):
     p = Photo(user=userProfile) #Makes photo
-    votes= random.randint(0,120)
-    p.votes = votes
     photo = random.choice(population_photos)
     p.name = str(photo).replace('_',' ')[:-4].capitalize()
     p.photo = get_upload_filename(p,str(photo)) #Same function we use in models to assign the destination folder of the pictures
     photo_old_path = os.path.join(population_photos_old_path,photo)
     photo_new_path = os.path.join(os.path.join(MEDIA_DIR,str(userProfile.id)),str(p.photo.url.split("/")[-1])) #Rename file to point to p.photo.url
     p.save() #Saves photo
-    userProfile.totalVotes+=votes
-    userProfile.save()
+    votes= random.randint(0,120)
+    p.increase_votes(votes)
     population_photos.remove(photo) #Avoids giving users the same photo
     shutil.copy(photo_old_path,photo_new_path) #Physically moves photo to user's photo file
 
@@ -66,5 +64,5 @@ if __name__ == '__main__':
         os.mkdir(MEDIA_DIR)
         os.mkdir(os.path.join(MEDIA_DIR, 'profilepics'))
     print('Starting fooodie population script...')
-    for i in range (0,20):
+    for i in range (0,18):
         create_user_profile()
