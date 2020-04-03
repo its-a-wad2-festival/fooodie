@@ -139,10 +139,7 @@ def register(request):
             profile.save() #Profile must be saved in order to generate an id value to be used next
 
             if 'picture' in request.FILES:
-                picture=request.FILES['picture'] #Obtains profile picture from request
-                picture.name=str(profile.id)+".jpg"
-                profile.picture=picture #UserProfile model handles save location of profile picture upon save
-                profile.save()
+                profile.set_picture(request.FILES['picture'])
 
             user.backend='django.contrib.auth.backends.ModelBackend'
             #Specify backend used for log in as we have 2 log in backends (Social and standard Django)
@@ -281,10 +278,7 @@ def settingsprofilepic(request):
         profile_pic_form = ChangePicture(request.POST)
         if profile_pic_form.is_valid():
             try:
-                picture=request.FILES['picture'] #Obtaining picture from request
-                picture.name=str(profile.id)+".jpg" #Using same naming scheme as that which registration uses
-                profile.picture=picture
-                profile.save()
+                profile.set_picture(request.FILES['picture']) #Set profile picture to new picture
                 return redirect(reverse('fooodie:myprofile'))
             except:
                 context_dict['error']="There was something wrong with your upload. Please try again. When this happens it's usually because you didn't upload a picture"

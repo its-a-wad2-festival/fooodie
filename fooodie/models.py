@@ -14,6 +14,11 @@ class UserProfile(models.Model):
     totalVotes = models.IntegerField(default=0)
     google=models.BooleanField(default=False)
     
+    def set_picture(self, pic):
+        pic.name=str(self.id)+".jpg"
+        self.picture=pic
+        self.save()
+    
     def increase_votes(self, num):
         self.totalVotes=self.totalVotes+num
         self.save()
