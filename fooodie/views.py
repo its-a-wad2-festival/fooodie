@@ -29,6 +29,17 @@ def profile_leaderboard(profile):
             break
     return position_leaderboard
 
+def get_user(request):
+    return request.user
+    
+def get_profile(request):
+    return UserProfile.objects.get(user=get_user(request))
+
+def get_user_and_profile(request):
+    user=get_user(request)
+    profile=get_profile(request)
+    return user, profile
+
 #Returns two randomly-chosen Photo objects from the database
 def random_dif_pics():
     pics = Photo.objects.order_by('?')
@@ -165,7 +176,7 @@ def userlogout(request):
 #ADD AND DELETE PICTURE FUNCTIONALITY STARTS
 @login_required
 def addfoodphoto(request):
-    profile=UserProfile.objects.get(user=request.user)
+    profile=get_profile(request)
     context_dict = {}
     context_dict['profile'] = profile
     context_dict['photo_type']="food photo"
@@ -195,8 +206,7 @@ def addfoodphoto(request):
 @login_required
 def deletepic(request, photo_id):
     photo = Photo.objects.get(id = photo_id)
-    #Author's totalVotes must be decreased to reflect deletion of photo and thus non-contribution of the photo's votes
-    photo.decrease_votes(photo.votes)
+    photo.decrease_votes(photo.votes) #We first remove th photo's votes to ensure they are also removed from the user's total votes, THEN we delete the photo.
     photo.delete()
     return redirect(reverse('fooodie:myprofile'))
 #ADD AND DELETE PICTURE FUNCTIONALITY ENDS
@@ -204,12 +214,12 @@ def deletepic(request, photo_id):
 #MYPROFILE AND MYPROFILE SETTINGS START
 @login_required
 def myprofile(request): #User's manage account site
-    user = request.user
+    user = get_user(request)
     context_dict={}
     context_dict['user'] = user
     context_dict['my_profile']=True
     try:
-        profile = UserProfile.objects.get(user = user)
+        profile = get_profile(request)
         context_dict['profile'] = profile
         photos = Photo.objects.filter(user = profile) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
         context_dict['photos'] = photos
@@ -228,8 +238,7 @@ def myprofile(request): #User's manage account site
 @login_required
 def usersettings(request):
     context_dict = {}
-    user = request.user
-    profile = UserProfile.objects.get(user = user)
+    profile=get_profile(request)
     context_dict['profile'] = profile
     photos = Photo.objects.filter(user__id = profile.id) #Get all the pictures with user_id. Useful documentation of this notation (user__id with two underscores)
     context_dict['photos'] = photos
@@ -238,8 +247,7 @@ def usersettings(request):
 
 @login_required
 def settingsusername(request):
-    user = request.user
-    profile=UserProfile.objects.get(user=request.user)
+    user, profile=get_user_and_profile(request)
     if request.method == 'POST':
         name_form = ChangeUsername(request.POST) # If the form is valid...
         if name_form.is_valid():
@@ -254,8 +262,7 @@ def settingsusername(request):
 
 @login_required
 def settingsemail(request):
-    user = request.user
-    profile=UserProfile.objects.get(user=request.user)
+    user, profile=get_user_and_profile(request)
     if profile.google:
         return render(request, 'fooodie/error.html', context={'error' : 'An account made with google cannot change its email!'})
     if request.method == 'POST':
@@ -272,7 +279,7 @@ def settingsemail(request):
 
 @login_required
 def settingsprofilepic(request):
-    profile = UserProfile.objects.get(user = request.user) #Obtains current logged-in user that sent the request
+    profile = get_profile(request)
     context_dict = {}
     if request.method == 'POST': #Request type must be POST, as input data must be provided
         profile_pic_form = ChangePicture(request.POST)
@@ -296,7 +303,7 @@ def settingsprofilepic(request):
 
 @login_required
 def deleteaccount(request):
-    user=request.user
+    user=get_user(request)
     logout(request)
     user.delete() #Utilising inbuilt delete() function to remove User object from database
     return redirect(reverse('fooodie:home'))
@@ -304,8 +311,7 @@ def deleteaccount(request):
 
 @login_required
 def settingspassword(request):
-    user = request.user
-    profile=UserProfile.objects.get(user=request.user)
+    user, profile= get_user_and_profile(request)
     if profile.google: #Boolean field that is true if profile was created via Google authentication
         return render(request, 'fooodie/error.html', context={'error' : 'An account made with google works without a password, so you cannot change it!'})
     if request.method == 'POST':
@@ -380,7 +386,7 @@ def userprofile(request, user_profile_slug):
 
 #GOOGLE ACCOUNT LOG IN STARTS
 def googleloggedin(request):
-    user=request.user
+    user=get_user(request)
     try:
         profile = UserProfile.objects.get(user=user)
     except:
