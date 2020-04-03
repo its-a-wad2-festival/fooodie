@@ -47,11 +47,6 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
 
-	
-/*!
-Different styling. I'll delete unnecesary styling when everything is functional
- */
- 
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
 
@@ -118,198 +113,6 @@ img {
 }
 
 
-
-
-
-.fooodie-btn {
-	position: absolute;
-  top: 90%;
-  left: 92%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  background-color: #00A2FF;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.fooodie-btn:hover {
-    background-color: #1a3c8d;
-    color: #fff;
-}
-
-.fooodie-btn2 {
-	position: absolute;
-  top: 85%;
-  left: 89%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  background-color: transparent;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.fooodie-btn2:hover {
-    background-color: #636F76;
-    color: #fff;
-}
-
-.bg-overlay,
-.bg-overlay-white {
-    position: relative;
-    z-index: 1;
-}
-
-.bg-overlay:after,
-.bg-overlay-white:after {
-    background-color: rgba(33, 27, 49, 0.88);
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    content: '';
-    z-index: -1;
-    position: absolute;
-}
-
-.bg-overlay-white:after {
-    background-color: rgba(231, 235, 246, 0.89);
-}
-
-.bg-img {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-/* --------------------------
-:: 2.0 Header Area CSS
--------------------------- */
-
-.header_area {
-    left: 0;
-    position: fixed;
-    width: 100%;
-    z-index: 999;
-    top: 0;
-    padding: 0 15px;
-    height: 100px;
-    background-color: #63531f;
-    -webkit-transition-duration: 700ms;
-    transition-duration: 700ms;
-}
-
-.menu_area {
-    position: relative;
-    z-index: 2;
-}
-
-.menu_area #nav .nav-link {
-    color: #fff;
-    display: block;
-	margin-left: 15px;
-	margin-right: 15px;
-    font-size: 15px;
-	font-family: "Montserrat"
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
-    padding: 0 15px;
-}
-
-.menu_area #nav .nav-link:hover,
-.menu_area #nav .nav-item.active .nav-link,
-.menu_area .dropdown-item:hover {
-    color: #4a7aec;
-}
-
-
-.navbar-nav {
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
-}
-/* Sticky CSS */
-
-.header_area.sticky {
-    background-color: #63531f;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    height: 80px;
-    position: fixed;
-    top: 0;
-    z-index: 999;
-}
-
-/* --------------------------
-:: 12.0 Footer Area CSS
--------------------------- */
-
-.footer-area {
-	clear: both;
-    position: relative;
-    z-index: 10;
-	width: 100%;
-	bottom: 0;
-	z-index: 1;
-    background-color: transparent;
-}
-
-.copyright-text > p {
-    margin-bottom: 0;
-    font-size: 13px;
-}
-
-.footer-social-info > a {
-    color: #abadbe;
-    padding: 0 15px;
-    display: inline-block;
-    font-size: 13px;
-}
-
-.footer-social-info > a:hover {
-    color: #fff;
-}
-
-.footer-bottom-area {
-	background-color: #63531f;
-    height: 60px;
-}
-
-/* -------------------------
-:: 17.0 Home
-------------------------- */
-.question {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	background-color: #756213;
-	background-image: linear-gradient(315deg, #756213 0%, #000000 74%);
-	box-shadow: 0px 7px 8px -1px rgba(0,0,0,0.75);
-
-    overflow: hidden;	
-    position: relative;
-}
-
-
-.or {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -35px;
-    margin-left: -35px;
-    width: 72px;
-    height: 71px;
-    background-image: url(https://static.either.io/v2/img/yr-common-sprite.gz.png);
-    background-position: -97px -79px;
-    background-repeat: none;
-    z-index: 5;
-}
-
-/* -----------------------
-:: 18.0 General CSS
------------------------ */
 body {
 	position: relative;
 	height:100%;
@@ -421,8 +224,201 @@ h1, h2, h3, h4, h5,
     flex: 0 0 66.66667%;
     max-width: 66.66667%; }	
 
+
+
+.fooodie-btn {
+	position: absolute;
+  top: 90%;
+  left: 92%;
+  max-height: 15%;
+  max-width: 10%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #00A2FF;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.fooodie-btn:hover {
+    background-color: #1a3c8d;
+    color: #fff;
+}
+
+.fooodie-btn2 {
+	position: absolute;
+  top: 85%;
+  left: 89%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: transparent;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.fooodie-btn2:hover {
+    background-color: #636F76;
+    color: #fff;
+}
+
+.bg-overlay,
+.bg-overlay-white {
+    position: relative;
+    z-index: 1;
+}
+
+.bg-overlay:after,
+.bg-overlay-white:after {
+    background-color: rgba(33, 27, 49, 0.88);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    content: '';
+    z-index: -1;
+    position: absolute;
+}
+
+.bg-overlay-white:after {
+    background-color: rgba(231, 235, 246, 0.89);
+}
+
+.bg-img {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* --------------------------
+:: 2.0 Header Area CSS
+-------------------------- */
+
+.header_area {
+    left: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    top: 0;
+    padding: 0 15px;
+    height: 100px;
+    background-color: #63531f;
+    -webkit-transition-duration: 700ms;
+    transition-duration: 700ms;
+}
+
+.menu_area {
+    position: relative;
+    z-index: 2;
+}
+
+.menu_area #nav .nav-link {
+    color: #fff;
+    display: block;
+	margin-left: 15px;
+	margin-right: 15px;
+    font-size: 15px;
+	font-family: "Montserrat"
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+    padding: 0 15px;
+}
+
+.menu_area #nav .nav-link:hover,
+.menu_area #nav .nav-item.active .nav-link,
+.menu_area .dropdown-item:hover {
+    color: #4a7aec;
+}
+
+.menu_area .collapse.show {
+	background-color: #63531f
+}
+
+.navbar-nav {
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+}
+/* Sticky CSS */
+
+.header_area.sticky {
+    background-color: #63531f;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    height: 80px;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+
+/* --------------------------
+:: 3.0 Footer Area CSS
+-------------------------- */
+
+.footer-area {
+	clear: both;
+    position: relative;
+    z-index: 10;
+	width: 100%;
+	bottom: 0;
+	z-index: 1;
+    background-color: transparent;
+}
+
+.copyright-text > p {
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+.footer-social-info > a {
+    color: #abadbe;
+    padding: 0 15px;
+    display: inline-block;
+    font-size: 13px;
+}
+
+.footer-social-info > a:hover {
+    color: #fff;
+}
+
+.footer-bottom-area {
+	background-color: #63531f;
+    height: 60px;
+}
+
+/* -------------------------
+:: 4.0 Home
+------------------------- */
+.question {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #756213;
+	background-image: linear-gradient(315deg, #756213 0%, #000000 74%);
+	box-shadow: 0px 7px 8px -1px rgba(0,0,0,0.75);
+
+    overflow: hidden;	
+    position: relative;
+}
+
+
+.or {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -35px;
+    margin-left: -35px;
+    width: 72px;
+    height: 71px;
+    background-image: url(https://static.either.io/v2/img/yr-common-sprite.gz.png);
+    background-position: -97px -79px;
+    background-repeat: none;
+    z-index: 5;
+}
+
 /* ----------------------
-:: 19.0 Profiles
+:: 5.0 Profiles
 ---------------------- */
 
 #fooodie-page {
@@ -692,14 +688,9 @@ h1, h2, h3, h4, h5,
 }
 
 /* -----------------------
-:: 20.0 Leaderboard
+:: 6.0 Leaderboard
 ----------------------- */
-
-
-
-/* -----------------------
-:: Profiles
------------------------ */
+º
 .heading-leaderboard {
     margin-bottom: 10px;
 }
@@ -796,7 +787,7 @@ h1, h2, h3, h4, h5,
 }
 
 /* -----------------------
-:: 21.0 Settings - Confirmation Delete Account
+:: 7.0 Settings - Confirmation Delete Account
 ----------------------- */
 
 #fooodie-picture {
@@ -823,7 +814,7 @@ h1, h2, h3, h4, h5,
 
  {box-sizing: border-box}
 
-/* Set a style for all buttons */
+
 .buttonDelete {
   background-color: #4CAF50;
   color: white;
@@ -839,58 +830,58 @@ h1, h2, h3, h4, h5,
   opacity:1;
 }
 
-/* Float cancel and delete buttons and add an equal width */
+
 .cancelbtn, .deletebtn {
   float: left;
   width: 50%;
 }
 
-/* Add a color to the cancel button */
+
 .cancelbtn {
   background-color: #ccc;
   color: black;
 }
 
-/* Add a color to the delete button */
+
 .deletebtn {
   background-color: #f44336;
 }
 
-/* Add padding and center-align text to the container */
+
 .container {
   padding: 16px;
   text-align: center;
 }
 
-/* The Modal (background) */
+
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 999; /* Sit on top */
+  display: none; 
+  position: fixed; 
+  z-index: 999; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
   background-color: #474e5d;
   padding-top: 50px;
 }
 
-/* Modal Content/Box */
+
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  margin: 5% auto 15% auto; 
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 80%; 
 }
 
-/* Style the horizontal ruler */
+
 hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
 }
 
-/* The Modal Close Button (x) */
+
 .close {
   position: absolute;
   right: 35px;
@@ -906,14 +897,14 @@ hr {
   cursor: pointer;
 }
 
-/* Clear floats */
+
 .clearfix::after {
   content: "";
   clear: both;
   display: table;
 }
 
-/* Change styles for cancel button and delete button on extra small screens */
+
 @media screen and (max-width: 300px) {
   .cancelbtn, .deletebtn {
     width: 100%;
@@ -922,7 +913,7 @@ hr {
 
 
 /* -----------------------
-:: 21.0 Not Found Page
+:: 8.0 Not Found Page
 ----------------------- */
 
 .notFoundPage {
@@ -1000,7 +991,7 @@ notfound {
 }
 
 /* -----------------------
-:: Importing Custom Fonts
+:: 9.0 Importing Custom Fonts
 ----------------------- */
 @font-face {
   font-family: 'Code';
