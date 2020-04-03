@@ -390,7 +390,7 @@ def googleloggedin(request):
         profile = UserProfile(user=user)
         profile.google=True
         profile.save()
-    return redirect(reverse('fooodie:home'))
+    return redirect(reverse('fooodie:myprofile'))
 # GOOGLE ACCOUNT LOG IN ENDS
 
 class LikePhoto(View):
