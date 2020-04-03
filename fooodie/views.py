@@ -29,6 +29,7 @@ def profile_leaderboard(profile):
             break
     return position_leaderboard
 
+#Returns two randomly-chosen Photo objects from the database
 def random_dif_pics():
     pics = Photo.objects.order_by('?')
     pics_to_choose = pics[:2]
@@ -45,13 +46,13 @@ def home(request):
     context_dict = {}
     pics = Photo.objects.order_by('?')
     try:
-        photo1, photo2=random_dif_pics()
+        photo1, photo2=random_dif_pics() #Returns two randomly-selected Photo objects into photo1 and photo2
         context_dict['photo1']=photo1
         context_dict['photo2']=photo2
-        visitor_cookie_handler(request)
+        visitor_cookie_handler(request) #Tracks visit count and last visit time via a server-side cookie
         random_pics = pics[:3]
         context_dict['random_pics'] = random_pics
-        context_dict['visits'] = request.session['visits']
+        context_dict['visits'] = request.session['visits'] #Obtains number of visits made this session
     except:
         return render(request, 'fooodie/error.html', context={'error' : "DEV NOTE: If this happens, it means there has been an issue when populating the database... Maybe you forgot to migrate or you didn't run the populate script. As long as you don't click on anything it is fine though. First stop running the server. Then go to your files and delete both [workspace]/fooodie/db.sqlite3, and [workspace]/fooodie/media with all its contents. Then in command line go to [workspace]/fooodie/ and first run 'python manage.py migrate', second run 'python populate_fooodie.py'. PLEASE DO NOT CLICK ON ANYTHING ON THE PAGE UNTIL YOU DO THIS. YOU'LL ONLY BREAK IT EVEN MORE"})
     return render(request, 'fooodie/home.html', context = context_dict)
@@ -102,12 +103,11 @@ def userlogin(request):
     user_form=UserForm()
     user_form.fields['username'].widget.attrs['maxlength']='20'
     profile_form=UserProfileForm()
-    if request.method == 'POST':
-        #Need to consider allowing email OR username potentially
+    if request.method == 'POST': #If input data is being sent to the server
         username = request.POST.get('username')
         password = request.POST.get('password')
         
-        user = authenticate(username = username, password = password)
+        user = authenticate(username = username, password = password) #Verifies credentials against user database, returns appropriate User object if valid
         if user:
             if user.is_active:
                 login(request, user)
@@ -122,13 +122,13 @@ def userlogin(request):
 #Will focus on the registration/login logic first, implement into a single view later
 def register(request):
     if request.user.is_authenticated:
-        return redirect(reverse('fooodie:loginregister'))
+        return redirect(reverse('fooodie:loginregister')) #Redirects back to login/register page if already logged in
     context_dict={}
-    if request.method == 'POST':
+    if request.method == 'POST': #If input data is being sent to the server
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid(): #Two forms make up the entire registration form and so must both be valid
             user = user_form.save()
             user.set_password(user.password)
             user.save()
@@ -136,12 +136,12 @@ def register(request):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.slug = user.username
-            profile.save()
+            profile.save() #Profile must be saved in order to generate an id value to be used next
 
             if 'picture' in request.FILES:
-                picture=request.FILES['picture']
+                picture=request.FILES['picture'] #Obtains profile picture from request
                 picture.name=str(profile.id)+".jpg"
-                profile.picture=picture
+                profile.picture=picture #UserProfile model handles save location of profile picture upon save
                 profile.save()
 
             user.backend='django.contrib.auth.backends.ModelBackend'
@@ -243,7 +243,7 @@ def settingsusername(request):
     if request.method == 'POST':
         name_form = ChangeUsername(request.POST) # If the form is valid...
         if name_form.is_valid():
-            user.username = name_form.cleaned_data['username']
+            user.username = name_form.cleaned_data['username'] #As ChangeUsername is a basic form, form fields must be matched to model fields
             user.save()
             return redirect(reverse("fooodie:settings"))
         else: # Invalid form or forms - mistakes or something else? Print problems to the terminal.
@@ -272,14 +272,14 @@ def settingsemail(request):
 
 @login_required
 def settingsprofilepic(request):
-    profile = UserProfile.objects.get(user = request.user)
+    profile = UserProfile.objects.get(user = request.user) #Obtains current logged-in user that sent the request
     context_dict = {}
-    if request.method == 'POST':
+    if request.method == 'POST': #Request type must be POST, as input data must be provided
         profile_pic_form = ChangePicture(request.POST)
         if profile_pic_form.is_valid():
             try:
-                picture=request.FILES['picture']
-                picture.name=str(profile.id)+".jpg"
+                picture=request.FILES['picture'] #Obtaining picture from request
+                picture.name=str(profile.id)+".jpg" #Using same naming scheme as that which registration uses
                 profile.picture=picture
                 profile.save()
                 return redirect(reverse('fooodie:myprofile'))
@@ -287,7 +287,7 @@ def settingsprofilepic(request):
                 context_dict['error']="There was something wrong with your upload. Please try again. When this happens it's usually because you didn't upload a picture"
         else:
             profile_pic_form = ChangePicture()
-            context_dict['error']=profile_pic_form.errors
+            context_dict['error']=profile_pic_form.errors #Flags errors on form fields, informing viewer of issues with input
 
     else:
         profile_pic_form = ChangePicture()
@@ -301,7 +301,7 @@ def settingsprofilepic(request):
 def deleteaccount(request):
     user=request.user
     logout(request)
-    user.delete()
+    user.delete() #Utilising inbuilt delete() function to remove User object from database
     return redirect(reverse('fooodie:home'))
 
 
@@ -309,7 +309,7 @@ def deleteaccount(request):
 def settingspassword(request):
     user = request.user
     profile=UserProfile.objects.get(user=request.user)
-    if profile.google:
+    if profile.google: #Boolean field that is true if profile was created via Google authentication
         return render(request, 'fooodie/error.html', context={'error' : 'An account made with google works without a password, so you cannot change it!'})
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -393,16 +393,18 @@ def googleloggedin(request):
     return redirect(reverse('fooodie:myprofile'))
 # GOOGLE ACCOUNT LOG IN ENDS
 
+#Receives AJAX request from code executed when a "like" button is clicked
 class LikePhoto(View):
     def get(self, request):
-        photo_id = request.GET['photo_id']
+        photo_id = request.GET['photo_id'] #Obtains photo id from AJAX request
         try:
-            photo = Photo.objects.get(id = int(photo_id))
+            photo = Photo.objects.get(id = int(photo_id)) #Retrieves Photo object with id matching passed id; id is the object's primary key
         except Photo.DoesNotExist:
             return redirect(reverse('fooodie:home'))
         except ValueError:
             return redirect(reverse('fooodie:home'))
 
+        #Increments the the vote tallies of the picture and the picture's associated user
         author = UserProfile.objects.get(id = photo.user.id)
         photo.votes = photo.votes + 1
         author.totalVotes = author.totalVotes + 1;
@@ -411,6 +413,10 @@ class LikePhoto(View):
 
         photo1, photo2=random_dif_pics()
 
+        #Construct JSON-formatted response data. AJAX handles a plain text (HTML), JSON or
+        #XML-formatted response; as multiple pieces of text data must be returned, JSON is most
+        #suitable for the task, with the added benefit of utilising standard JavaScript functions
+        #to parse the JSON data returned
         return_dict = {'photo1' :
                        {'url' : photo1.photo.url,
                         'name' : photo1.name,
@@ -425,6 +431,7 @@ class LikePhoto(View):
                         'id' : photo2.id}
                        }
 
+        #Return the JSON-formatted data above
         return JsonResponse(return_dict)
 
 # Create your views here.
