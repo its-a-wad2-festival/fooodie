@@ -358,7 +358,7 @@ def usersearch(request):
     try:
         profile=UserProfile.objects.get(user__username=username)
     except:
-        return render(request, 'fooodie/error.html', context={'error' :"We're sorry but the user "+username+" does not exist. Please try again. Remember you have to write the user's exact name. Uppercase and lowercase matters! (You can check names in the leaderboard)"})
+        return render(request, 'fooodie/error.html', context={'error' :"We're sorry but the user "+str(username)+" does not exist. Please try again. Remember you have to write the user's exact name. Uppercase and lowercase matters! (You can check names in the leaderboard)"})
     return redirect(reverse('fooodie:userprofile', args=[profile.slug]))
 
 def userprofile(request, user_profile_slug):

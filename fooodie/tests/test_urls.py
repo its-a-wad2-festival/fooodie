@@ -5,7 +5,7 @@ from fooodie.models import UserProfile, Photo, UserFactory
 import factory
 import factory.django
 
-# 'fooodie:likephoto':likephoto, 'fooodie:loginregister':loginregister,
+#We ensure all urls map to someplace
 
 class TestUrls(TestCase):   
     def CreateUserProfile(self): #Create UserProfile so we can test it
@@ -87,6 +87,6 @@ class TestUrls(TestCase):
         url=reverse('fooodie:addfoodphoto')
         self.assertEquals(resolve(url).func, addfoodphoto)
     
-    def TestUrlIsResolved(self, name):
-        url=reverse(name)
-        self.assertEquals(resolve(url).func, urls_views[name])
+    def test_deleteaccount_url_is_resolved(self):
+        url=reverse('fooodie:deleteaccount')
+        self.assertEquals(resolve(url).func, deleteaccount)
