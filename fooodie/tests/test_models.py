@@ -53,3 +53,13 @@ class TestAttributes(TestCase):
         pic.increase_votes(5)
         profile=pic.user
         self.assertEquals(profile.totalVotes, 5)
+        
+    def test_multiple_photo_votes(self):
+        user=UserFactory()
+        profile=UserProfile.objects.create(user=user, totalVotes=0)
+        apple=Photo.objects.create(name="Apple", photo="", user=profile)
+        banana=Photo.objects.create(name="Banana", photo="", user=profile)
+        apple.increase_votes(9)
+        banana.increase_votes(4)
+        apple.decrease_votes(7)
+        self.assertEquals(profile.totalVotes, 6)

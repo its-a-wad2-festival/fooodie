@@ -79,6 +79,5 @@ class Photo(models.Model):
         
     def decrease_votes(self, num):
         self.votes=self.votes-num
-        profile=UserProfile.objects.get(id=self.user.id)
-        profile.decrease_votes(num)
+        self.user.decrease_votes(num)
         self.save()
