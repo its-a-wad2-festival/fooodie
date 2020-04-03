@@ -22,6 +22,7 @@ population_photos_old_path=os.path.join(BASE_DIR,'population_photos')
 def create_user():
     try:
         user = UserFactory() #User created with UserFactory() in models
+        user.username=user.username.upper()
         user.set_password("FooodieIsAwesome") #Facts
         #Passowrd given to ALL random users so we can access them if necessary
         user.save()
